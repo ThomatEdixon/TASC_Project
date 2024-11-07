@@ -1,0 +1,10 @@
+.icon-network a{
+    margin-right: 10px;
+}
+footer{
+    margin-top: auto; /* Đảm bảo footer nằm ở cuối */
+    background-color: #333;  /* Màu nền của footer */
+    color: #fff;  /* Màu chữ của footer */
+    padding: 20px;
+    text-align: center;
+}

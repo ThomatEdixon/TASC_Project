@@ -1,0 +1,14 @@
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Đảm bảo footer luôn ở dưới */
+  }
+  
+  /* App-footer */
+  app-footer {
+    margin-top: auto; /* Đảm bảo footer nằm ở cuối */
+    background-color: #333;  /* Màu nền của footer */
+    color: #fff;  /* Màu chữ của footer */
+    text-align: center;
+  }

@@ -1,0 +1,82 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-width: 100%;
+    background-image: url('https://static.vecteezy.com/system/resources/previews/038/811/348/non_2x/ai-generated-beautiful-background-for-jewelry-advertising-free-photo.jpeg');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .register-box {
+    max-width: 800px;
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  h2 {
+    color: #12454d;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    color: #666;
+  }
+  
+  .input-group {
+    margin-bottom: 1rem;
+  }
+  
+  .input-group .form-control {
+    border-right: 0;
+  }
+  
+  .input-group .input-group-append .input-group-text {
+    border-left: 0;
+    background-color: #ffffff;
+  }
+  
+  .input-group .form-control:focus {
+    border-color: #50C878;
+    box-shadow: 0 0 5px rgba(80, 200, 120, 0.5);
+    outline: none;
+  }
+  
+  .input-group .form-control:focus + .input-group-append .input-group-text {
+    border-color: #50C878;
+  }
+  
+  button {
+    padding: 0.75rem;
+    background-color: #50C878;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #3e995c;
+  }
+  
+  .login-link {
+    margin-top: 1rem;
+    color: #333;
+  }
+  
+  .login-link a {
+    color: #12454d;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  .login-link a:hover {
+    color: #12454d;
+  }
+  

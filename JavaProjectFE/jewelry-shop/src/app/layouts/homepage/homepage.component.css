@@ -1,0 +1,34 @@
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;  
+    overflow: hidden; 
+    display: flex;
+    align-items: center;
+  }
+  .video-overlay{
+    width: 100%;
+    height: 80%; 
+  }
+
+  .video-overlay iframe {
+    width: 100%;
+    height: 100%;  
+    border: none;
+    object-fit: cover; 
+  }
+  
+  /* Nội dung của home component */
+  .home-content {
+    margin-top: 20px;
+    padding-top: 20px;
+    text-align: center;
+  }
+  .home-content h1{
+    font-size: 2rem;
+    color: #12454d;
+  }
+  .home-content p{
+    font-size: 1.5rem;
+    color: #12454d;
+  }

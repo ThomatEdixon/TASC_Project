@@ -1,0 +1,117 @@
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    max-width: 100%;
+    background-image: url('https://static.vecteezy.com/system/resources/previews/038/811/348/non_2x/ai-generated-beautiful-background-for-jewelry-advertising-free-photo.jpeg');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .login-box {
+    max-width: 800px;
+    background: #ffffff;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .login-box h2 {
+    color: #12454d;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .login-box p {
+    color: #555;
+  }
+  
+  .input-group {
+    margin-bottom: 1rem;
+  }
+  
+  .input-group label {
+    display: block;
+    color: #50C878;
+    font-weight: inherit;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  .input-group input:focus{
+    border-color: #12454d;  
+    outline: none;
+  }
+  button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #12454d;
+  }
+  
+  a {
+    display: block;
+    margin-top: 1rem;
+    color: #333;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .register-link {
+    margin-top: 1rem;
+    color: #333;
+  }
+  
+  .register-link a {
+    color: #4CAF50;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  .register-link a:hover {
+    color: #32c0ec;
+  }
+  .input-group {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .input-group i {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #4CAF50;
+    font-size: 1.2rem;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 2.5rem; /* Extra left padding to make space for the icon */
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .input-group input:focus {
+    border-color: #12454d;
+    outline: none;
+  }
+  
+  

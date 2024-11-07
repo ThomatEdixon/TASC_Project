@@ -1,0 +1,113 @@
+
+  .navbar-custom {
+    padding: 10px 0;
+  }
+
+  /* Upper navbar: logo, search, contact */
+  .upper-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Center shop name in upper navbar */
+  .shop-name {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #12454d;
+  }
+
+  .upper-navbar .left-side,
+  .upper-navbar .right-side {
+    display: flex;
+    justify-content: space-between;
+  }
+  .upper-navbar .nav-link{
+    color: #12454d;
+  }
+
+  .upper-navbar .left-side > * {
+    display: flex;
+      align-items: center;
+    margin-right: 10px;
+  }
+
+  .upper-navbar .right-side > * {
+    margin-left: 10px;
+    color: #12454d;
+  }
+
+  .upper-navbar .right-side .icon {
+    font-size: 1.3rem;
+  }
+
+  /* Lower navbar: menu */
+  .lower-navbar {
+    padding: 10px 0;
+  }
+
+  .lower-navbar .navbar-nav {
+    display: flex;
+    justify-content: center;
+  }
+
+  .lower-navbar .nav-link {
+    color: #12454d;
+    padding: 10px 15px;
+  }
+
+  .lower-navbar .nav-link:hover {
+    color: #81d8d0;
+  }
+  /* Kiểu cho dropdown */
+.nav-item .dropdown-menu {
+  background-color: #ffffff; /* Màu nền trắng */
+  border: 1px solid #dcdcdc; /* Viền mỏng xám nhạt */
+  border-radius: 8px; /* Góc bo tròn nhẹ */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ để tạo hiệu ứng nổi */
+  min-width: 200px; /* Độ rộng tối thiểu */
+  padding: 10px 0; /* Khoảng cách bên trong */
+}
+
+/* Kiểu cho mỗi item trong dropdown */
+.nav-item .dropdown-item {
+  color: #12454d; /* Màu chữ ngọc lục bảo */
+  font-family: 'Playfair Display', serif; /* Font chữ thanh lịch */
+  font-size: 16px; /* Kích thước chữ */
+  padding: 10px 20px; /* Khoảng cách giữa các item */
+  text-align: center; /* Canh giữa */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
+}
+
+/* Hiệu ứng hover (khi rê chuột vào mỗi item) */
+.nav-item .dropdown-item:hover {
+  background-color: #50C878; /* Đổi nền sang màu ngọc lục bảo khi hover */
+  color: #ffffff; /* Chữ trắng khi hover */
+}
+
+/* Kiểu cho dòng phân cách giữa các mục */
+.nav-item .dropdown-divider {
+  border-color: #dcdcdc; /* Màu phân cách xám nhạt */
+  margin: 0; /* Không có khoảng cách giữa các mục */
+}
+
+/* Kiểu cho phần tiêu đề (ví dụ: Admin) */
+.nav-item .dropdown-item span {
+  font-weight: bold;
+  font-size: 18px; /* Chữ to hơn */
+  color: #12454d; /* Màu chữ đậm hơn */
+}
+
+/* Tùy chỉnh icon user-circle */
+.nav-link i {
+  color: #12454d; /* Màu ngọc lục bảo cho icon */
+  font-size: 24px; /* Tăng kích thước icon */
+}
+
+/* Kiểu cho dropdown menu khi đã mở */
+.nav-item .dropdown-menu.show {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}

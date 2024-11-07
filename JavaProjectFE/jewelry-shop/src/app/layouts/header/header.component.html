@@ -1,0 +1,93 @@
+<header>
+  <!-- Animated navbar-->
+  <nav class="navbar navbar-custom">
+    <div class="container upper-navbar">
+      <!-- Left Side (Search Icon, Logo, Contact) -->
+      <div class="left-side">
+        <!-- Logo -->
+        <a href="#" class="navbar-brand">
+          <img
+            src="https://media.istockphoto.com/id/1152003770/vector/icon-diamond-vector-logo.jpg?s=612x612&w=0&k=20&c=b6mZJ7u3anlhDiHB4vXkNODvTv5s2mDqNLt7UsrsDzg="
+            alt="Jewelry Shop" width="50" height="50">
+        </a>
+        <!-- Search Icon -->
+        <a href="#" class="nav-link">
+          <i class="fas fa-search icon"></i>
+        </a>
+        <!-- Contact -->
+        <a href="#" class="nav-link">Contact us</a>
+      </div>
+
+      <!-- Shop Name (Center) -->
+      <div class="shop-name">
+        Jewelry Shop
+      </div>
+
+      <!-- Right Side (Account, Wishlist, Cart Icons) -->
+      <div class="right-side">
+        <div class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown">
+            <i class="fas fa-user-circle"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <!-- Nếu đã đăng nhập -->
+            <ng-container *ngIf="IsAuthen(); else unauthDropdown">
+              <span class="dropdown-item">Admin</span>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item dropdown-footer" (click)="ClickLogOut()">Logout</a>
+            </ng-container>
+            
+            <!-- Nếu chưa đăng nhập -->
+            <ng-template #unauthDropdown>
+              <a class="dropdown-item dropdown-footer" [routerLink]="['/login']">Login</a>
+              <a class="dropdown-item dropdown-footer" [routerLink]="['/register']">Register</a>
+            </ng-template>
+          </div>
+        </div>
+        <a href="#" class="nav-link">
+          <i class="fas fa-heart icon"></i>
+        </a>
+        <a href="#" class="nav-link">
+          <i class="fas fa-shopping-cart icon"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Lower Navbar (Menu) -->
+  <nav class="navbar">
+    <div class="container lower-navbar">
+      <div>
+        <div class="nav-item">
+          <a class="nav-link" href="#">Home</a>
+        </div>
+      </div>
+      <div>
+        <div class="nav-item">
+          <a class="nav-link" href="#">Products</a>
+        </div>
+      </div>
+      <div>
+        <div class="nav-item">
+          <a class="nav-link" href="#">Collections</a>
+        </div>
+      </div>
+      <div>
+        <div class="nav-item">
+          <a class="nav-link" href="#">About Us</a>
+        </div>
+      </div>
+      <div>
+        <div class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Animated navbar -->
+
+  <!-- Background image -->
+
+  <!-- Background image -->
+</header>
+<!--Main Navigation-->
