@@ -2,11 +2,9 @@ package org.jewelryshop.productservice.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.jewelryshop.productservice.dto.request.BrandRequest;
-import org.jewelryshop.productservice.dto.request.CategoryRequest;
 import org.jewelryshop.productservice.dto.response.ApiResponse;
 import org.jewelryshop.productservice.dto.response.BrandResponse;
-import org.jewelryshop.productservice.dto.response.CategoryResponse;
-import org.jewelryshop.productservice.services.impl.BrandService;
+import org.jewelryshop.productservice.services.impl.BrandServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +13,7 @@ import java.util.List;
 @RequestMapping(value = "/brand")
 @RequiredArgsConstructor
 public class BrandController {
-    private final BrandService brandService;
+    private final BrandServiceImpl brandService;
     @PostMapping
     public ApiResponse<BrandResponse> saveProduct(@RequestBody BrandRequest brandRequest) {
         return ApiResponse.<BrandResponse>builder()

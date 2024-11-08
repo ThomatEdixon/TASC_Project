@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { UserRequest } from '../models/user';
 import { AuthenResponse } from '../models/authen';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/user/environment';
 import { th } from 'date-fns/locale';
 
 const BaseUrl = environment.ApiUrl;

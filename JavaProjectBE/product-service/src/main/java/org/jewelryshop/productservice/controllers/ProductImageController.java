@@ -3,7 +3,7 @@ package org.jewelryshop.productservice.controllers;
 import lombok.RequiredArgsConstructor;
 import org.jewelryshop.productservice.dto.response.ApiResponse;
 import org.jewelryshop.productservice.entities.ProductImage;
-import org.jewelryshop.productservice.services.impl.ProductImageService;
+import org.jewelryshop.productservice.services.impl.ProductImageServiceImpl;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(value = "/upload")
 @RequiredArgsConstructor
 public class ProductImageController {
-    private final ProductImageService productImageService;
+    private final ProductImageServiceImpl productImageService;
     @PostMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ApiResponse<List<ProductImage>> uploadImages(
             @PathVariable("id") String productId,

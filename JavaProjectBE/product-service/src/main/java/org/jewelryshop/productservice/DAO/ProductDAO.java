@@ -56,17 +56,18 @@ public class ProductDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             try(ResultSet resultSet = preparedStatement.executeQuery(sql)){
                 while (resultSet.next()) {
-                    Product product = new Product();
-                    product.setProductId(resultSet.getString("product_id"));
-                    product.setName(resultSet.getString("name"));
-                    product.setDescription(resultSet.getString("description"));
-                    product.setPrice(resultSet.getDouble("price"));
-                    product.setOriginalPrice(resultSet.getDouble("original_price"));
-                    product.setStockQuantity(resultSet.getInt("stock_quantity"));
-                    product.setCategoryId(resultSet.getString("category_id"));
-                    product.setBrandId(resultSet.getString("brand_id"));
-                    product.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
-                    product.setUpdatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime());
+                    Product product = Product.builder()
+                            .productId(resultSet.getString("product_id"))
+                            .name(resultSet.getString("name"))
+                            .description(resultSet.getString("description"))
+                            .price(resultSet.getDouble("price"))
+                            .originalPrice(resultSet.getDouble("original_price"))
+                            .stockQuantity(resultSet.getInt("stock_quantity"))
+                            .categoryId(resultSet.getString("category_id"))
+                            .brandId(resultSet.getString("brand_id"))
+                            .createdAt(resultSet.getTimestamp("created_at").toLocalDateTime())
+                            .updatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime())
+                            .build();
                     products.add(product);
                     product.setProductImages(productImageDAO.getProductImagesByProductId(resultSet.getString("product_id")));
                 }
@@ -98,28 +99,28 @@ public class ProductDAO {
 
     public Product findById(String productId) throws SQLException {
         String sql = "SELECT * FROM product WHERE product_id = ?";
-        Product product = null;
+        Product product = new Product();
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setString(1, productId);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    product = new Product();
-                    product.setProductId(rs.getString("product_id"));
-                    product.setName(rs.getString("name"));
-                    product.setDescription(rs.getString("description"));
-                    product.setPrice(rs.getDouble("price"));
-                    product.setOriginalPrice(rs.getDouble("original_price"));
-                    product.setStockQuantity(rs.getInt("stock_quantity"));
-                    product.setCategoryId(rs.getString("category_id"));
-                    product.setBrandId(rs.getString("brand_id"));
-                    product.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-                    product.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    product = Product.builder()
+                            .productId(resultSet.getString("product_id"))
+                            .name(resultSet.getString("name"))
+                            .description(resultSet.getString("description"))
+                            .price(resultSet.getDouble("price"))
+                            .originalPrice(resultSet.getDouble("original_price"))
+                            .stockQuantity(resultSet.getInt("stock_quantity"))
+                            .categoryId(resultSet.getString("category_id"))
+                            .brandId(resultSet.getString("brand_id"))
+                            .createdAt(resultSet.getTimestamp("created_at").toLocalDateTime())
+                            .updatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime())
+                            .build();
 
-                    // Get product images
                     product.setProductImages(productImageDAO.getProductImagesByProductId(productId));
                 }
             }

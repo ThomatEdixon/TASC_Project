@@ -10,7 +10,7 @@ import org.jewelryshop.userservice.dto.response.ApiResponse;
 import org.jewelryshop.userservice.dto.response.IntrospectResponse;
 import org.jewelryshop.userservice.dto.response.UserLoginResponse;
 import org.jewelryshop.userservice.exceptions.AppException;
-import org.jewelryshop.userservice.services.iplm.AuthenticationService;
+import org.jewelryshop.userservice.services.iplm.AuthenticationServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -19,7 +19,7 @@ import java.text.ParseException;
 @RequestMapping(value = "/authentication")
 @RequiredArgsConstructor
 public class AuthenticationController {
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceImpl authenticationService;
     @PostMapping("/login")
     public ApiResponse<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) throws AppException {
         UserLoginResponse userLoginResponse = authenticationService.login(userLoginRequest);

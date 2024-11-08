@@ -6,18 +6,19 @@ import org.jewelryshop.productservice.dto.response.BrandResponse;
 import org.jewelryshop.productservice.dto.response.CategoryResponse;
 import org.jewelryshop.productservice.entities.Brand;
 import org.jewelryshop.productservice.entities.Category;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
-
+@Component
 public class CategoryMapper {
-    public static Category toCategory(CategoryRequest categoryRequest){
+    public Category toCategory(CategoryRequest categoryRequest){
         return Category.builder()
                 .categoryId(UUID.randomUUID().toString())
                 .name(categoryRequest.getName())
                 .description(categoryRequest.getDescription())
                 .build();
     }
-    public static CategoryResponse toCategoryResponse(Category category){
+    public CategoryResponse toCategoryResponse(Category category){
         return CategoryResponse.builder()
                 .name(category.getName())
                 .description(category.getDescription())

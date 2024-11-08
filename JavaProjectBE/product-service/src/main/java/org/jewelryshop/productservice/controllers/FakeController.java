@@ -1,7 +1,7 @@
 package org.jewelryshop.productservice.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.jewelryshop.productservice.services.impl.FakeService;
+import org.jewelryshop.productservice.services.impl.FakeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 @RequiredArgsConstructor
 public class FakeController {
     @Autowired
-    private final FakeService fakeService;
+    private final FakeServiceImpl fakeService;
     @GetMapping("/generate")
     public ResponseEntity<String> generateFakeData() {
         try {

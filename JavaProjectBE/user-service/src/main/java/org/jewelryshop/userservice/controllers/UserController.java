@@ -5,9 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.jewelryshop.userservice.dto.request.UserRequest;
 import org.jewelryshop.userservice.dto.response.ApiResponse;
 import org.jewelryshop.userservice.dto.response.UserResponse;
-import org.jewelryshop.userservice.entities.User;
 import org.jewelryshop.userservice.exceptions.AppException;
-import org.jewelryshop.userservice.services.iplm.UserService;
+import org.jewelryshop.userservice.services.iplm.UserServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 @RequestMapping(value = "/user")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserServiceImpl userService;
     @PostMapping
     public ApiResponse<UserResponse> register(@RequestBody @Valid UserRequest userRequest) throws AppException {
         return ApiResponse.<UserResponse>builder()

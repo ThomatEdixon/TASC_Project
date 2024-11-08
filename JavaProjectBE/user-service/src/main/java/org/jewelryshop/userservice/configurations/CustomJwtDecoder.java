@@ -2,7 +2,7 @@ package org.jewelryshop.userservice.configurations;
 
 import com.nimbusds.jose.JOSEException;
 import org.jewelryshop.userservice.dto.request.IntrospectRequest;
-import org.jewelryshop.userservice.services.iplm.AuthenticationService;
+import org.jewelryshop.userservice.services.iplm.AuthenticationServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -20,11 +20,11 @@ public class CustomJwtDecoder implements JwtDecoder {
     @Value("${jwt.signerKey}")
     private String signerKey;
 
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceImpl authenticationService;
 
     private NimbusJwtDecoder nimbusJwtDecoder = null;
 
-    public CustomJwtDecoder(AuthenticationService authenticationService) {
+    public CustomJwtDecoder(AuthenticationServiceImpl authenticationService) {
         this.authenticationService = authenticationService;
     }
 

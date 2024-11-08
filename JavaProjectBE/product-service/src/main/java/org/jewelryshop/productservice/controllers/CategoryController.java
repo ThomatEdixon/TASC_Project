@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.jewelryshop.productservice.dto.request.CategoryRequest;
 import org.jewelryshop.productservice.dto.response.ApiResponse;
 import org.jewelryshop.productservice.dto.response.CategoryResponse;
-import org.jewelryshop.productservice.services.impl.CategoryService;
+import org.jewelryshop.productservice.services.impl.CategoryServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/category")
 @RequiredArgsConstructor
 public class CategoryController {
-    private final CategoryService categoryService;
+    private final CategoryServiceImpl categoryService;
     @PostMapping
     public ApiResponse<CategoryResponse> saveProduct(@RequestBody CategoryRequest categoryRequest) {
         return ApiResponse.<CategoryResponse>builder()

@@ -32,3 +32,146 @@
     font-size: 1.5rem;
     color: #12454d;
   }
+  /* Đặt kích thước cho container chính của slider */
+.jewelry-slider-container {
+  width: 100%;
+  overflow: hidden;
+}
+.jewelry-slider-container h2{
+  margin-top: 0px;
+  margin-bottom: 50px;
+}
+
+/* Thiết lập cấu trúc cho slider để hiển thị 4 sản phẩm cùng lúc */
+.slider {
+  display: flex;
+  overflow: hidden; /* Ẩn các sản phẩm thừa */
+}
+
+.slider-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.3s ease; /* Cần thiết cho hiệu ứng trượt */
+}
+
+/* Thiết lập cho từng mục trong slider */
+.slider-item {
+  flex: 0 0 25%; /* Mỗi mục chiếm 1/4 chiều rộng của container */
+  padding: 5px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+
+/* Thẻ sản phẩm */
+.jewelry-slider-container .slider-item .product-card {
+  width: 100%; /* Đảm bảo thẻ sản phẩm chiếm toàn bộ khung */
+  background: #fff;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+/* Kích thước và hiển thị hình ảnh sản phẩm */
+.jewelry-slider-container .product-image {
+  width: 100%;
+  height: 300px; /* Tăng/giảm chiều cao theo mong muốn */
+  overflow: hidden;
+  position: relative;
+}
+
+.jewelry-slider-container .product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Căn chỉnh overlay icon */
+.jewelry-slider-container .overlay-icons {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #fff;
+  font-size: 30px;
+}
+
+.jewelry-slider-container .product-image:hover .overlay-icons {
+  display: flex;
+  opacity: 1;
+}
+
+/* Hiệu ứng phóng to ảnh khi hover */
+.product-image img {
+  transition: transform 0.3s ease;
+}
+
+.product-image:hover img {
+  transform: scale(1.1);
+}
+
+/* Thông tin sản phẩm */
+.product-info {
+  margin-top: 10px;
+}
+
+.product-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.product-price {
+  color: #e91e63;
+  font-weight: bold;
+}
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}
+
+.slider-btn i {
+  font-size: 1.5rem;
+}
+
+.slider {
+  overflow: hidden;
+  width: 100%;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slider-item {
+  flex: 0 0 25%; /* Hiển thị 4 sản phẩm cùng lúc */
+  padding: 5px;
+}
+
+
+  

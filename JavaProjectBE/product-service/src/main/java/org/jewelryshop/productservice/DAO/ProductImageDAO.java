@@ -15,13 +15,15 @@ import java.util.List;
 @Repository
 public class ProductImageDAO {
     private final DataSource dataSource;
+    private final ProductImageMapper productImageMapper;
 
-    public ProductImageDAO(DataSource dataSource) {
+    public ProductImageDAO(DataSource dataSource, ProductImageMapper productImageMapper) {
         this.dataSource = dataSource;
+        this.productImageMapper = productImageMapper;
     }
 
     public void save(ProductImageRequest productImageRequest){
-        ProductImage productImage = ProductImageMapper.toProductImage(productImageRequest);
+        ProductImage productImage = productImageMapper.toProductImage(productImageRequest);
         String query = "INSERT INTO product_image (image_id, product_id, image_url) VALUES (?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {

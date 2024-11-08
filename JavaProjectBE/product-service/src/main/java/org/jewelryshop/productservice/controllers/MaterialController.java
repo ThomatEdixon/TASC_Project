@@ -3,7 +3,7 @@ package org.jewelryshop.productservice.controllers;
 import lombok.RequiredArgsConstructor;
 import org.jewelryshop.productservice.dto.response.ApiResponse;
 import org.jewelryshop.productservice.entities.Material;
-import org.jewelryshop.productservice.services.impl.MaterialService;
+import org.jewelryshop.productservice.services.impl.MaterialServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping(value = "/material")
 @RequiredArgsConstructor
 public class MaterialController {
-    private final MaterialService materialService;
+    private final MaterialServiceImpl materialService;
     @PostMapping
     public ApiResponse<Material> saveProduct(@RequestBody Material material) {
         return ApiResponse.<Material>builder()
