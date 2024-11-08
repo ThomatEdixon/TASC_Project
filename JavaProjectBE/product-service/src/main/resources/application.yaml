@@ -1,0 +1,16 @@
+server:
+  port: 9001
+
+spring :
+  application:
+    name: user-service
+  datasource:
+    url: "jdbc:mysql://localhost:3306/db_tasc_product"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 22102003
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 100MB
