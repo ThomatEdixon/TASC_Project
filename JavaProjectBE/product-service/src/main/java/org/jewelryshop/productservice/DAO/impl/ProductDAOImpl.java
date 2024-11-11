@@ -1,6 +1,7 @@
 package org.jewelryshop.productservice.DAO.impl;
 
 import org.jewelryshop.productservice.DAO.interfaces.ProductDAO;
+import org.jewelryshop.productservice.dto.response.ProductResponse;
 import org.jewelryshop.productservice.entities.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -137,6 +138,87 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
+    public List<ProductResponse> searchProducts(int page , int size,String name, Double minPrice, Double maxPrice, String materialName,
+                                                String categoryName, String brandName) {
+
+        List<ProductResponse> products = new ArrayList<>();
+        Pageable  pageable = PageRequest.of(page,size);
+        int pageSize = pageable.getPageSize();
+        int offset = pageable.getPageNumber() * pageSize;
+        StringBuilder query = new StringBuilder(
+                "SELECT p.*, c.name AS categoryName, b.name AS brandName " +
+                        "FROM product p " +
+                        "JOIN category c ON p.category_id = c.category_id " +
+                        "JOIN brand b ON p.brand_id = b.brand_id " +
+                        "WHERE 1=1"
+        );
+
+        // Thêm điều kiện tìm kiếm cho từng thuộc tính
+        if (name != null && !name.isEmpty()) {
+            query.append(" AND p.name LIKE ?");
+        }
+        if (minPrice != null) {
+            query.append(" AND p.price >= ?");
+        }
+        if (maxPrice != null) {
+            query.append(" AND p.price <= ?");
+        }
+        if (materialName != null && !materialName.isEmpty()) {
+            query.append(" AND p.product_id IN (SELECT pm.product_id FROM product_material pm JOIN material m ON pm.material_name = m.name WHERE m.name LIKE ?)");
+        }
+        if (categoryName != null && !categoryName.isEmpty()) {
+            query.append(" AND c.name LIKE ?");
+        }
+        if (brandName != null && !brandName.isEmpty()) {
+            query.append(" AND b.name LIKE ?");
+        }
+        query.append(" LIMIT "+pageSize+" OFFSET "+offset);
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query.toString())) {
+            int index = 1;
+
+            if (name != null && !name.isEmpty()) {
+                stmt.setString(index++, "%" + name + "%");
+            }
+            if (minPrice != null) {
+                stmt.setDouble(index++, minPrice);
+            }
+            if (maxPrice != null) {
+                stmt.setDouble(index++, maxPrice);
+            }
+            if (materialName != null && !materialName.isEmpty()) {
+                stmt.setString(index++, "%" + materialName + "%");
+            }
+            if (categoryName != null && !categoryName.isEmpty()) {
+                stmt.setString(index++, "%" + categoryName + "%");
+            }
+            if (brandName != null && !brandName.isEmpty()) {
+                stmt.setString(index++, "%" + brandName + "%");
+            }
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                while (resultSet.next()) {
+                    ProductResponse product = ProductResponse.builder()
+                            .name(resultSet.getString("name"))
+                            .description(resultSet.getString("description"))
+                            .price(resultSet.getDouble("price"))
+                            .stockQuantity(resultSet.getInt("stock_quantity"))
+                            .categoryName(resultSet.getString("categoryName"))
+                            .brandName(resultSet.getString("brandName"))
+                            .build();
+
+                    product.setProductImages(productImageDAO.getProductImagesByProductId(resultSet.getString("product_id")));
+                    products.add(product);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return products;
+    }
+
+    @Override
     public void update(String product_id , Product product) {
         String sql = "UPDATE product SET name = ?, description = ?, price = ?, original_price = ?, stock_quantity = ?, category_id = ?, brand_id = ?, updated_at = ? " +
                 "WHERE product_id = ?";
@@ -185,11 +267,6 @@ public class ProductDAOImpl implements ProductDAO {
         }catch(SQLException e){
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public List<Product> searchProducts(String name, Double minPrice, Double maxPrice, String materialName, String categoryName, String brandName) {
-        return null;
     }
 
     // Fake data

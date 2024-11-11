@@ -38,7 +38,7 @@ public class ProductMapper implements RowMapper<Product> {
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
-                .stock_quantity(product.getStockQuantity())
+                .stockQuantity(product.getStockQuantity())
                 .categoryName(categoryDAO.getById(product.getCategoryId()).getName())
                 .brandName(brandDAO.getById(product.getBrandId()).getName())
                 .productImages(product.getProductImages())

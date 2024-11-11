@@ -8,6 +8,8 @@ import org.jewelryshop.productservice.services.impl.ProductServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/product")
 @RequiredArgsConstructor
@@ -30,6 +32,21 @@ public class ProductController {
     public ApiResponse<ProductResponse> getProductById(@PathVariable String id) {
         return ApiResponse.<ProductResponse>builder()
                 .data(productService.getById(id))
+                .build();
+    }
+    @GetMapping("/search")
+    public ApiResponse<Page<ProductResponse>> searchProducts(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) String materialName,
+            @RequestParam(required = false) String categoryName,
+            @RequestParam(required = false) String brandName) {
+
+        return ApiResponse.<Page<ProductResponse>>builder()
+                .data(productService.searchProducts(page,size,name,minPrice,maxPrice,materialName,categoryName,brandName))
                 .build();
     }
 

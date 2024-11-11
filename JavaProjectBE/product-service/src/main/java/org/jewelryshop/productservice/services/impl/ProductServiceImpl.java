@@ -68,4 +68,12 @@ public class ProductServiceImpl implements ProductService {
     public void delete(String productId) {
         productDAO.delete(productId);
     }
+
+    @Override
+    public Page<ProductResponse> searchProducts(int page, int size, String name, Double minPrice, Double maxPrice, String materialName, String categoryName, String brandName) {
+        Pageable pageable = PageRequest.of(page, size);
+        long totalProducts = productDAO.getTotalProduct();
+        List<ProductResponse> productResponses = productDAO.searchProducts(page, size,name,minPrice,maxPrice,materialName,categoryName,brandName);
+        return new PageImpl<>(productResponses, pageable, totalProducts);
+    }
 }
