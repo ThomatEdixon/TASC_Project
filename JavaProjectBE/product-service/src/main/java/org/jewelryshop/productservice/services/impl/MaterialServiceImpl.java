@@ -1,6 +1,6 @@
 package org.jewelryshop.productservice.services.impl;
 
-import org.jewelryshop.productservice.DAO.MaterialDAO;
+import org.jewelryshop.productservice.DAO.impl.MaterialDAOImpl;
 import org.jewelryshop.productservice.entities.Material;
 import org.jewelryshop.productservice.services.interfaces.MaterialService;
 import org.springframework.stereotype.Service;
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class MaterialServiceImpl implements MaterialService {
-    private final MaterialDAO materialDAO;
+    private final MaterialDAOImpl materialDAO;
 
-    public MaterialServiceImpl(MaterialDAO materialDAO) {
+    public MaterialServiceImpl(MaterialDAOImpl materialDAO) {
         this.materialDAO = materialDAO;
     }
 

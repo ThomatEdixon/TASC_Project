@@ -1,6 +1,6 @@
 package org.jewelryshop.productservice.services.impl;
 
-import org.jewelryshop.productservice.DAO.CategoryDAO;
+import org.jewelryshop.productservice.DAO.impl.CategoryDAOImpl;
 import org.jewelryshop.productservice.dto.request.CategoryRequest;
 import org.jewelryshop.productservice.dto.response.CategoryResponse;
 import org.jewelryshop.productservice.entities.Category;
@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    private final CategoryDAO categoryDAO;
+    private final CategoryDAOImpl categoryDAO;
     private final CategoryMapper categoryMapper;
 
-    public CategoryServiceImpl(CategoryDAO categoryDAO, CategoryMapper categoryMapper) {
+    public CategoryServiceImpl(CategoryDAOImpl categoryDAO, CategoryMapper categoryMapper) {
         this.categoryDAO = categoryDAO;
         this.categoryMapper = categoryMapper;
     }

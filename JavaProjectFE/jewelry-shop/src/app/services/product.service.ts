@@ -21,4 +21,7 @@ export class ProductService {
   getImage(imageName: string) {
     return this.httpClient.get(`${BaseUrl}/${EndpointUpload}/${imageName}`, { responseType: 'blob' });
   }
+  getProducts(page:number,size:number): Observable<AuthenResponse> {
+    return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}?page=${page}&size=${size}`);
+  }
 }

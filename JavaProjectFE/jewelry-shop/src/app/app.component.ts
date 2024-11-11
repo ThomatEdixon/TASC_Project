@@ -10,7 +10,12 @@ import { Router } from '@angular/router';
 export class AppComponent {
   constructor(private authService: AuthenticateService,private router:Router) { }
   ngOnInit(){
-    this.router.navigateByUrl('home');
+    if(!this.IsAuthen()){
+      this.router.navigateByUrl('user');
+    }else{
+      this.router.navigateByUrl('admin');
+    }
   }
+  IsAuthen = () => this.authService.LoggedIn
 
 }

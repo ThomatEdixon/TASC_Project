@@ -1,0 +1,152 @@
+/* Navbar Container */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2e2a2b; /* Dark background for elegance */
+    color: #f3e5ab; /* Soft gold text color */
+    padding: 0.5rem 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Navbar Menu */
+  .navbar-menu {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-menu li {
+    position: relative;
+  }
+  
+  .navbar-menu a {
+    color: #f3e5ab;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-menu a:hover,
+  .navbar-menu .active {
+    color: #ffd700; /* Brighter gold for active links */
+  }
+  
+  /* Navbar Actions */
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logout-button {
+    background-color: #b8860b;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #ffd700; /* Gold hover effect */
+  }
+  /* Navbar background */
+/* Navbar styling */
+.main-header.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #006D5B; /* Màu xanh ngọc lục bảo */
+}
+
+/* Phần bên trái của navbar */
+.navbar-left .navbar-nav .nav-link {
+  color: #E0F8F5; /* Màu xanh nhạt của ngọc lục bảo */
+  font-size: 1.1em; /* Tăng kích thước chữ */
+  padding: 0 15px;
+  text-align: center;
+}
+
+.navbar-left .navbar-nav .nav-link:hover {
+  color: #2C3E50; /* Màu xanh dương của đá sapphire khi hover */
+}
+
+/* Phần bên phải của navbar */
+.navbar-right .navbar-nav .nav-link {
+  color: #E0F8F5;
+}
+
+.navbar-right .navbar-nav .nav-link:hover {
+  color: #2C3E50;
+}
+
+/* Thanh tìm kiếm với icon */
+.search-form .input-group {
+  width: 200px;
+  height: 38px;
+  box-sizing: border-box;
+}
+
+.search-bar {
+  background-color: #FFFFFF; /* Màu trắng cho thanh tìm kiếm */
+  border: 1px solid #2C3E50; /* Viền xanh dương sapphire */
+  color: #2C3E50;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.search-bar::placeholder {
+  color: #006D5B; /* Placeholder màu xanh ngọc lục bảo */
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #006D5B; /* Viền xanh ngọc lục bảo khi focus */
+}
+
+/* Icon search trong thanh tìm kiếm */
+.input-group-text {
+  background-color: #FFFFFF; /* Nền trắng cho biểu tượng */
+  border: none;
+  color: #006D5B; /* Màu xanh ngọc lục bảo cho biểu tượng */
+}
+.search-form .input-group {
+  width: 250px;
+}
+
+.search-icon {
+  background-color: #FFFFFF;
+  color: #006D5B; /* Màu xanh ngọc lục bảo cho biểu tượng */
+  border: 1px solid #2C3E50; /* Viền xanh dương sapphire */
+  border-right: none; /* Loại bỏ viền phải để nối liền với thanh tìm kiếm */
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  height: 38px; /* Đảm bảo cùng kích thước với thanh tìm kiếm */
+}
+
+.search-bar {
+  background-color: #FFFFFF; /* Màu trắng cho thanh tìm kiếm */
+  border: 1px solid #2C3E50; /* Viền xanh dương sapphire */
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left: none; /* Loại bỏ viền trái để nối liền với biểu tượng */
+  color: #2C3E50;
+  height: 38px; /* Đảm bảo cùng kích thước với biểu tượng */
+  padding: 5px;
+}
+
+.search-bar::placeholder {
+  color: #006D5B; /* Placeholder màu xanh ngọc lục bảo */
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #006D5B; /* Viền xanh ngọc lục bảo khi focus */
+}
+

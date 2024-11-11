@@ -1,6 +1,6 @@
 package org.jewelryshop.productservice.services.impl;
 
-import org.jewelryshop.productservice.DAO.BrandDAO;
+import org.jewelryshop.productservice.DAO.impl.BrandDAOImpl;
 import org.jewelryshop.productservice.dto.request.BrandRequest;
 import org.jewelryshop.productservice.dto.response.BrandResponse;
 import org.jewelryshop.productservice.entities.Brand;
@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class BrandServiceImpl implements BrandService {
-    private final BrandDAO brandDAO;
+    private final BrandDAOImpl brandDAO;
     private final BrandMapper brandMapper;
 
-    public BrandServiceImpl(BrandDAO brandDAO, BrandMapper brandMapper) {
+    public BrandServiceImpl(BrandDAOImpl brandDAO, BrandMapper brandMapper) {
         this.brandDAO = brandDAO;
         this.brandMapper = brandMapper;
     }

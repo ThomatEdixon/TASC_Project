@@ -1,6 +1,6 @@
 package org.jewelryshop.productservice.services.impl;
 
-import org.jewelryshop.productservice.DAO.ProductDAO;
+import org.jewelryshop.productservice.DAO.impl.ProductDAOImpl;
 import org.jewelryshop.productservice.dto.request.ProductRequest;
 import org.jewelryshop.productservice.dto.response.ProductResponse;
 import org.jewelryshop.productservice.entities.Product;
@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    private final ProductDAO productDAO;
+    private final ProductDAOImpl productDAO;
     private final ProductMapper productMapper;
 
-    public ProductServiceImpl(ProductDAO productDAO, ProductMapper productMapper) {
+    public ProductServiceImpl(ProductDAOImpl productDAO, ProductMapper productMapper) {
         this.productDAO = productDAO;
         this.productMapper = productMapper;
     }
@@ -30,11 +30,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse createProduct(ProductRequest productRequest) {
         Product product = productMapper.toProduct(productRequest);
-        try {
-            productDAO.save(product);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        productDAO.save(product);
         return productMapper.toProductResponse(product);
     }
 
@@ -57,13 +53,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse getById(String productId) {
-        try {
-            Product product = productDAO.findById(productId);
-            return productMapper.toProductResponse(product);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+        Product product = productDAO.findById(productId);
+        return productMapper.toProductResponse(product);
     }
 
     @Override
@@ -75,10 +66,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(String productId) {
-        try {
-            productDAO.delete(productId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        productDAO.delete(productId);
     }
 }

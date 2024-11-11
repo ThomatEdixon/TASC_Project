@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       if (res.code == 100) {
         this.authService.credentialSubject.next(res);
         localStorage.setItem('credential', JSON.stringify(res));
-        this.router.navigate(['home']);
+        this.router.navigate(['user']);
         return {
           isOk: true,
           data: res,

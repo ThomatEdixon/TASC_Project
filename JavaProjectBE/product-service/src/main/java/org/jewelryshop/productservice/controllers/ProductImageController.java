@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.jewelryshop.productservice.dto.response.ApiResponse;
 import org.jewelryshop.productservice.entities.ProductImage;
 import org.jewelryshop.productservice.services.impl.ProductImageServiceImpl;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,18 +34,18 @@ public class ProductImageController {
                     .build();
         }
     }
-    @GetMapping("/{imageName}")
-    public ResponseEntity<Resource> viewImage(@PathVariable String imageName) {
-        try {
-            Resource image = productImageService.loadImageResponse(imageName);
-            MediaType mediaType = MediaType.IMAGE_JPEG;
-
-            return ResponseEntity.ok()
-                    .contentType(mediaType)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + imageName + "\"")
-                    .body(image);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @GetMapping("/{imageName}")
+//    public ResponseEntity<Resource> viewImage(@PathVariable String imageName) {
+//        try {
+//            Resource image = productImageService.loadImageResponse(imageName);
+//            MediaType mediaType = MediaType.IMAGE_JPEG;
+//
+//            return ResponseEntity.ok()
+//                    .contentType(mediaType)
+//                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + imageName + "\"")
+//                    .body(image);
+//        } catch (Exception e) {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 }

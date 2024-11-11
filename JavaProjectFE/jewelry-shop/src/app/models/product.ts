@@ -6,7 +6,7 @@ export interface ProductImage {
     altText: string;
   }
   
-export interface Product {
+export interface ProductResponse {
     name: string;
     description: string;
     price: number;
@@ -16,3 +16,17 @@ export interface Product {
     productImages: ProductImage[];
     imageUrl?: SafeUrl;
   }
+export interface ProductRequest {
+  name: string;
+  description: string;
+  price: number;
+  originalPrice: number;
+  stockQuantity: number;
+  categoryId: string;
+  brandId: string;
+}
+
+export interface Material {
+  name: string;
+  description: string;
+}

@@ -1,0 +1,43 @@
+<div class="product-list-container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Category</th>
+        <th>Brand</th>
+        <th>Images</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>{{ product.stock_quantity }}</td>
+        <td>{{ product.categoryName }}</td>
+        <td>{{ product.brandName }}</td>
+        <td>
+          <button (click)="viewImages(product.productImages)">View Images</button>
+        </td>
+        <td>
+          <button (click)="editProduct(product)">Edit</button>
+          <button (click)="deleteProduct()">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal to show images -->
+  <div *ngIf="selectedImages" class="image-modal">
+    <div class="modal-content">
+      <span class="close-button" (click)="closeModal()">&times;</span>
+      <div class="image-container">
+        <img *ngFor="let img of selectedImages" [src]="img.imageUrl" [alt]="img.altText" />
+      </div>
+    </div>
+  </div>
+</div>
+<pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+

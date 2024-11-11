@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './layouts/footer/footer.component';
 import { UnauthenComponent } from './layouts/unauthen/unauthen.component';
 import { LoginComponent } from './layouts/unauthen/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -11,23 +10,21 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { JwtInterceptor } from './services/jwt/jwt.interceptor';
 import { RegisterComponent } from './layouts/unauthen/register/register.component';
-import { HeaderComponent } from './layouts/header/header.component';
-import { HomepageComponent } from './layouts/homepage/homepage.component';
-
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     LoginComponent,
     RegisterComponent,
-    FooterComponent,
     UnauthenComponent,
-    HomepageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    StoreModule.forRoot(),
+    EffectsModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: function tokenGetter() {

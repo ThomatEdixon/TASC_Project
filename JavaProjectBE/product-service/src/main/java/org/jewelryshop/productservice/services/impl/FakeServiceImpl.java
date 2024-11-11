@@ -1,7 +1,7 @@
 package org.jewelryshop.productservice.services.impl;
 
 import com.github.javafaker.Faker;
-import org.jewelryshop.productservice.DAO.ProductDAO;
+import org.jewelryshop.productservice.DAO.impl.ProductDAOImpl;
 import org.jewelryshop.productservice.entities.Product;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +11,11 @@ import java.util.*;
 
 @Service
 public class FakeServiceImpl {
-    private final ProductDAO productDAO;
+    private final ProductDAOImpl productDAO;
     private Faker faker = new Faker();
     private Random random = new Random();
 
-    public FakeServiceImpl(ProductDAO productDAO) {
+    public FakeServiceImpl(ProductDAOImpl productDAO) {
         this.productDAO = productDAO;
     }
 

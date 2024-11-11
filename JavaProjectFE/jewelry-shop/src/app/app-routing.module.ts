@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './layouts/unauthen/login/login.component';
 import { RegisterComponent } from './layouts/unauthen/register/register.component';
-import { HomepageComponent } from './layouts/homepage/homepage.component';
+import { AuthenticateGuard } from './services/jwt/authenticate.guard';
 
 const routes: Routes = [
   {
@@ -13,9 +13,15 @@ const routes: Routes = [
     "path":"register",
     component: RegisterComponent
   },
-  { "path": 'home', 
-    component: HomepageComponent
-  }
+  { "path": 'user',
+    loadChildren: () =>
+      import('../app/pages/user/user.module').then((m) => m.UserModule),
+  },
+  {
+    "path": 'admin',
+    loadChildren: () =>
+      import('../app/pages/admin/admin.module').then((m) => m.AdminModule),
+  },
 ];
 
 @NgModule({
