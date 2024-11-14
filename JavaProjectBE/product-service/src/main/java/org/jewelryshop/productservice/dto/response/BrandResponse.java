@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BrandResponse {
+    private String brandId;
     private String name;
     private String description;
 }

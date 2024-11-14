@@ -26,7 +26,7 @@ public class ProductMapper implements RowMapper<Product> {
                 .description(productRequest.getDescription())
                 .price(productRequest.getPrice())
                 .originalPrice(productRequest.getOriginalPrice())
-                .stockQuantity(productRequest.getStock_quantity())
+                .stockQuantity(productRequest.getStockQuantity())
                 .categoryId(productRequest.getCategoryId())
                 .brandId(productRequest.getBrandId())
                 .createdAt(LocalDateTime.now())
@@ -35,6 +35,7 @@ public class ProductMapper implements RowMapper<Product> {
     }
     public ProductResponse toProductResponse(Product product){
         return ProductResponse.builder()
+                .productId(product.getProductId())
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
@@ -42,6 +43,7 @@ public class ProductMapper implements RowMapper<Product> {
                 .categoryName(categoryDAO.getById(product.getCategoryId()).getName())
                 .brandName(brandDAO.getById(product.getBrandId()).getName())
                 .productImages(product.getProductImages())
+                .materials(product.getMaterials())
                 .build();
     }
 

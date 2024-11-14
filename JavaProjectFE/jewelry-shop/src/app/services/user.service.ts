@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { UserRequest } from '../models/user';
 import { AuthenResponse } from '../models/authen';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/user/environment';
+import { environment } from '../../environments/environment';
 import { th } from 'date-fns/locale';
 
 const BaseUrl = environment.ApiUrl;
@@ -20,7 +20,7 @@ export class UserService {
     return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}`, model);
   }
   GetInfo():Observable<AuthenResponse>{
-    return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}/my-info`);
+    return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}/my-info`,);
   }
   GetAll():Observable<AuthenResponse>{
     return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}`);

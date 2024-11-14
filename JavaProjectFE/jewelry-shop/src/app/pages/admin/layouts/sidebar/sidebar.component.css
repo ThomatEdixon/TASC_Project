@@ -1,71 +1,109 @@
 /* Main Sidebar Styling */
 .main-sidebar {
-    background-color: #2C3E50; /* Màu xanh dương sapphire */
-    color: #E0F8F5; /* Màu chữ xanh nhạt */
-  }
-  
-  .main-sidebar .brand-link {
-    background-color: #006D5B; /* Màu xanh ngọc lục bảo cho phần logo */
-    color: #E0F8F5;
-    font-weight: bold;
-    text-align: center;
-    padding: 1rem;
-  }
-  
-  .main-sidebar .brand-link .brand-image {
-    height: 35px;
-    width: 35px;
-  }
-  
-  .main-sidebar .brand-text {
-    color: #E0F8F5; /* Màu xanh nhạt */
-    font-size: 1.2em;
-  }
-  
-  /* Sidebar Links */
-  .sidebar .nav-sidebar .nav-item > .nav-link {
-    color: #E0F8F5; /* Màu xanh nhạt cho link */
-    border-radius: 5px;
-    padding: 10px 15px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .sidebar .nav-sidebar .nav-item > .nav-link .nav-icon {
-    margin-right: 10px;
-  }
-  
-  /* Active and Hover States */
-  .sidebar .nav-sidebar .nav-item > .nav-link.router-link-active,
-  .sidebar .nav-sidebar .nav-item > .nav-link:hover {
-    background-color: #006D5B; /* Màu nền xanh ngọc lục bảo khi hover hoặc active */
-    color: #FFFFFF; /* Màu trắng cho chữ khi active */
-  }
-  
-  /* Menu Sections */
-  .sidebar .nav-sidebar .nav-item > .nav-link p {
-    font-size: 1.1em; /* Tăng kích thước chữ cho dễ nhìn hơn */
-  }
-  
-  /* Sidebar Menu Spacing */
-  .sidebar .nav-sidebar .nav-item {
-    margin-bottom: 5px;
-  }
-  
-  .sidebar {
-    padding-top: 10px;
-  }
-  
-  /* Adjust Scrollbar if Sidebar is scrollable */
-  .sidebar::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .sidebar::-webkit-scrollbar-thumb {
-    background-color: #006D5B; /* Màu xanh ngọc lục bảo cho thanh cuộn */
-    border-radius: 5px;
-  }
-  
-  .sidebar::-webkit-scrollbar-track {
-    background-color: #2C3E50; /* Màu nền cho track của thanh cuộn */
-  }
-  
+  background-color: #2C3E50; /* Màu xanh dương sapphire */
+  color: #E0F8F5; /* Màu chữ xanh nhạt */
+}
+
+.main-sidebar .brand-link {
+  background-color: #006D5B; /* Màu xanh ngọc lục bảo cho phần logo */
+  color: #E0F8F5;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+}
+
+.main-sidebar .brand-link .brand-image {
+  height: 35px;
+  width: 35px;
+}
+
+.main-sidebar .brand-text {
+  color: #E0F8F5; /* Màu xanh nhạt */
+  font-size: 1.2em;
+}
+
+/* Sidebar Links */
+.sidebar .nav-sidebar .nav-item > .nav-link {
+  color: #E0F8F5; /* Màu xanh nhạt cho link */
+  border-radius: 5px;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar .nav-sidebar .nav-item > .nav-link .nav-icon {
+  margin-right: 10px;
+}
+
+/* Active and Hover States */
+.sidebar .nav-sidebar .nav-item > .nav-link.router-link-active,
+.sidebar .nav-sidebar .nav-item > .nav-link:hover {
+  background-color: #006D5B; /* Màu nền xanh ngọc lục bảo khi hover hoặc active */
+  color: #FFFFFF; /* Màu trắng cho chữ khi active */
+}
+
+/* Menu Sections */
+.sidebar .nav-sidebar .nav-item > .nav-link p {
+  font-size: 1.1em; /* Tăng kích thước chữ cho dễ nhìn hơn */
+}
+
+/* Sidebar Menu Spacing */
+.sidebar .nav-sidebar .nav-item {
+  margin-bottom: 5px;
+}
+
+.sidebar {
+  padding-top: 10px;
+}
+
+/* Adjust Scrollbar if Sidebar is scrollable */
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #006D5B; /* Màu xanh ngọc lục bảo cho thanh cuộn */
+  border-radius: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background-color: #2C3E50; /* Màu nền cho track của thanh cuộn */
+}
+
+/* Submenu Styling */
+.sidebar .nav-sidebar .nav-treeview {
+  background-color: #34495E; /* Màu nền tối hơn cho menu con */
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 3px solid #006D5B; /* Đường kẻ cho menu con */
+}
+
+.sidebar .nav-sidebar .nav-treeview .nav-item > .nav-link {
+  color: #B2DFDB; /* Màu xanh nhạt cho menu con */
+  font-size: 0.95em;
+  padding: 8px 15px;
+  border-radius: 3px;
+}
+
+.sidebar .nav-sidebar .nav-treeview .nav-item > .nav-link:hover {
+  background-color: #006D5B; /* Màu xanh ngọc lục bảo khi hover */
+  color: #FFFFFF;
+}
+
+.sidebar .nav-sidebar .nav-treeview .nav-item > .nav-link .nav-icon {
+  font-size: 0.85em; /* Kích thước icon nhỏ hơn trong menu con */
+  margin-right: 8px;
+}
+
+.sidebar .nav-sidebar .has-treeview > .nav-link .right {
+  position: absolute;
+  right: 15px;
+}
+/* Đảm bảo menu con được ẩn mặc định */
+.nav-treeview {
+  display: none;
+}
+
+/* Hiển thị menu con khi menu chính có lớp 'menu-open' */
+.menu-open .nav-treeview {
+  display: block;
+}

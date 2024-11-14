@@ -1,22 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductRoutingModule } from './product-routing.module';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductListComponent } from './product-list/product-list.component';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { productKey, productReducer } from './state/product.reducer';
-import { ProductEffects } from './state/product.effects';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { ProductCreateComponent } from './product-create/product-create.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ProductEditComponent } from './product-edit/product-edit.component';
 
 @NgModule({
   imports: [
     CommonModule,
     ProductRoutingModule,
-    NgxPaginationModule,
-    StoreModule.forFeature(productKey, productReducer),
-    EffectsModule.forFeature([ProductEffects])
+    ReactiveFormsModule
   ],
-  declarations: [ProductDetailComponent,ProductListComponent]
+  declarations: [ProductListComponent,ProductCreateComponent,ProductEditComponent]
 })
 export class ProductModule { }

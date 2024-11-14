@@ -1,4 +1,9 @@
+
 <div class="product-list-container">
+  <div class="product-list-header">
+    <h2>Product List</h2>
+    <a class="create-button" routerLink="create">Create</a>
+  </div>
   <table class="table">
     <thead>
       <tr>
@@ -14,16 +19,16 @@
     <tbody>
       <tr *ngFor="let product of products">
         <td>{{ product.name }}</td>
-        <td>{{ product.price | currency }}</td>
-        <td>{{ product.stock_quantity }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.stockQuantity }}</td>
         <td>{{ product.categoryName }}</td>
         <td>{{ product.brandName }}</td>
         <td>
-          <button (click)="viewImages(product.productImages)">View Images</button>
+          <img *ngIf="product.productImages[0].imageUrl" [src]="product.productImages[0].imageUrl" alt="{{ product.name }}" />
         </td>
         <td>
-          <button (click)="editProduct(product)">Edit</button>
-          <button (click)="deleteProduct()">Delete</button>
+          <button class="edit-btn" (click)="editProduct(product.productId)">Edit</button>
+          <button class="delete-btn" (click)="deleteProduct()">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -39,5 +44,24 @@
     </div>
   </div>
 </div>
-<pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
-
+<div class="d-flex justify-content-center">
+  <nav aria-label="Page navigation">
+      <ul class="pagination">
+          <li *ngIf="currentPage > 0" class="page-item">
+              <a class="page-link" (click)="onChangePage(0)">First</a>
+          </li>
+          <li *ngIf="currentPage > 0" class="page-item">
+              <a class="page-link" (click)="onChangePage(currentPage - 1)">Previous</a>
+          </li>
+          <li *ngFor="let page of visiblePages" class="page-item" [ngClass]="{'active': page === currentPage + 1}">
+              <a class="page-link" (click)="onChangePage(page - 1)">{{ page }}</a>
+          </li>
+          <li *ngIf="currentPage < totalPage - 1" class="page-item">
+              <a class="page-link" (click)="onChangePage(currentPage + 1)">Next</a>
+          </li>
+          <li *ngIf="currentPage < totalPage - 1" class="page-item">
+              <a class="page-link" (click)="onChangePage(totalPage - 1)">Last</a>
+          </li>
+      </ul>
+  </nav>
+</div>

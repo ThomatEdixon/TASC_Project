@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ProductImage, ProductResponse } from '../../../../models/product';
-import { ProductAction } from '../state/product.actions';
-import * as productSelector from '../state/product.selectors'
+import { ProductService } from '../../../../services/product.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -11,31 +11,45 @@ import * as productSelector from '../state/product.selectors'
 })
 export class ProductListComponent implements OnInit {
 
-  constructor(private store:Store) { }
+  constructor(
+      private productService:ProductService,
+      private router:Router,
+      private activatedRouter:ActivatedRoute
+    ) { }
 
   products : ProductResponse[]=[];
   selectedImages: ProductImage[] | null = null;
-  totalItems: number= 20;
-  pageSize: number = 10;
-  currentPage: number = 1;
+  currentPage = 1;
+  itemsPerPage = 9;
+  visiblePages = [1, 2, 3];
+  totalPage = Math.ceil(this.products.length / this.itemsPerPage);
 
   ngOnInit() {
     this.getAll();
-    this.store.select(productSelector.selectListProduct).pipe().subscribe((res:any)=>{
-      if(res.code == 100) this.products = res.map((x:any)=> x);
-    })
   }
   closeModal() {
     this.selectedImages = null;
   }
-  getAll(){
-    debugger
-    this.store.dispatch(ProductAction.getAllProducts({page: this.currentPage, size: this.pageSize}))
+  onChangePage(page: number) {
+    this.currentPage = page;
+    this.getAll();
   }
-  viewImages(images: ProductImage[]) {
-    this.selectedImages = images;
+
+  getAll() {
+    this.productService.getProducts(this.currentPage, this.itemsPerPage).pipe().subscribe((res) => {
+      this.products = res.data.content;
+      this.totalPage = res.data.totalPages; 
+    });
   }
-  editProduct(product: ProductResponse){}
+
+  updateVisiblePages() {
+    this.visiblePages = Array.from({ length: this.totalPage }, (_, i) => i + 1)
+      .slice(Math.max(this.currentPage - 1, 0), this.currentPage + 2);
+  }
+  editProduct(productId: String){
+    console.log('productId',productId);
+    this.router.navigate(['edit'], { relativeTo: this.activatedRouter, queryParams: { productId: productId } });
+  }
 
   deleteProduct(){}
   onPageChange(page: number): void {

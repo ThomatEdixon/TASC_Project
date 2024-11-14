@@ -1,0 +1,67 @@
+<div class="product-create-container">
+  <h2>Update Product</h2>
+  <div class="form-section">
+    <div class="form-left">
+      <form [formGroup]="formUpdateProduct">
+        <div>
+          <label for="name">Name</label>
+          <input formControlName="name" id="name" type="text" required />
+        </div>
+        <div>
+          <label for="description">Description</label>
+          <textarea formControlName="description" id="description" required></textarea>
+        </div>
+        <div>
+          <label for="price">Price</label>
+          <input formControlName="price" id="price" type="number" required />
+        </div>
+        <div>
+          <label for="stockQuantity">Stock Quantity</label>
+          <input formControlName="stockQuantity" id="stockQuantity" type="number" required />
+        </div>
+      </form>
+    </div>
+
+    <div class="form-right">
+      <form [formGroup]="formUpdateProductImage">
+        <div>
+          <label for="image">Image URL</label>
+          <input type="file" formControlName="imageUrl" (change)="onFileChange($event)" />
+        </div>
+      </form>
+
+      <form [formGroup]="formUpdateMaterial">
+        <div>
+          <label for="material">Material</label>
+          <select formControlName="materialName" id="material" required>
+            <option *ngFor="let material of materials" [value]="material.name">{{ material.name }}</option>
+          </select>
+        </div>
+      </form>
+
+      <form [formGroup]="formUpdateProduct">
+        <div>
+          <label for="category">Category</label>
+          <select formControlName="categoryId" id="category" required [compareWith]="compareById">
+            <option *ngFor="let category of categories" [ngValue]="category.categoryId">{{ category.name }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="brand">Brand</label>
+          <select formControlName="brandId" id="brand" required [compareWith]="compareById">
+            <option *ngFor="let brand of brands" [ngValue]="brand.brandId">{{ brand.name }}</option>
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" (click)="onUpdateProduct()" 
+            >
+      Update Product
+    </button>
+  </div>
+</div>
+
+

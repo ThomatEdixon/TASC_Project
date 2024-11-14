@@ -12,7 +12,7 @@ public class ProductRequest {
     private String description;
     private double price;
     private double originalPrice;
-    private int stock_quantity;
+    private int stockQuantity;
     private String categoryId;
     private String brandId;
 }

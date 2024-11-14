@@ -15,14 +15,14 @@ import java.util.List;
 public class BrandController {
     private final BrandServiceImpl brandService;
     @PostMapping
-    public ApiResponse<BrandResponse> saveProduct(@RequestBody BrandRequest brandRequest) {
+    public ApiResponse<BrandResponse> save(@RequestBody BrandRequest brandRequest) {
         return ApiResponse.<BrandResponse>builder()
                 .data(brandService.createBrand(brandRequest))
                 .build();
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<BrandResponse> getProductById(@PathVariable String id) {
+    public ApiResponse<BrandResponse> getById(@PathVariable String id) {
         return ApiResponse.<BrandResponse>builder()
                 .data(brandService.getById(id))
                 .build();
@@ -34,13 +34,13 @@ public class BrandController {
                 .build();
     }
     @PutMapping("/{id}")
-    public ApiResponse<Void> updateProduct(@PathVariable String id, @RequestBody BrandRequest brandRequest) {
+    public ApiResponse<Void> update(@PathVariable String id, @RequestBody BrandRequest brandRequest) {
         brandService.updateBrand(id,brandRequest);
         return ApiResponse.<Void>builder().build();
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteProduct(@PathVariable String id) {
+    public ApiResponse<Void> delete(@PathVariable String id) {
         brandService.delete(id);
         return ApiResponse.<Void>builder().build();
     }

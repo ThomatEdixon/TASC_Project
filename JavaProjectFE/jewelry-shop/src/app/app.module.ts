@@ -23,8 +23,6 @@ import { StoreModule } from '@ngrx/store';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    StoreModule.forRoot(),
-    EffectsModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: function tokenGetter() {

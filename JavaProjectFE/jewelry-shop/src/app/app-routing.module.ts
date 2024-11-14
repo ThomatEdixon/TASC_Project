@@ -6,19 +6,19 @@ import { AuthenticateGuard } from './services/jwt/authenticate.guard';
 
 const routes: Routes = [
   {
-    "path":"login",
+    path:"login",
     component: LoginComponent
   },
   {
-    "path":"register",
+    path:"register",
     component: RegisterComponent
   },
-  { "path": 'user',
+  { path: 'user',
     loadChildren: () =>
       import('../app/pages/user/user.module').then((m) => m.UserModule),
   },
   {
-    "path": 'admin',
+    path: 'admin',
     loadChildren: () =>
       import('../app/pages/admin/admin.module').then((m) => m.AdminModule),
   },

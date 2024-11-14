@@ -1,3 +1,5 @@
+server:
+  port: 8080
 spring :
   application:
     name: apigateway-service
@@ -8,22 +10,53 @@ spring :
           uri: lb://USER-SERVICE
           predicates:
             - Path=/user/**
+          filters:
+            JwtAuthenticationFilter
 
         - id: authentication-route
           uri: lb://USER-SERVICE
           predicates:
             - Path=/authentication/**
+          filters:
+            JwtAuthenticationFilter
 
+        # product service
         - id: product-service
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/product/**
+
+        - id: brand-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/brand/**
+
+        - id: category-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/category/**
+
+        - id: material-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/material/**
+
+        - id: material-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/upload/**
+  main:
+    web-application-type: reactive
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+jwt:
+  signerKey: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
+  valid-duration : 3600 # seconds
+  refreshable-duration : 360000 # seconds
 
 
 

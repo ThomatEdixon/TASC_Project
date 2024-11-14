@@ -34,18 +34,14 @@ public class ProductImageController {
                     .build();
         }
     }
-//    @GetMapping("/{imageName}")
-//    public ResponseEntity<Resource> viewImage(@PathVariable String imageName) {
-//        try {
-//            Resource image = productImageService.loadImageResponse(imageName);
-//            MediaType mediaType = MediaType.IMAGE_JPEG;
-//
-//            return ResponseEntity.ok()
-//                    .contentType(mediaType)
-//                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + imageName + "\"")
-//                    .body(image);
-//        } catch (Exception e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ApiResponse<Void> updateImages(
+            @PathVariable("id") String imageId,
+            @ModelAttribute("files") MultipartFile[] files) throws IOException {
+
+        productImageService.update(imageId,files);
+
+        return ApiResponse.<Void>builder()
+                    .build();
+    }
 }

@@ -1,0 +1,70 @@
+<div class="product-create-container">
+  <h2>Create New Product</h2>
+  <div class="form-section">
+    <!-- Phần bên trái của form -->
+    <div class="form-left">
+      <form [formGroup]="formProduct">
+        <div>
+          <label for="name">Name</label>
+          <input formControlName="name" id="name" type="text" required />
+        </div>
+        <div>
+          <label for="description">Description</label>
+          <textarea formControlName="description" id="description" required></textarea>
+        </div>
+        <div>
+          <label for="price">Price</label>
+          <input formControlName="price" id="price" type="number" required />
+        </div>
+        <div>
+          <label for="originalPrice">Original Price</label>
+          <input formControlName="originalPrice" id="originalPrice" type="number" required />
+        </div>
+        <div>
+          <label for="stockQuantity">Stock Quantity</label>
+          <input formControlName="stockQuantity" id="stockQuantity" type="number" required />
+        </div>
+      </form>
+    </div>
+
+    <!-- Phần bên phải của form -->
+    <div class="form-right">
+      <form [formGroup]="formProductImage">
+        <div>
+          <label for="image">Image URL</label>
+          <input type="file" formControlName="imageUrl" (change)="onFileChange($event)" />
+        </div>
+      </form>
+
+      <form [formGroup]="formMaterial">
+        <div>
+          <label for="material">Material</label>
+          <select formControlName="materialId" id="material" required>
+            <option *ngFor="let material of materials" [value]="material.name">{{ material.name }}</option>
+          </select>
+        </div>
+      </form>
+
+      <form [formGroup]="formProduct">
+        <div>
+          <label for="category">Category</label>
+          <select formControlName="categoryId" id="category" required>
+            <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.name }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="brand">Brand</label>
+          <select formControlName="brandId" id="brand" required>
+            <option *ngFor="let brand of brands" [value]="brand.brandId">{{ brand.name }}</option>
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" (click)="onCreateProduct()" [disabled]="formProduct.invalid || formProductImage.invalid || formMaterial.invalid">
+      Create Product
+    </button>
+  </div>
+</div>

@@ -14,14 +14,14 @@ import java.util.List;
 public class MaterialController {
     private final MaterialServiceImpl materialService;
     @PostMapping
-    public ApiResponse<Material> saveProduct(@RequestBody Material material) {
+    public ApiResponse<Material> save(@RequestBody Material material) {
         return ApiResponse.<Material>builder()
                 .data(materialService.create(material))
                 .build();
     }
 
     @GetMapping("/{name}")
-    public ApiResponse<Material> getProductById(@PathVariable String name) {
+    public ApiResponse<Material> getById(@PathVariable String name) {
         return ApiResponse.<Material>builder()
                 .data(materialService.getByName(name))
                 .build();
@@ -33,13 +33,13 @@ public class MaterialController {
                 .build();
     }
     @PutMapping("/{name}")
-    public ApiResponse<Void> updateProduct(@PathVariable String name, @RequestBody Material material) {
+    public ApiResponse<Void> update(@PathVariable String name, @RequestBody Material material) {
         materialService.update(name,material);
         return ApiResponse.<Void>builder().build();
     }
 
     @DeleteMapping("/{name}")
-    public ApiResponse<Void> deleteProduct(@PathVariable String name) {
+    public ApiResponse<Void> delete(@PathVariable String name) {
         materialService.delete(name);
         return ApiResponse.<Void>builder().build();
     }

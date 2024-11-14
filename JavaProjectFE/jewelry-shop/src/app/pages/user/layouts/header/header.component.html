@@ -5,17 +5,17 @@
       <!-- Left Side (Search Icon, Logo, Contact) -->
       <div class="left-side">
         <!-- Logo -->
-        <a href="#" class="navbar-brand">
+        <a [routerLink]="['/user']" routerLinkActive="router-link-active"  class="navbar-brand">
           <img
             src="https://media.istockphoto.com/id/1152003770/vector/icon-diamond-vector-logo.jpg?s=612x612&w=0&k=20&c=b6mZJ7u3anlhDiHB4vXkNODvTv5s2mDqNLt7UsrsDzg="
             alt="Jewelry Shop" width="50" height="50">
         </a>
         <!-- Search Icon -->
-        <a href="#" class="nav-link">
+        <a  class="nav-link">
           <i class="fas fa-search icon"></i>
         </a>
         <!-- Contact -->
-        <a href="#" class="nav-link">Contact us</a>
+        <a  class="nav-link">Contact us</a>
       </div>
 
       <!-- Shop Name (Center) -->
@@ -45,10 +45,10 @@
             </ng-template>
           </div>
         </div>
-        <a href="#" class="nav-link">
+        <a  class="nav-link">
           <i class="fas fa-heart icon"></i>
         </a>
-        <a href="#" class="nav-link">
+        <a  class="nav-link">
           <i class="fas fa-shopping-cart icon"></i>
         </a>
       </div>
@@ -60,27 +60,27 @@
     <div class="container lower-navbar">
       <div>
         <div class="nav-item">
-          <a class="nav-link" href="#">Home</a>
+          <a [routerLink]="['/user/home']" routerLinkActive="router-link-active" class="nav-link" >Home</a>
         </div>
       </div>
       <div>
         <div class="nav-item">
-          <a class="nav-link" href="#">Products</a>
+          <a [routerLink]="['/user/products']" routerLinkActive="router-link-active"  class="nav-link" >Products</a>
         </div>
       </div>
       <div>
         <div class="nav-item">
-          <a class="nav-link" href="#">Collections</a>
+          <a class="nav-link" >Collections</a>
         </div>
       </div>
       <div>
         <div class="nav-item">
-          <a class="nav-link" href="#">About Us</a>
+          <a class="nav-link" >About Us</a>
         </div>
       </div>
       <div>
         <div class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
+          <a class="nav-link" >Contact</a>
         </div>
       </div>
     </div>

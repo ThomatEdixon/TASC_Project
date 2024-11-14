@@ -21,7 +21,13 @@ public class ProductController {
                 .data(productService.createProduct(product))
                 .build();
     }
-    @GetMapping("")
+    @PostMapping("/{id}")
+    public ApiResponse<Void> addMaterial(@PathVariable String id , @RequestParam String materialName){
+        productService.addProductMaterial(id,materialName);
+        return ApiResponse.<Void>builder()
+                .build();
+    }
+    @GetMapping("/public/getAll")
     public ApiResponse<Page<ProductResponse>> getAll(@RequestParam(value = "page", defaultValue = "0") int page,
                                                      @RequestParam(value = "size", defaultValue = "10") int size) {
         return ApiResponse.<Page<ProductResponse>>builder()

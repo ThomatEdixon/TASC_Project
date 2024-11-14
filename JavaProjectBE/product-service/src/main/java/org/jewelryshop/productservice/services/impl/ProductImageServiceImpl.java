@@ -5,8 +5,6 @@ import org.jewelryshop.productservice.dto.request.ProductImageRequest;
 import org.jewelryshop.productservice.entities.ProductImage;
 import org.jewelryshop.productservice.mappers.ProductImageMapper;
 import org.jewelryshop.productservice.services.interfaces.ProductImageService;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -15,9 +13,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 @Service
@@ -34,40 +29,35 @@ public class ProductImageServiceImpl implements ProductImageService {
     }
     @Override
     public List<ProductImage> uploadImages(String productId, MultipartFile[] files) throws IOException {
-        if (files.length > MAXIMUM_IMAGES_PER_PRODUCT) {
-            throw new IllegalArgumentException("Chỉ được phép tải tối đa 5 ảnh");
-        }
-
+        List<ProductImageRequest> productImagesRequest = convertToProductImages(productId,files);
         List<ProductImage> productImages = new ArrayList<>();
-        for (MultipartFile file : files) {
-            if (file.isEmpty() || !file.getContentType().startsWith("image/")) continue;
-
-            if (file.getSize() > 10 * 1024 * 1024) { // >10MB
-                throw new IllegalArgumentException("Dung lượng ảnh tối đa là 10MB");
-            }
-
-            String imageUrl = uploadToImgur(file); // Gửi ảnh đến Imgur và lấy URL
-            ProductImageRequest productImageRequest = ProductImageRequest.builder()
-                    .productId(productId)
-                    .imageUrl(imageUrl)
-                    .build();
-            productImageDAO.save(productImageRequest);
-
-            productImages.add(productImageMapper.toProductImage(productImageRequest));
+        for(ProductImageRequest productImage : productImagesRequest){
+            productImageDAO.save(productImage);
+            productImages.add(productImageMapper.toProductImage(productImage));
         }
         return productImages;
     }
 
     @Override
-    public Resource loadImageResponse(String imageName) throws MalformedURLException {
-        Path imagePath = Paths.get("uploads/" + imageName);
-        UrlResource resource = new UrlResource(imagePath.toUri());
-
-        if (resource.exists()) {
-            return resource;
-        } else {
-            return new UrlResource(Paths.get("uploads/notfound.jpeg").toUri());
+    public void update(String imageId, MultipartFile[] files) throws IOException {
+        ProductImage existingImage = productImageDAO.getById(imageId);
+        if (existingImage == null) {
+            throw new NoSuchElementException("Không tìm thấy ảnh với ID: " + imageId);
         }
+        List<ProductImageRequest> productImagesRequest = convertToProductImages(existingImage.getProductId(), files);
+        for(ProductImageRequest productImage : productImagesRequest){
+            productImageDAO.update(imageId,productImageMapper.toProductImage(productImage));
+        }
+    }
+
+    @Override
+    public ProductImage getById(String imageId) {
+        return null;
+    }
+
+    @Override
+    public void delete(String imageId) {
+    productImageDAO.delete(imageId);
     }
 
     public String uploadToImgur(MultipartFile file) throws IOException {
@@ -75,8 +65,10 @@ public class ProductImageServiceImpl implements ProductImageService {
         headers.set("Authorization", "Client-ID " + IMGUR_CLIENT_ID);
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("image", file.getBytes());
-        body.add("type", "file");
+
+        String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
+        body.add("image", base64Image);
+        body.add("type", "base64");
 
         HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
 
@@ -89,5 +81,28 @@ public class ProductImageServiceImpl implements ProductImageService {
         } else {
             throw new IOException("Không thể upload ảnh lên Imgur. Lỗi: " + response.getBody());
         }
+    }
+    public List<ProductImageRequest> convertToProductImages(String productId, MultipartFile[] files) throws IOException {
+        if (files.length > MAXIMUM_IMAGES_PER_PRODUCT) {
+            throw new IllegalArgumentException("Chỉ được phép tải tối đa 5 ảnh");
+        }
+
+        List<ProductImageRequest> productImages = new ArrayList<>();
+        for (MultipartFile file : files) {
+            if (file.isEmpty() || !file.getContentType().startsWith("image/")) continue;
+
+            if (file.getSize() > 10 * 1024 * 1024) { // >10MB
+                throw new IllegalArgumentException("Dung lượng ảnh tối đa là 10MB");
+            }
+
+            String imageUrl = uploadToImgur(file); // Gửi ảnh đến Imgur và lấy URL
+            ProductImageRequest productImageRequest = ProductImageRequest.builder()
+                    .productId(productId)
+                    .imageUrl(imageUrl)
+                    .build();
+
+            productImages.add(productImageRequest);
+        }
+        return productImages;
     }
 }

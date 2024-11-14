@@ -1,0 +1,57 @@
+.product-create-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #004d40;
+  color: #333;
+}
+.product-create-container h2{
+  color: #fff;
+}
+.form-section {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  gap: 20px;
+}
+
+.form-left, .form-right {
+  flex: 1;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #e8f5e9; /* Màu xanh ngọc lục bảo nhạt */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-left h2, .form-right h3 {
+  color: #004d40; /* Màu ngọc lục bảo đậm */
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #0d47a1; /* Màu sapphire */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[disabled] {
+  background-color: #b0bec5;
+}
+
+label {
+  font-weight: bold;
+  color: #004d40;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #b2dfdb;
+  border-radius: 4px;
+}

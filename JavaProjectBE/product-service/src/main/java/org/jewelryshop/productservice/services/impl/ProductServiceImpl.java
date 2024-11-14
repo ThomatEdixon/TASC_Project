@@ -76,4 +76,9 @@ public class ProductServiceImpl implements ProductService {
         List<ProductResponse> productResponses = productDAO.searchProducts(page, size,name,minPrice,maxPrice,materialName,categoryName,brandName);
         return new PageImpl<>(productResponses, pageable, totalProducts);
     }
+
+    @Override
+    public void addProductMaterial(String productId, String materialName) {
+        productDAO.addProductMaterial(productId,materialName);
+    }
 }

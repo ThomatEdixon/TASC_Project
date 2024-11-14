@@ -10,7 +10,10 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthenticateService, private fb: FormBuilder, private router: Router) { }
+  constructor(private authService: AuthenticateService,
+     private fb: FormBuilder, 
+     private router: Router
+    ) { }
   form!: FormGroup;
 
   ngOnInit(): void {
@@ -28,26 +31,18 @@ export class LoginComponent implements OnInit {
     this.form.markAllAsTouched();
     if (this.form.invalid) return
     let model = this.form.getRawValue();
-    console.log(model);
     this.authService.Login(model).pipe().subscribe(res => {
       console.log(res);
       if (res.code == 100) {
         this.authService.credentialSubject.next(res);
         localStorage.setItem('credential', JSON.stringify(res));
         this.router.navigate(['user']);
-        return {
-          isOk: true,
-          data: res,
-          message: '',
-        };
       } else {
         console.log('Authenticate fail: ' + res.message)
-        return {
-          isOk: false,
-          data: this.authService.credentialSubject.value,
-          message: res.message,
-        };
       }
     })
+  }
+  IsAdmin():boolean{
+    return false;
   }
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
-import { environment } from '../../environments/user/environment';
+import { environment } from '../../environments/environment';
 import { AuthenRequest, AuthenResponse, AuthenToken} from '../models/authen';
 const BaseUrl = environment.ApiUrl;
 const Endpoint = 'authentication';
@@ -17,6 +17,7 @@ export class AuthenticateService {
 
   get LoggedIn(): boolean { return !(JSON.stringify(this.credentialSubject.value) === '{}') }
   get GetCredential() { return this.credentialSubject.value; }
+  get IsAdmin():boolean{ return false}
 
   Login(model: AuthenRequest): Observable<AuthenResponse>{
     return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}/login`, model);

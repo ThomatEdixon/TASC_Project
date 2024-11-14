@@ -18,34 +18,17 @@ export class HomepageComponent implements OnInit {
   constructor(private productService: ProductService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    // const observable = this.productService.getProducts(1, 10);
-    // console.log(observable instanceof Observable); 
     this.getFeaturedProduct()
-    this.getAll()
   }
   getFeaturedProduct() {
     this.productService.getFeaturedProducts().subscribe((res) => {
       if (res.code === 100) {
         this.products = Object.values(res.data.content);
         
-
-        //Load ảnh cho từng sản phẩm
         this.products.forEach(product => {
           product.productImages[0].imageUrl; 
         });
       }
-    });
-  }
-  getAll(){
-    this.productService.getProducts(1,10).pipe().subscribe((res)=>{
-      console.log(res);
-    })
-  }
-
-  loadImage(imageName: string, product: ProductResponse) {
-    this.productService.getImage(imageName).subscribe(res => {
-      const objectURL = URL.createObjectURL(res);
-      product.imageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     });
   }
   // Hàm trượt tới

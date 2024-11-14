@@ -9,8 +9,12 @@ import { Router } from '@angular/router';
 export class SidebarComponent implements OnInit {
 
   constructor(private router:Router) { }
-
+  isProductMenuOpen = false;
   ngOnInit() {
+  }
+  toggleProductMenu() {
+    this.isProductMenuOpen = !this.isProductMenuOpen;
+    console.log(this.isProductMenuOpen);
   }
 
 }

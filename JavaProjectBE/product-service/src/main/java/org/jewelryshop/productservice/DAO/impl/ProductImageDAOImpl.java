@@ -58,13 +58,13 @@ public class ProductImageDAOImpl implements ProductImageDAO {
         return images;
     }
     @Override
-    public void update(ProductImage productImage) {
+    public void update(String imageId,ProductImage productImage) {
         String query = "UPDATE product_image SET product_id = ?, image_url = ? WHERE image_id = ?";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(query)){
             stmt.setString(1, productImage.getProductId());
             stmt.setString(2, productImage.getImageUrl());
-            stmt.setString(3, productImage.getImageId());
+            stmt.setString(3, imageId);
             stmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -81,5 +81,26 @@ public class ProductImageDAOImpl implements ProductImageDAO {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public ProductImage getById(String imageId) {
+        ProductImage productImage = new ProductImage();
+        String query = "SELECT * FROM product_image WHERE image_id = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, imageId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    productImage.setImageId(rs.getString("image_id"));
+                    productImage.setProductId(rs.getString("product_id"));
+                    productImage.setImageUrl(rs.getString("image_url"));
+                }
+            }
+        } catch (SQLException e) {
+
+        }
+        return productImage;
+    }
+
 }
 

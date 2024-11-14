@@ -19,10 +19,12 @@ public class ProductDAOImpl implements ProductDAO {
     private final DataSource dataSource;
 
     private final ProductImageDAOImpl productImageDAO;
+    private final MaterialDAOImpl materialDAO;
 
-    public ProductDAOImpl(DataSource dataSource, ProductImageDAOImpl productImageDAO) {
+    public ProductDAOImpl(DataSource dataSource, ProductImageDAOImpl productImageDAO, MaterialDAOImpl materialDAO) {
         this.dataSource = dataSource;
         this.productImageDAO = productImageDAO;
+        this.materialDAO = materialDAO;
     }
     @Override
     public void save(Product product) {
@@ -72,9 +74,10 @@ public class ProductDAOImpl implements ProductDAO {
                             .createdAt(resultSet.getTimestamp("created_at").toLocalDateTime())
                             .updatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime())
                             .build();
-                    products.add(product);
                     product.setProductImages(productImageDAO.getProductImagesByProductId(resultSet.getString("product_id")));
-                }
+                    product.setMaterials(materialDAO.getMaterialByProductId(resultSet.getString("product_id")));
+                    products.add(product);
+                    }
             }
             // Câu truy vấn đếm tổng số sản phẩm
             return new PageImpl<>(products, pageable, getTotalProduct());
@@ -129,6 +132,8 @@ public class ProductDAOImpl implements ProductDAO {
                             .build();
 
                     product.setProductImages(productImageDAO.getProductImagesByProductId(productId));
+                    product.setMaterials(materialDAO.getMaterialByProductId(resultSet.getString("product_id")));
+
                 }
             }
         }catch (SQLException e){
@@ -200,6 +205,7 @@ public class ProductDAOImpl implements ProductDAO {
             try (ResultSet resultSet = stmt.executeQuery()) {
                 while (resultSet.next()) {
                     ProductResponse product = ProductResponse.builder()
+                            .productId(resultSet.getString("product_id"))
                             .name(resultSet.getString("name"))
                             .description(resultSet.getString("description"))
                             .price(resultSet.getDouble("price"))
@@ -209,6 +215,7 @@ public class ProductDAOImpl implements ProductDAO {
                             .build();
 
                     product.setProductImages(productImageDAO.getProductImagesByProductId(resultSet.getString("product_id")));
+                    product.setMaterials(materialDAO.getMaterialByProductId(resultSet.getString("product_id")));
                     products.add(product);
                 }
             }

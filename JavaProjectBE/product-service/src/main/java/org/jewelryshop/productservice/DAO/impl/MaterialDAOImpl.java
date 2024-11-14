@@ -10,7 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Repository
 public class MaterialDAOImpl implements MaterialDAO {
     private final DataSource dataSource;
@@ -96,5 +99,28 @@ public class MaterialDAOImpl implements MaterialDAO {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Set<Material> getMaterialByProductId(String productId) {
+        Set<Material> materials = new HashSet<>();
+        String sql = "SELECT m.* FROM material m JOIN product_material pm " +
+                "ON m.name = pm.material_name JOIN product p ON pm.product_id  = p.product_id WHERE pm.product_id = ?";
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement= connection.prepareStatement(sql)){
+            preparedStatement.setString(1,productId);
+            try(ResultSet resultSet = preparedStatement.executeQuery()){
+                while(resultSet.next()){
+                    Material material = Material.builder()
+                            .name(resultSet.getString("name"))
+                            .description(resultSet.getString("description"))
+                            .build();
+                    materials.add(material);
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return materials;
     }
 }

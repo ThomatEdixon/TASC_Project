@@ -1,20 +1,23 @@
 import { SafeUrl } from "@angular/platform-browser";
 
 export interface ProductImage {
-    id: number;
+    imageId: string;
+    productId: string;
     imageUrl: string;
     altText: string;
   }
   
 export interface ProductResponse {
+    productId:string
     name: string;
     description: string;
     price: number;
-    stock_quantity: number;
+    stockQuantity: number;
     categoryName: string;
     brandName: string;
     productImages: ProductImage[];
     imageUrl?: SafeUrl;
+    materials : Material[];
   }
 export interface ProductRequest {
   name: string;

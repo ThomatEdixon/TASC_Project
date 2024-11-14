@@ -1,38 +1,57 @@
-<!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <!-- Brand Logo -->
+  <!-- Logo Thương Hiệu -->
   <a [routerLink]="['/']" routerLinkActive="router-link-active" class="brand-link">
-    <img src="https://media.istockphoto.com/id/1152003770/vector/icon-diamond-vector-logo.jpg?s=612x612&w=0&k=20&c=b6mZJ7u3anlhDiHB4vXkNODvTv5s2mDqNLt7UsrsDzg=" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-      style="opacity: .8">
+    <img src="https://media.istockphoto.com/id/1152003770/vector/icon-diamond-vector-logo.jpg?s=612x612&w=0&k=20&c=b6mZJ7u3anlhDiHB4vXkNODvTv5s2mDqNLt7UsrsDzg=" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">Jewelry Shop</span>
   </a>
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <!-- Sidebar Menu -->
+    <!-- Menu Sidebar -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
+        
+        <!-- Mục User (Có thể thêm menu con nếu cần) -->
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/user']" routerLinkActive="router-link-active">
-            <i class="nav-icon far fa-image"></i>
+          <a class="nav-link">
+            <i class="nav-icon far fa-user"></i>
             <p>
               User
             </p>
           </a>
         </li>
-
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/admin/product']" routerLinkActive="router-link-active">
-            <i class="nav-icon far fa-image"></i>
+        
+        <!-- Mục Product với Menu con CRUD -->
+        <li class="nav-item has-treeview" [class.menu-open]="isProductMenuOpen">
+          <a (click)="toggleProductMenu()" class="nav-link">
+            <i class="nav-icon fas fa-box"></i>
             <p>
               Product
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
+          <ul class="nav nav-treeview" *ngIf="isProductMenuOpen">
+            <li class="nav-item">
+              <a [routerLink]="['/admin/product/create']" routerLinkActive="router-link-active" class="nav-link">
+                <p>Create Product</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/admin/product/']" routerLinkActive="router-link-active" class="nav-link">
+                <p>List Products</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/admin/product/edit']" routerLinkActive="router-link-active" class="nav-link">
+                <p>Edit Product</p>
+              </a>
+            </li>
+          </ul>
         </li>
+
       </ul>
     </nav>
-    <!-- /.sidebar-menu -->
+    <!-- /.menu sidebar -->
   </div>
   <!-- /.sidebar -->
 </aside>

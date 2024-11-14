@@ -3,8 +3,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #2e2a2b; /* Dark background for elegance */
-    color: #f3e5ab; /* Soft gold text color */
+    background-color: #2e2a2b; 
+    color: #f3e5ab; 
     padding: 0.5rem 1.5rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
@@ -51,7 +51,7 @@
   }
   
   .logout-button:hover {
-    background-color: #ffd700; /* Gold hover effect */
+    background-color: #ffd700; 
   }
   /* Navbar background */
 /* Navbar styling */
@@ -59,19 +59,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #006D5B; /* Màu xanh ngọc lục bảo */
+  background-color: #006D5B; 
 }
 
 /* Phần bên trái của navbar */
 .navbar-left .navbar-nav .nav-link {
-  color: #E0F8F5; /* Màu xanh nhạt của ngọc lục bảo */
-  font-size: 1.1em; /* Tăng kích thước chữ */
+  color: #E0F8F5; 
+  font-size: 1.1em; 
   padding: 0 15px;
   text-align: center;
 }
 
 .navbar-left .navbar-nav .nav-link:hover {
-  color: #2C3E50; /* Màu xanh dương của đá sapphire khi hover */
+  color: #2C3E50; 
 }
 
 /* Phần bên phải của navbar */
@@ -83,7 +83,6 @@
   color: #2C3E50;
 }
 
-/* Thanh tìm kiếm với icon */
 .search-form .input-group {
   width: 200px;
   height: 38px;
@@ -91,27 +90,27 @@
 }
 
 .search-bar {
-  background-color: #FFFFFF; /* Màu trắng cho thanh tìm kiếm */
-  border: 1px solid #2C3E50; /* Viền xanh dương sapphire */
+  background-color: #FFFFFF; 
+  border: 1px solid #2C3E50; 
   color: #2C3E50;
   border-radius: 5px;
   padding: 5px;
 }
 
 .search-bar::placeholder {
-  color: #006D5B; /* Placeholder màu xanh ngọc lục bảo */
+  color: #006D5B; 
 }
 
 .search-bar:focus {
   outline: none;
-  border-color: #006D5B; /* Viền xanh ngọc lục bảo khi focus */
+  border-color: #006D5B; 
 }
 
 /* Icon search trong thanh tìm kiếm */
 .input-group-text {
-  background-color: #FFFFFF; /* Nền trắng cho biểu tượng */
+  background-color: #FFFFFF; 
   border: none;
-  color: #006D5B; /* Màu xanh ngọc lục bảo cho biểu tượng */
+  color: #006D5B; 
 }
 .search-form .input-group {
   width: 250px;
@@ -119,15 +118,15 @@
 
 .search-icon {
   background-color: #FFFFFF;
-  color: #006D5B; /* Màu xanh ngọc lục bảo cho biểu tượng */
-  border: 1px solid #2C3E50; /* Viền xanh dương sapphire */
-  border-right: none; /* Loại bỏ viền phải để nối liền với thanh tìm kiếm */
+  color: #006D5B; 
+  border: 1px solid #2C3E50; 
+  border-right: none; 
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   display: flex;
   align-items: center;
   font-size: 14px;
-  height: 38px; /* Đảm bảo cùng kích thước với thanh tìm kiếm */
+  height: 38px; 
 }
 
 .search-bar {
@@ -148,5 +147,55 @@
 .search-bar:focus {
   outline: none;
   border-color: #006D5B; /* Viền xanh ngọc lục bảo khi focus */
+}
+.nav-item .dropdown-menu {
+  background-color: #ffffff; /* Màu nền trắng */
+  border: 1px solid #dcdcdc; /* Viền mỏng xám nhạt */
+  border-radius: 8px; /* Góc bo tròn nhẹ */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ để tạo hiệu ứng nổi */
+  min-width: 200px; /* Độ rộng tối thiểu */
+  padding: 10px 0; /* Khoảng cách bên trong */
+}
+
+/* Kiểu cho mỗi item trong dropdown */
+.nav-item .dropdown-item {
+  color: #12454d; /* Màu chữ ngọc lục bảo */
+  font-family: 'Playfair Display', serif; /* Font chữ thanh lịch */
+  font-size: 16px; /* Kích thước chữ */
+  padding: 10px 20px; /* Khoảng cách giữa các item */
+  text-align: center; /* Canh giữa */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
+}
+
+/* Hiệu ứng hover (khi rê chuột vào mỗi item) */
+.nav-item .dropdown-item:hover {
+  background-color: #50C878; /* Đổi nền sang màu ngọc lục bảo khi hover */
+  color: #ffffff; /* Chữ trắng khi hover */
+}
+
+/* Kiểu cho dòng phân cách giữa các mục */
+.nav-item .dropdown-divider {
+  border-color: #dcdcdc; /* Màu phân cách xám nhạt */
+  margin: 0; /* Không có khoảng cách giữa các mục */
+}
+
+/* Kiểu cho phần tiêu đề (ví dụ: Admin) */
+.nav-item .dropdown-item span {
+  font-weight: bold;
+  font-size: 18px; /* Chữ to hơn */
+  color: #12454d; /* Màu chữ đậm hơn */
+}
+
+/* Tùy chỉnh icon user-circle */
+.nav-link i {
+  color: #FFFFFF; /* Màu ngọc lục bảo cho icon */
+  font-size: 24px; /* Tăng kích thước icon */
+}
+
+/* Kiểu cho dropdown menu khi đã mở */
+.nav-item .dropdown-menu.show {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 

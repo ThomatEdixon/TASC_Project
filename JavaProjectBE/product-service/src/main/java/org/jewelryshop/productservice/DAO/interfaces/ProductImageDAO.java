@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProductImageDAO {
     void save(ProductImageRequest productImageReques);
     List<ProductImage> getProductImagesByProductId(String productId);
-    void update(ProductImage productImage);
+    void update(String imageId ,ProductImage productImage);
     void delete(String productImage);
+    ProductImage getById(String imageId);
 }

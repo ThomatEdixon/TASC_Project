@@ -14,4 +14,5 @@ public interface ProductService {
     void delete(String productId);
     Page<ProductResponse> searchProducts(int page , int size , String name, Double minPrice, Double maxPrice,
                                          String materialName, String categoryName, String brandName);
+    void addProductMaterial(String productId, String name);
 }

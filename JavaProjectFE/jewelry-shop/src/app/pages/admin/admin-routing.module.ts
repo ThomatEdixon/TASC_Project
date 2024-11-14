@@ -6,12 +6,14 @@ const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
-  },
-  {
-    path: 'product',
-    loadChildren: () =>
-      import('../admin/pages/product.module').then((m) => m.ProductModule),
-  },
+    children: [
+      {
+        path: "product",
+        loadChildren: () =>
+          import('../admin/pages/product.module').then((m) => m.ProductModule),
+      },
+    ]
+  }
 ];
 
 @NgModule({

@@ -11,7 +11,7 @@ export class UserComponent implements OnInit {
   constructor(private router:Router) { }
 
   ngOnInit() {
-    this.router.navigateByUrl('user');
+    this.router.navigateByUrl('user/home');
   }
 
 }

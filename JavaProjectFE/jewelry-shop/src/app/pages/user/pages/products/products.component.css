@@ -1,0 +1,172 @@
+.container {
+    padding: 20px;
+    max-width: 1600px;
+    margin: auto;
+    display: flex;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 300px;
+    background-color: #f0f4f7;
+    border-right: 2px solid #004d40;
+    padding: 20px;
+    margin-right: 20px; /* Khoảng cách với phần hiển thị sản phẩm */
+    position: sticky;
+    top: 20px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar h2 {
+    color: #004d40;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #004d40; /* Gạch dưới cho mỗi nhóm menu */
+}
+.filter-group h5{
+    color: #004d40;
+    cursor: pointer;
+    padding: 10px 0;
+    position: relative;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}.filter-group h5:hover {
+    color: white; /* Màu chữ khi hover */
+    background-color: #00695c; /* Màu nền khi hover */
+    border-radius: 5px;
+    padding-left: 10px; /* Đẩy chữ ra một chút khi hover */
+}
+/* Tăng kích thước chữ của menu và loại bỏ icon của radio button */
+.filter-group li {
+    font-size: 1.1em;
+    color: #004d40;
+    cursor: pointer;
+    padding: 10px 0;
+    position: relative;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.filter-group input[type="radio"] {
+    display: none; /* Ẩn radio button */
+}
+
+.filter-group li:hover {
+    color: white; /* Màu chữ khi hover */
+    background-color: #00695c; /* Màu nền khi hover */
+    border-radius: 5px;
+    padding-left: 10px; /* Đẩy chữ ra một chút khi hover */
+}
+
+.filter-group li:active {
+    transform: translateY(2px); /* Hiệu ứng nhấn nút */
+}
+
+/* Price Range styling */
+.price-range {
+    margin-top: 20px;
+}
+
+.price-range input[type="range"] {
+    width: 100%;
+}
+
+/* Product section styling */
+.product-section {
+    flex: 1;
+    background-color: #e8f5e9;
+}
+
+/* Search box styling */
+.search-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Product item styling */
+.product-item {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s;
+    margin: 10px;
+}
+
+.product-item:hover {
+    transform: translateY(-10px);
+}
+
+.product-item img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.product-name {
+    font-size: 1.2em;
+    color: #004d40;
+    margin: 10px 0;
+}
+
+.product-description {
+    font-size: 0.9em;
+    color: #757575;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 1.1em;
+    color: #003366;
+}
+
+/* Flex settings for three columns */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Pagination styles */
+.pagination .page-item .page-link {
+    color: #003366;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #004d40;
+    border-color: #004d40;
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .sidebar {
+        display: none;
+    }
+    
+    .product-section {
+        padding-left: 0;
+    }
+
+    .col-lg-4, .col-md-6 {
+        flex: 0 0 48%;
+    }
+}
+
+@media (max-width: 768px) {
+    .col-lg-4, .col-md-6 {
+        flex: 0 0 100%;
+    }
+}
