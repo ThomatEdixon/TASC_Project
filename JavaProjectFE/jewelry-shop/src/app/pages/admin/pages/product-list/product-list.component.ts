@@ -52,9 +52,5 @@ export class ProductListComponent implements OnInit {
   }
 
   deleteProduct(){}
-  onPageChange(page: number): void {
-    this.currentPage = page;
-    this.getAll();
-  }
 
 }

@@ -1,6 +1,7 @@
 package org.jewelryshop.userservice.controllers;
 
 import com.nimbusds.jose.JOSEException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jewelryshop.userservice.dto.request.IntrospectRequest;
 import org.jewelryshop.userservice.dto.request.RefreshRequest;
@@ -21,7 +22,7 @@ import java.text.ParseException;
 public class AuthenticationController {
     private final AuthenticationServiceImpl authenticationService;
     @PostMapping("/login")
-    public ApiResponse<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) throws AppException {
+    public ApiResponse<UserLoginResponse> login(@RequestBody @Valid UserLoginRequest userLoginRequest) throws AppException {
         UserLoginResponse userLoginResponse = authenticationService.login(userLoginRequest);
         return ApiResponse.<UserLoginResponse>builder().data(userLoginResponse).build();
     }

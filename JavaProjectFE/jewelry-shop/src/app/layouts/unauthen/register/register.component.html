@@ -4,72 +4,79 @@
     <p style="color: #12454d;">Create Account</p>
     <form [formGroup]="registerForm">
       
+      <!-- Username Field -->
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Username" formControlName="username" required />
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-user"></span> <!-- Icon hình người -->
-          </div>
+        <i class="fas fa-user"></i> <!-- Font Awesome icon for username -->
+        <input type="text" id="username" formControlName="username" placeholder="Username" required />
+        <div *ngIf="registerForm.controls['username'].touched && registerForm.controls['username'].hasError('required')">
+          <span class="text-danger" style="font-size: 14px;">Username is required</span>
         </div>
       </div>
+      
 
+      <!-- Password Field -->
       <div class="input-group">
-        <input type="password" class="form-control" placeholder="Password" formControlName="password" required />
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-lock"></span>
-          </div>
+        <i class="fas fa-lock"></i> <!-- Font Awesome icon for password -->
+        <input type="password" id="password" formControlName="password" placeholder="Password" required />
+        <div *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].hasError('required')">
+          <span class="text-danger" style="font-size: 14px;">Password is required</span>
         </div>
       </div>
+      
 
+      <!-- Confirm Password Field -->
       <div class="input-group">
-        <input type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword" required />
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-lock"></span>
-          </div>
+        <i class="fas fa-lock"></i> <!-- Font Awesome icon for confirm password -->
+        <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password" required />
+        <div *ngIf="registerForm.controls['confirmPassword'].touched && registerForm.controls['confirmPassword'].hasError('required')">
+          <span class="text-danger" style="font-size: 14px;">Confirmation is required</span>
         </div>
       </div>
+      
 
+      <!-- Email Field -->
       <div class="input-group">
-        <input type="email" class="form-control" placeholder="Email" formControlName="email" required />
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-envelope"></span>
-          </div>
+        <i class="fas fa-envelope"></i> <!-- Font Awesome icon for email -->
+        <input type="email" id="email" formControlName="email" placeholder="Email" required />
+        <div *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].hasError('required')">
+          <span class="text-danger" style="font-size: 14px;">Email is required</span>
         </div>
       </div>
+      
 
+      <!-- Phone Number Field -->
       <div class="input-group">
-        <input type="tel" class="form-control" placeholder="Phone Number" formControlName="phoneNumber" required />
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-phone"></span>
-          </div>
+        <i class="fas fa-phone"></i> <!-- Font Awesome icon for phone -->
+        <input type="tel" id="phoneNumber" formControlName="phoneNumber" placeholder="Phone Number" required />
+        <div *ngIf="registerForm.controls['phoneNumber'].touched && registerForm.controls['phoneNumber'].hasError('required')">
+          <span class="text-danger" style="font-size: 14px;">Phone number is required</span>
         </div>
       </div>
+      
 
+      <!-- Date of Birth Field -->
       <div class="input-group">
-        <input type="date" class="form-control" placeholder="Date of Birth" formControlName="dob" required />
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-calendar"></span>
-          </div>
+        <i class="fas fa-calendar"></i> <!-- Font Awesome icon for date of birth -->
+        <input type="date" id="dob" formControlName="dob" placeholder="Date of Birth" required />
+        <div *ngIf="registerForm.controls['dob'].touched && registerForm.controls['dob'].hasError('required')">
+          <span class="text-danger" style="font-size: 14px;">Date of birth is required</span>
         </div>
       </div>
+      
 
+      <!-- Address Field -->
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Address" formControlName="address" required />
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-map-marker-alt"></span>
-          </div>
+        <i class="fas fa-map-marker-alt"></i> <!-- Font Awesome icon for address -->
+        <input type="text" id="address" formControlName="address" placeholder="Address" required />
+        <div *ngIf="registerForm.controls['address'].touched && registerForm.controls['address'].hasError('required')">
+          <span class="text-danger" style="font-size: 14px;">Address is required</span>
         </div>
       </div>
+      
 
-      <button type="button" class="btn btn-primary w-100" (click)="OnClickRegister()">Register</button>
+      <button type="button" (click)="OnClickRegister()">Register</button>
     </form>
+
     <p class="login-link">You have an account? <a routerLink="/login">Login</a></p>
   </div>
 </div>
-

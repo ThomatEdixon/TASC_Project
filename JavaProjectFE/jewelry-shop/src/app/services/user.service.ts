@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserRequest } from '../models/user';
+import { ChangePasswordRequest, ForgotPassWordRequest, UserRequest, VerifyRequest } from '../models/user';
 import { AuthenResponse } from '../models/authen';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -18,6 +18,15 @@ export class UserService {
   }
   Register(model:UserRequest):Observable<AuthenResponse>{
     return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}`, model);
+  }
+  ForgotPassWord(model:ForgotPassWordRequest):Observable<AuthenResponse>{
+    return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}/forgotPassword`, model);
+  }
+  Verify(username:string,model:VerifyRequest):Observable<AuthenResponse>{
+    return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}/verify/${username}`, model);
+  }
+  ChangePassword(username:string, model:ChangePasswordRequest):Observable<AuthenResponse>{
+    return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}/changePassword/${username}`, model);
   }
   GetInfo():Observable<AuthenResponse>{
     return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}/my-info`,);

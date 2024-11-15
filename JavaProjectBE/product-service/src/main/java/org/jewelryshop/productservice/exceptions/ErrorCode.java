@@ -1,4 +1,4 @@
-package org.jewelryshop.userservice.exceptions;
+package org.jewelryshop.productservice.exceptions;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,7 @@ public enum ErrorCode {
     INVALID_KEY(101, "Uncategorized error", HttpStatus.BAD_REQUEST),
     USER_EXISTED(102, "User existed", HttpStatus.BAD_REQUEST),
     USERNAME_INVALID(103, "Username must be at least {min} characters", HttpStatus.BAD_REQUEST),
-    INVALID_PASSWORD(104, "Password must be at least 8 characters long, contain at least 1 uppercase letter and numbers.", HttpStatus.BAD_REQUEST),
+    INVALID_PASSWORD(104, "Password must be at least {min} characters", HttpStatus.BAD_REQUEST),
     USER_NOT_EXISTED(105, "User not existed", HttpStatus.NOT_FOUND),
     EMAIL_INVALID(106, "Email is invalid", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(107, "Unauthenticated", HttpStatus.UNAUTHORIZED),

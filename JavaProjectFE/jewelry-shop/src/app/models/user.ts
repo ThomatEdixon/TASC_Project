@@ -14,3 +14,13 @@ export interface UserResponse{
     address:string,
     role:any,
 }
+export interface ForgotPassWordRequest{
+    username:string;
+    email:string
+}
+export interface ChangePasswordRequest{
+    newPassword:string;
+}
+export interface VerifyRequest{
+    otp:string
+}

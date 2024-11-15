@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './layouts/unauthen/login/login.component';
 import { RegisterComponent } from './layouts/unauthen/register/register.component';
-import { AuthenticateGuard } from './services/jwt/authenticate.guard';
+import { ForgotPasswordComponent } from './layouts/unauthen/forgot-password/forgot-password.component';
+import { VerifyComponent } from './layouts/unauthen/verify/verify.component';
+import { ChangePasswordComponent } from './layouts/unauthen/change-password/change-password.component';
 
 const routes: Routes = [
   {
@@ -12,6 +14,18 @@ const routes: Routes = [
   {
     path:"register",
     component: RegisterComponent
+  },
+  {
+    path:"forgot-password",
+    component: ForgotPasswordComponent
+  },
+  {
+    path:"verify",
+    component: VerifyComponent
+  },
+  {
+    path:"change-password",
+    component: ChangePasswordComponent
   },
   { path: 'user',
     loadChildren: () =>

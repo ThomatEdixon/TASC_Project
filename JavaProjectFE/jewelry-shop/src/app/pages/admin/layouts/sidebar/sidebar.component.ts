@@ -10,11 +10,14 @@ export class SidebarComponent implements OnInit {
 
   constructor(private router:Router) { }
   isProductMenuOpen = false;
+  isUserMenuOpen = false;
   ngOnInit() {
   }
   toggleProductMenu() {
     this.isProductMenuOpen = !this.isProductMenuOpen;
-    console.log(this.isProductMenuOpen);
+  }
+  toggleUserMenu() {
+    this.isUserMenuOpen = !this.isUserMenuOpen;
   }
 
 }

@@ -1,7 +1,9 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Logo Thương Hiệu -->
   <a [routerLink]="['/']" routerLinkActive="router-link-active" class="brand-link">
-    <img src="https://media.istockphoto.com/id/1152003770/vector/icon-diamond-vector-logo.jpg?s=612x612&w=0&k=20&c=b6mZJ7u3anlhDiHB4vXkNODvTv5s2mDqNLt7UsrsDzg=" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <img
+      src="https://media.istockphoto.com/id/1152003770/vector/icon-diamond-vector-logo.jpg?s=612x612&w=0&k=20&c=b6mZJ7u3anlhDiHB4vXkNODvTv5s2mDqNLt7UsrsDzg="
+      alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">Jewelry Shop</span>
   </a>
 
@@ -10,17 +12,40 @@
     <!-- Menu Sidebar -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        
+
         <!-- Mục User (Có thể thêm menu con nếu cần) -->
-        <li class="nav-item">
-          <a class="nav-link">
+        <li class="nav-item has-treeview" [class.menu-open]="isUserMenuOpen">
+          <a (click)="toggleUserMenu()" class="nav-link">
             <i class="nav-icon far fa-user"></i>
             <p>
               User
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
+          <ul class="nav nav-treeview" *ngIf="isUserMenuOpen">
+            <li class="nav-item">
+              <a [routerLink]="['/login']" routerLinkActive="router-link-active" class="nav-link">
+                <p>Login</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/register']" routerLinkActive="router-link-active" class="nav-link">
+                <p>Register</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/forgot-password']" routerLinkActive="router-link-active" class="nav-link">
+                <p>Forgot Password</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/change-password']" routerLinkActive="router-link-active" class="nav-link">
+                <p>Change Password</p>
+              </a>
+            </li>
+          </ul>
         </li>
-        
+
         <!-- Mục Product với Menu con CRUD -->
         <li class="nav-item has-treeview" [class.menu-open]="isProductMenuOpen">
           <a (click)="toggleProductMenu()" class="nav-link">

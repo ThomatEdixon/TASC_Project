@@ -10,14 +10,18 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { JwtInterceptor } from './services/jwt/jwt.interceptor';
 import { RegisterComponent } from './layouts/unauthen/register/register.component';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
+import { ForgotPasswordComponent } from './layouts/unauthen/forgot-password/forgot-password.component';
+import { VerifyComponent } from './layouts/unauthen/verify/verify.component';
+import { ChangePasswordComponent } from './layouts/unauthen/change-password/change-password.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
     UnauthenComponent,
+    ForgotPasswordComponent,
+    VerifyComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

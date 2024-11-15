@@ -2,7 +2,10 @@ package org.jewelryshop.userservice.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.jewelryshop.userservice.dto.request.ChangePasswordRequest;
+import org.jewelryshop.userservice.dto.request.ForgotPasswordRequest;
 import org.jewelryshop.userservice.dto.request.UserRequest;
+import org.jewelryshop.userservice.dto.request.VerifyRequest;
 import org.jewelryshop.userservice.dto.response.ApiResponse;
 import org.jewelryshop.userservice.dto.response.UserResponse;
 import org.jewelryshop.userservice.exceptions.AppException;
@@ -20,6 +23,27 @@ public class UserController {
     public ApiResponse<UserResponse> register(@RequestBody @Valid UserRequest userRequest) throws AppException {
         return ApiResponse.<UserResponse>builder()
                 .data(userService.createUser(userRequest))
+                .build();
+    }
+    @PostMapping("/forgotPassword")
+    public ApiResponse<Boolean> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest ) {
+        return ApiResponse.<Boolean>builder()
+                .data(userService.forgotPassword(forgotPasswordRequest))
+                .build();
+    }
+    @PostMapping("/changePassword/{username}")
+    public ApiResponse<UserResponse> changePassword(@PathVariable String username
+            , @RequestBody ChangePasswordRequest changePasswordRequest) throws AppException {
+        return ApiResponse.<UserResponse>builder()
+                .data(userService.changePassword(username,changePasswordRequest))
+                .build();
+    }
+
+    @PostMapping("/verify/{username}")
+    public ApiResponse<Boolean> verify(@PathVariable String username
+            , @RequestBody VerifyRequest verifyRequest)  {
+        return ApiResponse.<Boolean>builder()
+                .data(userService.verifyOTP(username,verifyRequest))
                 .build();
     }
     @GetMapping

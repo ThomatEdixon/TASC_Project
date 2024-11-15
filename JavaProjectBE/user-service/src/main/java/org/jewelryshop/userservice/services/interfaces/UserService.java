@@ -1,6 +1,9 @@
 package org.jewelryshop.userservice.services.interfaces;
 
+import org.jewelryshop.userservice.dto.request.ChangePasswordRequest;
+import org.jewelryshop.userservice.dto.request.ForgotPasswordRequest;
 import org.jewelryshop.userservice.dto.request.UserRequest;
+import org.jewelryshop.userservice.dto.request.VerifyRequest;
 import org.jewelryshop.userservice.dto.response.UserResponse;
 import org.jewelryshop.userservice.exceptions.AppException;
 
@@ -13,4 +16,8 @@ public interface UserService {
     void deleteUser(String id);
     UserResponse getUserById(String id) throws AppException;
     UserResponse getMyInfoFromToken() throws AppException;
+    UserResponse changePassword(String userId, ChangePasswordRequest changePasswordRequest) throws AppException;
+    boolean forgotPassword(ForgotPasswordRequest forgotPasswordRequest);
+    boolean verifyOTP(String userId, VerifyRequest verifyRequest);
+
 }

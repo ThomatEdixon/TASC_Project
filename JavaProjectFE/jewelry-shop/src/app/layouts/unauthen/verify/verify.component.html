@@ -1,0 +1,20 @@
+<div class="verify-container">
+  <div class="verify-box">
+    <h2>Jewelry Shop</h2>
+    <p style="color: #12454d;">Enter Verification Code</p>
+    <form [formGroup]="verifyForm">
+      <!-- Verification Code Field -->
+      <div class="input-group">
+        <i class="fas fa-key"></i> <!-- Font Awesome icon for code -->
+        <input type="text" id="verificationCode" formControlName="verificationCode" name="verificationCode" placeholder="Verification Code" required />
+      </div>
+
+      <p id="timer">Time remaining: <span id="countdown">60</span> seconds</p>
+
+      <button type="button" (click)="onVerify()">Verify</button>
+    </form>
+
+    <a routerLink="/forgot-password">Resend Code</a>
+  </div>
+</div>
+

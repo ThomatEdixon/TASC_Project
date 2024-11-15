@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
+import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
         path: "product",
         loadChildren: () =>
           import('../admin/pages/product.module').then((m) => m.ProductModule),
+      },
+      {
+        path: "dashboard",
+        component:DashboardComponent
       },
     ]
   }

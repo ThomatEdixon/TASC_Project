@@ -7,18 +7,24 @@
       <div class="input-group">
         <i class="fas fa-user"></i> <!-- Font Awesome icon for username -->
         <input type="text" id="username" formControlName="username" name="username" placeholder="Username" required />
+        <div *ngIf="form.controls['username'].touched && form.controls['username'].invalid">
+          <span class="text-danger" style="font-size: 14px;">{{ form.controls['username'].hasError('backend') ? form.controls['username'].getError('backend') : 'Username is requied' }}</span>
+        </div>
       </div>
 
       <!-- Password Field -->
       <div class="input-group">
         <i class="fas fa-lock"></i> <!-- Font Awesome icon for password -->
         <input type="password" id="password" formControlName="password" name="password" placeholder="Password" required />
+        <div *ngIf="form.controls['password'].touched && form.controls['password'].invalid">
+          <span class="text-danger" style="font-size: 14px;">{{ form.controls['password'].hasError('backend') ? form.controls['password'].getError('backend') :'Password is required' }}</span>
+        </div>
       </div>
 
       <button type="button" (click)="OnClickLogin()">Login</button>
     </form>
 
-    <a href="#">Forgot Password?</a>
+    <a routerLink="/forgot-password">Forgot Password?</a>
     <p class="register-link">You don't have an account? <a routerLink="/register">Register now</a></p>
   </div>
 </div>

@@ -7,22 +7,39 @@
         <div>
           <label for="name">Name</label>
           <input formControlName="name" id="name" type="text" required />
+          <div class="error-message text-danger" *ngIf="formProduct.get('name')?.touched && formProduct.get('name')?.hasError('required')">
+            Name is required.
+          </div>
         </div>
         <div>
           <label for="description">Description</label>
           <textarea formControlName="description" id="description" required></textarea>
+          <div class="error-message text-danger" *ngIf="formProduct.get('description')?.touched && formProduct.get('description')?.hasError('required')">
+            Description is required.
+          </div>
         </div>
         <div>
           <label for="price">Price</label>
           <input formControlName="price" id="price" type="number" required />
+          <div class="error-message text-danger" *ngIf="formProduct.get('price')?.touched">
+            <div *ngIf="formProduct.get('price')?.hasError('required')">Price is required.</div>
+            <div *ngIf="formProduct.get('price')?.hasError('min')">Price must be a positive number.</div>
+          </div>
         </div>
         <div>
           <label for="originalPrice">Original Price</label>
           <input formControlName="originalPrice" id="originalPrice" type="number" required />
+          <div class="error-message text-danger" *ngIf="formProduct.get('originalPrice')?.touched">
+            <div *ngIf="formProduct.get('originalPrice')?.hasError('required')">Original Price is required.</div>
+            <div *ngIf="formProduct.get('originalPrice')?.hasError('min')">Original Price must be a positive number.</div>
+          </div>
         </div>
         <div>
           <label for="stockQuantity">Stock Quantity</label>
           <input formControlName="stockQuantity" id="stockQuantity" type="number" required />
+          <div class="error-message text-danger" *ngIf="formProduct.get('stockQuantity')?.touched && formProduct.get('stockQuantity')?.hasError('required')">
+            Stock Quantity is required.
+          </div>
         </div>
       </form>
     </div>
@@ -33,6 +50,9 @@
         <div>
           <label for="image">Image URL</label>
           <input type="file" formControlName="imageUrl" (change)="onFileChange($event)" />
+          <div class="error-message text-danger" *ngIf="formProductImage.get('imageUrl')?.touched && formProductImage.get('imageUrl')?.hasError('required')">
+            Image is required.
+          </div>
         </div>
       </form>
 
@@ -42,6 +62,9 @@
           <select formControlName="materialId" id="material" required>
             <option *ngFor="let material of materials" [value]="material.name">{{ material.name }}</option>
           </select>
+          <div class="error-message text-danger" *ngIf="formMaterial.get('materialId')?.touched && formMaterial.get('materialId')?.hasError('required')">
+            Material is required.
+          </div>
         </div>
       </form>
 
@@ -51,12 +74,18 @@
           <select formControlName="categoryId" id="category" required>
             <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.name }}</option>
           </select>
+          <div class="error-message text-danger" *ngIf="formProduct.get('categoryId')?.touched && formProduct.get('categoryId')?.hasError('required')">
+            Category is required.
+          </div>
         </div>
         <div>
           <label for="brand">Brand</label>
           <select formControlName="brandId" id="brand" required>
             <option *ngFor="let brand of brands" [value]="brand.brandId">{{ brand.name }}</option>
           </select>
+          <div class="error-message text-danger" *ngIf="formProduct.get('brandId')?.touched && formProduct.get('brandId')?.hasError('required')">
+            Brand is required.
+          </div>
         </div>
       </form>
     </div>

@@ -1,0 +1,48 @@
+.dashboard-container {
+    padding: 20px;
+  }
+  
+  h2, h3 {
+    color: #1c634a;
+  }
+  
+  .jewelry-images .image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .jewelry-images img {
+    width: 100%;
+    height: 500px; /* Đặt chiều cao cố định */
+    object-fit: cover; /* Đảm bảo ảnh giữ tỷ lệ gốc */
+    border-radius: 8px;
+    border: 2px solid #a8d5ba;
+  }  
+  
+  .sales-overview .chart-container {
+    margin-top: 20px;
+  }
+  
+  .sales-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .sales-table th, .sales-table td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .sales-table th {
+    background-color: #1c634a;
+    color: white;
+  }
+  
+  .sales-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
