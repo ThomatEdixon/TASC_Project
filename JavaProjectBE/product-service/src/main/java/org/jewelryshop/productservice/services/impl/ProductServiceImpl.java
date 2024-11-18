@@ -1,7 +1,12 @@
 package org.jewelryshop.productservice.services.impl;
 
 import org.jewelryshop.productservice.DAO.impl.ProductDAOImpl;
+import org.jewelryshop.productservice.client.OrderClient;
+import org.jewelryshop.productservice.client.PaymentClient;
 import org.jewelryshop.productservice.dto.request.ProductRequest;
+import org.jewelryshop.productservice.dto.request.ProductStockRequest;
+import org.jewelryshop.productservice.dto.response.OrderResponse;
+import org.jewelryshop.productservice.dto.response.PaymentResponse;
 import org.jewelryshop.productservice.dto.response.ProductResponse;
 import org.jewelryshop.productservice.entities.Product;
 import org.jewelryshop.productservice.mappers.ProductMapper;
@@ -11,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,13 +24,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ProductServiceImpl implements ProductService {
     private final ProductDAOImpl productDAO;
     private final ProductMapper productMapper;
+    private final PaymentClient paymentClient;
+    private final OrderClient orderClient;
 
-    public ProductServiceImpl(ProductDAOImpl productDAO, ProductMapper productMapper) {
+    public ProductServiceImpl(ProductDAOImpl productDAO, ProductMapper productMapper, PaymentClient paymentClient, OrderClient orderClient) {
         this.productDAO = productDAO;
         this.productMapper = productMapper;
+        this.paymentClient = paymentClient;
+        this.orderClient = orderClient;
     }
 
     @Override
@@ -80,5 +91,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void addProductMaterial(String productId, String materialName) {
         productDAO.addProductMaterial(productId,materialName);
+    }
+
+    @Override
+    public boolean checkStock(ProductStockRequest stockRequest) {
+        return productDAO.checkStock(stockRequest);
+    }
+
+    @Override
+    public void reduceStock(ProductStockRequest stockRequest) {
+        if(checkStock(stockRequest)){
+            productDAO.reduceStock(stockRequest);
+        }
     }
 }

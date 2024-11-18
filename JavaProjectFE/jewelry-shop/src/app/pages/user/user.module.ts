@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserComponent } from './user.component';
-import { HomepageComponent } from './layouts/homepage/homepage.component';
+import { HomepageComponent } from './pages/homepage/homepage.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { UserRoutingModule } from './user-routing.module';
 import { ProductsComponent } from './pages/products/products.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProductDetailComponent } from './pages/product-details/product-details.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     UserRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [UserComponent,HomepageComponent,HeaderComponent,FooterComponent,ProductsComponent]
+  declarations: [UserComponent,HomepageComponent,HeaderComponent,FooterComponent,ProductsComponent,ProductDetailComponent]
 })
 export class UserModule { }

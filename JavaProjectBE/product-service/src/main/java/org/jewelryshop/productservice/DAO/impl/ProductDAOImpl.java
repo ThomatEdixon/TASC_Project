@@ -1,8 +1,14 @@
 package org.jewelryshop.productservice.DAO.impl;
 
 import org.jewelryshop.productservice.DAO.interfaces.ProductDAO;
+import org.jewelryshop.productservice.client.OrderClient;
+import org.jewelryshop.productservice.contants.ProductStatus;
+import org.jewelryshop.productservice.dto.request.ProductStockRequest;
 import org.jewelryshop.productservice.dto.response.ProductResponse;
+import org.jewelryshop.productservice.dto.response.StatusResponse;
 import org.jewelryshop.productservice.entities.Product;
+import org.jewelryshop.productservice.exceptions.AppException;
+import org.jewelryshop.productservice.exceptions.ErrorCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -20,16 +26,18 @@ public class ProductDAOImpl implements ProductDAO {
 
     private final ProductImageDAOImpl productImageDAO;
     private final MaterialDAOImpl materialDAO;
+    private final OrderClient orderClient;
 
-    public ProductDAOImpl(DataSource dataSource, ProductImageDAOImpl productImageDAO, MaterialDAOImpl materialDAO) {
+    public ProductDAOImpl(DataSource dataSource, ProductImageDAOImpl productImageDAO, MaterialDAOImpl materialDAO, OrderClient orderClient) {
         this.dataSource = dataSource;
         this.productImageDAO = productImageDAO;
         this.materialDAO = materialDAO;
+        this.orderClient = orderClient;
     }
     @Override
     public void save(Product product) {
-        String sql = "INSERT INTO product (product_id, name, description, price, original_price, stock_quantity, category_id, brand_id, created_at, updated_at) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO product (product_id, name, description, price, original_price, stock_quantity, category_id, brand_id, created_at, updated_at,status) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -44,6 +52,7 @@ public class ProductDAOImpl implements ProductDAO {
             stmt.setString(8, product.getBrandId());
             stmt.setTimestamp(9, Timestamp.valueOf(product.getCreatedAt()));
             stmt.setTimestamp(10, Timestamp.valueOf(product.getUpdatedAt()));
+            stmt.setString(11,product.getStatus());
 
             stmt.executeUpdate();
         }catch (SQLException e){
@@ -71,6 +80,7 @@ public class ProductDAOImpl implements ProductDAO {
                             .stockQuantity(resultSet.getInt("stock_quantity"))
                             .categoryId(resultSet.getString("category_id"))
                             .brandId(resultSet.getString("brand_id"))
+                            .status(resultSet.getString("status"))
                             .createdAt(resultSet.getTimestamp("created_at").toLocalDateTime())
                             .updatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime())
                             .build();
@@ -126,6 +136,7 @@ public class ProductDAOImpl implements ProductDAO {
                             .originalPrice(resultSet.getDouble("original_price"))
                             .stockQuantity(resultSet.getInt("stock_quantity"))
                             .categoryId(resultSet.getString("category_id"))
+                            .status(resultSet.getString("status"))
                             .brandId(resultSet.getString("brand_id"))
                             .createdAt(resultSet.getTimestamp("created_at").toLocalDateTime())
                             .updatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime())
@@ -226,8 +237,54 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
+    public boolean checkStock(ProductStockRequest stockRequest) {
+        String sql = "SELECT stock_quantity FROM product WHERE product_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, stockRequest.getProductId());
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    if(resultSet.getInt("stock_quantity") < stockRequest.getQuantity()){
+                        updateProductStatus(ProductStatus.OUT_OF_STOCK);
+                        throw new AppException(ErrorCode.OUT_OF_STOCK);
+                    }
+                    else {
+                        return true;
+                    }
+                }
+            } catch (AppException e) {
+                throw new RuntimeException(e);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public void reduceStock(ProductStockRequest stockRequest) {
+        String sql = "UPDATE product SET  stock_quantity = (stock_quantity - ?) " +
+                "WHERE product_id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1,stockRequest.getQuantity());
+
+            stmt.executeUpdate();
+            updateProductStatus(ProductStatus.SUCCESS);
+        }catch (SQLException e){
+            updateProductStatus(ProductStatus.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void update(String product_id , Product product) {
-        String sql = "UPDATE product SET name = ?, description = ?, price = ?, original_price = ?, stock_quantity = ?, category_id = ?, brand_id = ?, updated_at = ? " +
+        String sql = "UPDATE product SET name = ?, description = ?, price = ?, original_price = ?, stock_quantity = ?, category_id = ?, brand_id = ?, updated_at = ? , status = ?" +
                 "WHERE product_id = ?";
 
         try (Connection connection = dataSource.getConnection();
@@ -241,7 +298,8 @@ public class ProductDAOImpl implements ProductDAO {
             stmt.setString(6, product.getCategoryId());
             stmt.setString(7, product.getBrandId());
             stmt.setTimestamp(8, Timestamp.valueOf(product.getUpdatedAt()));
-            stmt.setString(9, product_id);
+            stmt.setString(9, product.getStatus());
+            stmt.setString(10, product_id);
 
             stmt.executeUpdate();
         }catch (SQLException e){
@@ -272,6 +330,17 @@ public class ProductDAOImpl implements ProductDAO {
             stmt.setString(2, name);
             stmt.executeUpdate();
         }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public void updateProductStatus(String productStatus){
+        String sql = "UPDATE product SET status = ?";
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1,productStatus);
+            statement.executeUpdate();
+
+        }catch (SQLException e){
             e.printStackTrace();
         }
     }

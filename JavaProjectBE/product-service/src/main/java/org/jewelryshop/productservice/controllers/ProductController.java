@@ -2,6 +2,7 @@ package org.jewelryshop.productservice.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.jewelryshop.productservice.dto.request.ProductRequest;
+import org.jewelryshop.productservice.dto.request.ProductStockRequest;
 import org.jewelryshop.productservice.dto.response.ApiResponse;
 import org.jewelryshop.productservice.dto.response.ProductResponse;
 import org.jewelryshop.productservice.services.impl.ProductServiceImpl;
@@ -34,10 +35,10 @@ public class ProductController {
                 .data(productService.getAll(page,size))
                 .build();
     }
-    @GetMapping("/{id}")
-    public ApiResponse<ProductResponse> getProductById(@PathVariable String id) {
+    @GetMapping("/{productId}")
+    public ApiResponse<ProductResponse> getProductById(@PathVariable String productId) {
         return ApiResponse.<ProductResponse>builder()
-                .data(productService.getById(id))
+                .data(productService.getById(productId))
                 .build();
     }
     @GetMapping("/search")
@@ -65,6 +66,16 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ApiResponse<Void> deleteProduct(@PathVariable String id) {
         productService.delete(id);
+        return ApiResponse.<Void>builder().build();
+    }
+    @PostMapping("/check-stock")
+    public ApiResponse<Boolean> checkProductStock(@RequestBody ProductStockRequest stockRequest) {
+        return ApiResponse.<Boolean>builder().data(productService.checkStock(stockRequest)).build();
+    }
+
+    @PutMapping("/reduce-stock")
+    public ApiResponse<Void> reduceProductStock(@RequestBody ProductStockRequest stockRequest) {
+        productService.reduceStock(stockRequest);
         return ApiResponse.<Void>builder().build();
     }
 }

@@ -3,6 +3,7 @@ package org.jewelryshop.productservice.mappers;
 import lombok.RequiredArgsConstructor;
 import org.jewelryshop.productservice.DAO.impl.BrandDAOImpl;
 import org.jewelryshop.productservice.DAO.impl.CategoryDAOImpl;
+import org.jewelryshop.productservice.contants.ProductStatus;
 import org.jewelryshop.productservice.dto.request.ProductRequest;
 import org.jewelryshop.productservice.dto.response.ProductResponse;
 import org.jewelryshop.productservice.entities.Product;
@@ -29,6 +30,7 @@ public class ProductMapper implements RowMapper<Product> {
                 .stockQuantity(productRequest.getStockQuantity())
                 .categoryId(productRequest.getCategoryId())
                 .brandId(productRequest.getBrandId())
+                .status(ProductStatus.CREATE)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -40,6 +42,7 @@ public class ProductMapper implements RowMapper<Product> {
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .stockQuantity(product.getStockQuantity())
+                .status(product.getStatus())
                 .categoryName(categoryDAO.getById(product.getCategoryId()).getName())
                 .brandName(brandDAO.getById(product.getBrandId()).getName())
                 .productImages(product.getProductImages())

@@ -4,6 +4,7 @@ import { ProductService } from '../../../../services/product.service';
 import { ProductResponse } from '../../../../models/product';
 import { Observable } from 'rxjs';
 import { isThisMonth } from 'date-fns';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -15,7 +16,7 @@ export class HomepageComponent implements OnInit {
   imageUrl: SafeUrl | null = null;
   currentIndex = 0; 
   itemsPerPage = 4;
-  constructor(private productService: ProductService, private sanitizer: DomSanitizer) { }
+  constructor(private productService: ProductService, private router:Router, private activatedRouter:ActivatedRoute) { }
 
   ngOnInit() {
     this.getFeaturedProduct()
@@ -58,6 +59,9 @@ export class HomepageComponent implements OnInit {
     const sliderTrack = document.querySelector('.slider-track') as HTMLElement;
     const translateX = -this.currentIndex * 100;
     sliderTrack.style.transform = `translateX(${translateX}%)`;
+  }
+  onDetailProduct(productId:string){
+    this.router.navigate(['user/product-detail'], { queryParams: { productId: productId } });
   }
 
 }

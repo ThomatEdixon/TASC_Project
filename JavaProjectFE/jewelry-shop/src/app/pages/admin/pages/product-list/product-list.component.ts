@@ -46,8 +46,7 @@ export class ProductListComponent implements OnInit {
     this.visiblePages = Array.from({ length: this.totalPage }, (_, i) => i + 1)
       .slice(Math.max(this.currentPage - 1, 0), this.currentPage + 2);
   }
-  editProduct(productId: String){
-    console.log('productId',productId);
+  editProduct(productId: string){
     this.router.navigate(['edit'], { relativeTo: this.activatedRouter, queryParams: { productId: productId } });
   }
 

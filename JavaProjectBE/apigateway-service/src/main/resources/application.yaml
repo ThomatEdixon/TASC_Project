@@ -43,6 +43,16 @@ spring :
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/upload/**
+        # order service
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order/**
+        # payment service
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/payment/**
   main:
     web-application-type: reactive
 eureka:

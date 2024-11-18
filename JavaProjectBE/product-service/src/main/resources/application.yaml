@@ -1,6 +1,5 @@
 server:
   port: 9001
-
 spring :
   application:
     name: product-service
@@ -20,3 +19,5 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+  instance:
+    preferIpAddress: true

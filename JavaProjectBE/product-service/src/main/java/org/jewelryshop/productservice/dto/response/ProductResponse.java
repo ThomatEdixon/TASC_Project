@@ -22,6 +22,7 @@ public class ProductResponse {
     private int stockQuantity;
     private String categoryName;
     private String brandName;
+    private String status;
     private List<ProductImage> productImages;
     private Set<Material> materials;
 }
