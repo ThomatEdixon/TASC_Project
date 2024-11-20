@@ -23,7 +23,7 @@ public class OrderResponse {
 
     private String status;
 
-    private double totalAmount;
+    private int totalAmount;
 
     private List<OrderDetailResponse> orderDetails;
 }

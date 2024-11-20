@@ -17,6 +17,6 @@ public class OrderResponse {
     private String userId;
     private LocalDateTime orderDate;
     private String status;
-    private Double totalAmount;
+    private int totalAmount;
     private List<OrderDetailResponse> orderDetails;
 }

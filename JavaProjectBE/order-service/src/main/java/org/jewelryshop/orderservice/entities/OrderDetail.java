@@ -10,13 +10,12 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "order_detail")
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "order_detail_id")
     private String orderDetailId;
-
-    @Column(name = "order_id",insertable=false, updatable=false)
-    private String orderId;
 
     @Column(name = "product_id")
     private String productId;
@@ -24,10 +23,10 @@ public class OrderDetail {
     private int quantity;
 
     @Column(name = "price_per_unit")
-    private double pricePerUnit;
+    private int pricePerUnit;
 
     @Column(name = "total_price")
-    private double totalPrice;
+    private int totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "order_id")

@@ -29,7 +29,7 @@ public class Order {
     private String status;
 
     @Column(name = "total_amount")
-    private double totalAmount;
+    private int totalAmount;
 
     @OneToMany(mappedBy = "order" , fetch = FetchType.LAZY)
     @JsonIgnore

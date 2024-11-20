@@ -14,3 +14,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+payos:
+  client-id: 84243374-ccb7-4497-a4bd-958b1cf3bc2b
+  api-key: ef5521f3-b7a6-425d-bed3-3769548ba8d3
+  checksum-key: a114983328de40dfd488f8937a24e3b3a4af99bc7a6c042bafd8a6a4ee30a635
+  sandbox:
+    url=https://sandbox.payos.com/api/v1/orders:

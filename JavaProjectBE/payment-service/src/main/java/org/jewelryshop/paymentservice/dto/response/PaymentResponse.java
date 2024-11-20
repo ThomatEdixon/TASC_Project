@@ -15,4 +15,5 @@ public class PaymentResponse {
     private String paymentMethod;
     private String paymentStatus;
     private LocalDateTime createdAt;
+    private String checkoutUrl;
 }

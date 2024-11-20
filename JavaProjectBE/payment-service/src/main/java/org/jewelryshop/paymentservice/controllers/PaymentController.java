@@ -17,22 +17,22 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping
-    public ApiResponse<PaymentResponse> createPayment(@RequestBody PaymentRequest paymentRequest) throws AppException {
+    public ApiResponse<PaymentResponse> createPayment(@RequestBody PaymentRequest paymentRequest) {
         return ApiResponse.<PaymentResponse>builder()
-                .data(paymentService.createPayment(paymentRequest))
+                .data(paymentService.updateStatusPaymentMethod(paymentRequest))
                 .build();
     }
 
     @PutMapping("/status/{paymentId}")
     public ApiResponse<Void> updatePaymentStatus(
             @PathVariable String paymentId,
-            @RequestParam StatusResponse statusResponse) throws AppException {
+            @RequestParam StatusResponse statusResponse)  {
         paymentService.updatePaymentStatus(paymentId, statusResponse);
         return ApiResponse.<Void>builder().build();
     }
 
     @GetMapping("/{paymentId}")
-    public ApiResponse<PaymentResponse> getPaymentById(@PathVariable String paymentId) throws AppException {
+    public ApiResponse<PaymentResponse> getPaymentById(@PathVariable String paymentId)  {
         return ApiResponse.<PaymentResponse>builder()
                 .data(paymentService.getPaymentById(paymentId))
                 .build();

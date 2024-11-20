@@ -7,7 +7,8 @@ import org.jewelryshop.orderservice.dto.response.StatusResponse;
 import org.jewelryshop.orderservice.exceptions.AppException;
 
 public interface OrderService {
-    OrderResponse createOrder(OrderRequest order)  throws AppException;
+    OrderResponse createOrder(OrderRequest order) ;
     void updateOrderStatus(String orderId,StatusResponse response);
     OrderResponse getOrderById(String orderId);
+    OrderResponse updateStatusForPayment(OrderRequest orderRequest);
 }

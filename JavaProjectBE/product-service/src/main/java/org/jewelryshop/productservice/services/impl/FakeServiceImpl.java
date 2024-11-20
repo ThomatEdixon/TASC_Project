@@ -35,8 +35,8 @@ public class FakeServiceImpl {
             product.setName(jewelryName);
 
             product.setDescription(faker.lorem().sentence(10));
-            product.setPrice(Double.parseDouble(faker.commerce().price()));
-            product.setOriginalPrice(product.getPrice() * 1.1);  // Giá gốc cao hơn giá bán 10%
+            product.setPrice(Integer.parseInt(faker.commerce().price()));
+            product.setOriginalPrice((int) (product.getPrice() * 1.1));  // Giá gốc cao hơn giá bán 10%
             product.setStockQuantity(faker.number().numberBetween(1, 100));
 
             // Chọn ngẫu nhiên brand_id và category_id

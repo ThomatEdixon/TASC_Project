@@ -16,9 +16,9 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ApiResponse<OrderResponse> createOrder(@RequestBody OrderRequest orderRequest) throws AppException {
+    public ApiResponse<OrderResponse> createOrder(@RequestBody OrderRequest orderRequest){
         return ApiResponse.<OrderResponse>builder()
-                .data(orderService.createOrder(orderRequest))
+                .data(orderService.updateStatusForPayment(orderRequest))
                 .build();
     }
     @GetMapping("/{orderId}")

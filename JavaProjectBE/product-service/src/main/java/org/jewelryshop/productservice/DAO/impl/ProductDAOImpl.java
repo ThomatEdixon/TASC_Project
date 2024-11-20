@@ -45,8 +45,8 @@ public class ProductDAOImpl implements ProductDAO {
             stmt.setString(1, product.getProductId());
             stmt.setString(2, product.getName());
             stmt.setString(3, product.getDescription());
-            stmt.setDouble(4, product.getPrice());
-            stmt.setDouble(5, product.getOriginalPrice());
+            stmt.setInt(4, product.getPrice());
+            stmt.setInt(5, product.getOriginalPrice());
             stmt.setInt(6, product.getStockQuantity());
             stmt.setString(7, product.getCategoryId());
             stmt.setString(8, product.getBrandId());
@@ -75,8 +75,8 @@ public class ProductDAOImpl implements ProductDAO {
                             .productId(resultSet.getString("product_id"))
                             .name(resultSet.getString("name"))
                             .description(resultSet.getString("description"))
-                            .price(resultSet.getDouble("price"))
-                            .originalPrice(resultSet.getDouble("original_price"))
+                            .price(resultSet.getInt("price"))
+                            .originalPrice(resultSet.getInt("original_price"))
                             .stockQuantity(resultSet.getInt("stock_quantity"))
                             .categoryId(resultSet.getString("category_id"))
                             .brandId(resultSet.getString("brand_id"))
@@ -132,8 +132,8 @@ public class ProductDAOImpl implements ProductDAO {
                             .productId(resultSet.getString("product_id"))
                             .name(resultSet.getString("name"))
                             .description(resultSet.getString("description"))
-                            .price(resultSet.getDouble("price"))
-                            .originalPrice(resultSet.getDouble("original_price"))
+                            .price(resultSet.getInt("price"))
+                            .originalPrice(resultSet.getInt("original_price"))
                             .stockQuantity(resultSet.getInt("stock_quantity"))
                             .categoryId(resultSet.getString("category_id"))
                             .status(resultSet.getString("status"))
@@ -219,7 +219,7 @@ public class ProductDAOImpl implements ProductDAO {
                             .productId(resultSet.getString("product_id"))
                             .name(resultSet.getString("name"))
                             .description(resultSet.getString("description"))
-                            .price(resultSet.getDouble("price"))
+                            .price(resultSet.getInt("price"))
                             .stockQuantity(resultSet.getInt("stock_quantity"))
                             .categoryName(resultSet.getString("categoryName"))
                             .brandName(resultSet.getString("brandName"))
@@ -292,8 +292,8 @@ public class ProductDAOImpl implements ProductDAO {
 
             stmt.setString(1, product.getName());
             stmt.setString(2, product.getDescription());
-            stmt.setDouble(3, product.getPrice());
-            stmt.setDouble(4, product.getOriginalPrice());
+            stmt.setInt(3, product.getPrice());
+            stmt.setInt(4, product.getOriginalPrice());
             stmt.setInt(5, product.getStockQuantity());
             stmt.setString(6, product.getCategoryId());
             stmt.setString(7, product.getBrandId());
