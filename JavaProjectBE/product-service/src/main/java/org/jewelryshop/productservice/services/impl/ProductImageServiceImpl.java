@@ -4,7 +4,7 @@ import org.jewelryshop.productservice.DAO.impl.ProductImageDAOImpl;
 import org.jewelryshop.productservice.dto.request.ProductImageRequest;
 import org.jewelryshop.productservice.entities.ProductImage;
 import org.jewelryshop.productservice.mappers.ProductImageMapper;
-import org.jewelryshop.productservice.services.interfaces.ProductImageService;
+import org.jewelryshop.productservice.services.ProductImageService;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;

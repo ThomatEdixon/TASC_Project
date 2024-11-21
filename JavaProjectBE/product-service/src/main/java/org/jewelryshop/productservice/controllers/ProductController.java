@@ -74,8 +74,7 @@ public class ProductController {
     }
 
     @PutMapping("/reduce-stock")
-    public ApiResponse<Void> reduceProductStock(@RequestBody ProductStockRequest stockRequest) {
-        productService.reduceStock(stockRequest);
-        return ApiResponse.<Void>builder().build();
+    public ApiResponse<Boolean> reduceProductStock(@RequestBody ProductStockRequest stockRequest) {
+        return ApiResponse.<Boolean>builder().data(productService.reduceStock(stockRequest)).build();
     }
 }

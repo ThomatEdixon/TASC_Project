@@ -5,6 +5,7 @@ import { ProductResponse } from '../../../../models/product';
 import { Observable } from 'rxjs';
 import { isThisMonth } from 'date-fns';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from '../../../../services/cart.service';
 
 @Component({
   selector: 'app-homepage',
@@ -14,21 +15,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class HomepageComponent implements OnInit {
   products: ProductResponse[] = [];
   imageUrl: SafeUrl | null = null;
-  currentIndex = 0; 
+  currentIndex = 0;
   itemsPerPage = 4;
-  constructor(private productService: ProductService, private router:Router, private activatedRouter:ActivatedRoute) { }
+  constructor(
+    private productService: ProductService, 
+    private router: Router,
+    private activatedRouter: ActivatedRoute,
+    private cartService:CartService
+  ) { }
 
   ngOnInit() {
-    this.getFeaturedProduct()
-  }
-  getFeaturedProduct() {
     this.productService.getFeaturedProducts().subscribe((res) => {
-      if (res.code === 100) {
+      if (res.errorCode === 200) {
         this.products = Object.values(res.data.content);
-        
-        this.products.forEach(product => {
-          product.productImages[0].imageUrl; 
-        });
+        console.log(this.products);
       }
     });
   }
@@ -60,8 +60,14 @@ export class HomepageComponent implements OnInit {
     const translateX = -this.currentIndex * 100;
     sliderTrack.style.transform = `translateX(${translateX}%)`;
   }
-  onDetailProduct(productId:string){
+  onDetailProduct(productId: string) {
     this.router.navigate(['user/product-detail'], { queryParams: { productId: productId } });
   }
+
+
+  addToCart(product: any): void {
+    this.cartService.addToCart(product); // Gọi service để thêm vào cart
+  }
+
 
 }

@@ -1,4 +1,4 @@
-package org.jewelryshop.userservice.services.interfaces;
+package org.jewelryshop.userservice.services;
 
 import org.jewelryshop.userservice.dto.request.PermissionRequest;
 import org.jewelryshop.userservice.dto.response.PermissionResponse;

@@ -41,7 +41,7 @@ export class ChangePasswordComponent implements OnInit {
     if(model.newPassword == model.confirmNewPassword){
       delete model.confirmNewPassword;
       this.userService.ChangePassword(this.username,model).pipe().subscribe((res)=>{
-        if(res.code == 100){
+        if(res.errorCode == 200){
           this.router.navigate(['login']);
         }
       });

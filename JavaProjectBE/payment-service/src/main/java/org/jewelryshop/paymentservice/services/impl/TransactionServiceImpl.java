@@ -20,6 +20,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction createTransaction(TransactionRequest transactionRequest) {
         Transaction transaction = Transaction.builder()
+                .transactionId(transactionRequest.getTransactionId())
                 .transactionCode(transactionRequest.getTransactionCode())
                 .amount(transactionRequest.getAmount())
                 .transactionStatus(transactionRequest.getTransactionStatus())

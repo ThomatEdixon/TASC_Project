@@ -1,10 +1,12 @@
 package org.jewelryshop.paymentservice.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.jewelryshop.paymentservice.contants.PaymentStatus;
 import org.jewelryshop.paymentservice.dto.request.PaymentRequest;
 import org.jewelryshop.paymentservice.dto.response.ApiResponse;
 import org.jewelryshop.paymentservice.dto.response.PaymentResponse;
 import org.jewelryshop.paymentservice.dto.response.StatusResponse;
+import org.jewelryshop.paymentservice.entities.Payment;
 import org.jewelryshop.paymentservice.exceptions.AppException;
 import org.jewelryshop.paymentservice.services.PaymentService;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +21,19 @@ public class PaymentController {
     @PostMapping
     public ApiResponse<PaymentResponse> createPayment(@RequestBody PaymentRequest paymentRequest) {
         return ApiResponse.<PaymentResponse>builder()
-                .data(paymentService.updateStatusPaymentMethod(paymentRequest))
+                .data(paymentService.createPayment(paymentRequest))
                 .build();
     }
-
+    @GetMapping("/url-check-out/{paymentId}")
+    public ApiResponse<PaymentResponse> getUrlCheckOut(@PathVariable String paymentId){
+        return ApiResponse.<PaymentResponse>builder().data(paymentService.getUrlPaymentMethod(paymentId)).build();
+    }
     @PutMapping("/status/{paymentId}")
     public ApiResponse<Void> updatePaymentStatus(
             @PathVariable String paymentId,
             @RequestParam StatusResponse statusResponse)  {
-        paymentService.updatePaymentStatus(paymentId, statusResponse);
+        PaymentResponse payment = paymentService.getPaymentById(paymentId);
+        paymentService.updatePaymentStatus(payment.getOrderCode(), statusResponse);
         return ApiResponse.<Void>builder().build();
     }
 
@@ -36,6 +42,27 @@ public class PaymentController {
         return ApiResponse.<PaymentResponse>builder()
                 .data(paymentService.getPaymentById(paymentId))
                 .build();
+    }
+
+    @GetMapping("/payment-success")
+    public ApiResponse<Boolean> paymentSuccess(
+            @RequestParam String code,
+            @RequestParam String id,
+            @RequestParam boolean cancel,
+            @RequestParam String status,
+            @RequestParam Long orderCode) {
+        StatusResponse statusResponse = new StatusResponse();
+        if(!cancel){
+            if(status.equals("PAID")){
+                paymentService.reduceStock(Math.toIntExact(orderCode));
+                return ApiResponse.<Boolean>builder().data(true).build();
+            }
+        }else {
+            statusResponse.setStatus(PaymentStatus.CANCEL);
+            paymentService.updatePaymentStatus(Math.toIntExact(orderCode),statusResponse);
+        }
+
+        return ApiResponse.<Boolean>builder().data(false).build();
     }
 }
 

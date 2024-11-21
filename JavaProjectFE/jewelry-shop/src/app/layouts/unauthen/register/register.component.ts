@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
     }
     console.log(model);
     this.userService.Register(model).pipe().subscribe((res)=>{
-      if(res.code == 100){
+      if(res.errorCode == 200){
         this.router.navigateByUrl('/login');
       }
     });

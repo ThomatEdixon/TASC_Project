@@ -20,7 +20,7 @@ export class ProductService {
     return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}/${id}`);
   }
   getFeaturedProducts(): Observable<AuthenResponse> {
-    return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}/public/getAll?page=1&size=10`);
+    return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}/public/getAll?page=1&size=8`);
   }
   getProducts(page:number,size:number): Observable<AuthenResponse> {
     return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}`+"/public/getAll"+`?page=${page}&size=${size}`);

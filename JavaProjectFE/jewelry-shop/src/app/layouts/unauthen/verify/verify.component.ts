@@ -48,7 +48,7 @@ export class VerifyComponent implements OnInit {
     if (this.verifyForm.invalid) return
     let model = this.verifyForm.getRawValue();
     this.userService.Verify(this.username,model).pipe().subscribe((res)=>{
-        if(res.code == 100){
+        if(res.errorCode == 200){
           this.router.navigate(['change-password'],{queryParams: { username : this.username}})
         }
     })

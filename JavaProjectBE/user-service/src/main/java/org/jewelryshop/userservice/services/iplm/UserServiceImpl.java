@@ -16,7 +16,7 @@ import org.jewelryshop.userservice.exceptions.ErrorCode;
 import org.jewelryshop.userservice.mappers.UserMapper;
 import org.jewelryshop.userservice.repositories.ForgotPasswordRepository;
 import org.jewelryshop.userservice.repositories.UserRepository;
-import org.jewelryshop.userservice.services.interfaces.UserService;
+import org.jewelryshop.userservice.services.UserService;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContext;
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     private final ForgotPasswordRepository forgotPasswordRepository;
 
     @Override
-    public UserResponse createUser(UserRequest userRequest) throws AppException {
+    public UserResponse createUser(UserRequest userRequest){
         if (userRepository.existsByUsername(userRequest.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
 
         User newUser = userMapper.toUser(userRequest);
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse updateUser(String id, UserRequest userRequest) throws AppException {
+    public UserResponse updateUser(String id, UserRequest userRequest) {
         User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         userMapper.updateUser(user, userRequest);
@@ -84,13 +84,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
 //    @PostAuthorize("returnObject.username == authentication.name")
-    public UserResponse getUserById(String id) throws AppException {
+    public UserResponse getUserById(String id) {
         return userMapper.toUserResponse(
                 userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
     }
 
     @Override
-    public UserResponse getMyInfoFromToken() throws AppException {
+    public UserResponse getMyInfoFromToken() {
         SecurityContext context = SecurityContextHolder.getContext();
         String name = context.getAuthentication().getName();
 

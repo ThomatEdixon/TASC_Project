@@ -1,4 +1,4 @@
-package org.jewelryshop.productservice.services.interfaces;
+package org.jewelryshop.productservice.services;
 
 import org.jewelryshop.productservice.dto.request.ProductRequest;
 import org.jewelryshop.productservice.dto.request.ProductStockRequest;
@@ -17,5 +17,5 @@ public interface ProductService {
                                          String materialName, String categoryName, String brandName);
     void addProductMaterial(String productId, String name);
     boolean checkStock(ProductStockRequest stockRequest);
-    void reduceStock(ProductStockRequest stockRequest);
+    boolean reduceStock(ProductStockRequest stockRequest);
 }

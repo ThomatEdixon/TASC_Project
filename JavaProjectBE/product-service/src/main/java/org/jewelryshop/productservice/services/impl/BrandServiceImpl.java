@@ -5,7 +5,7 @@ import org.jewelryshop.productservice.dto.request.BrandRequest;
 import org.jewelryshop.productservice.dto.response.BrandResponse;
 import org.jewelryshop.productservice.entities.Brand;
 import org.jewelryshop.productservice.mappers.BrandMapper;
-import org.jewelryshop.productservice.services.interfaces.BrandService;
+import org.jewelryshop.productservice.services.BrandService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

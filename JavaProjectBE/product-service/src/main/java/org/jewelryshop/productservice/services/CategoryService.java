@@ -1,4 +1,4 @@
-package org.jewelryshop.productservice.services.interfaces;
+package org.jewelryshop.productservice.services;
 
 
 import org.jewelryshop.productservice.dto.request.CategoryRequest;

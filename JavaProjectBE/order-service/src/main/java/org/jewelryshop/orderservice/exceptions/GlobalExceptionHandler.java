@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     }
     private ApiResponse createApiResponse(ErrorCode errorCode){
         ApiResponse apiResponse = new ApiResponse<>();
-        apiResponse.setCode(errorCode.getCode());
+        apiResponse.setErrorCode(errorCode.getErrorCode());
         apiResponse.setMessage(errorCode.getMessage());
         return apiResponse;
     }

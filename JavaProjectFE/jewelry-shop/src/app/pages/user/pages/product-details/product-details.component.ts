@@ -27,7 +27,7 @@ export class ProductDetailComponent implements OnInit {
 
   getProductDetail(productId: string): void {
     this.productService.getProductById(productId).subscribe((res) => {
-      if(res.code == 100){
+      if(res.errorCode == 200){
         this.product = res.data;
       }
     });

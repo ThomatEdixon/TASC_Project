@@ -106,21 +106,21 @@ export class ProductsComponent implements OnInit {
   }
   getAllCategory() {
     this.categoryService.getAll().pipe().subscribe((res) => {
-      if (res.code == 100) {
+      if (res.errorCode == 100) {
         this.categories = res.data;
       }
     });
   }
   getAllMaterial() {
     this.materialService.getAll().pipe().subscribe((res) => {
-      if (res.code == 100) {
+      if (res.errorCode == 100) {
         this.materials = res.data;
       }
     });
   }
   getAllBrand() {
     this.brandService.getAll().pipe().subscribe((res) => {
-      if (res.code == 100) {
+      if (res.errorCode == 100) {
         this.brands = res.data;
       }
     });

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.jewelryshop.userservice.dto.request.RoleRequest;
 import org.jewelryshop.userservice.dto.response.ApiResponse;
 import org.jewelryshop.userservice.dto.response.RoleResponse;
+import org.jewelryshop.userservice.services.RoleService;
 import org.jewelryshop.userservice.services.iplm.RoleServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @RequestMapping("/roles")
 @RequiredArgsConstructor
 public class RoleController {
-    private final RoleServiceImpl roleService;
+    private final RoleService roleService;
 
     @PostMapping
     ApiResponse<RoleResponse> create(@RequestBody RoleRequest roleRequest) {

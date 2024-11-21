@@ -18,7 +18,7 @@ import org.jewelryshop.userservice.exceptions.AppException;
 import org.jewelryshop.userservice.exceptions.ErrorCode;
 import org.jewelryshop.userservice.repositories.InvalidatedTokenRepository;
 import org.jewelryshop.userservice.repositories.UserRepository;
-import org.jewelryshop.userservice.services.interfaces.AuthenticationService;
+import org.jewelryshop.userservice.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,7 +48,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Value("${jwt.refreshable-duration}")
     private long REFRESHABLE_DURATION;
     @Override
-    public UserLoginResponse login(UserLoginRequest userLoginRequest) throws AppException {
+    public UserLoginResponse login(UserLoginRequest userLoginRequest) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         User user = userRepository
                 .findByUsername(userLoginRequest.getUsername());
@@ -63,7 +63,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void logout(UserLogoutRequest userLogoutRequest) throws AppException, ParseException, JOSEException {
+    public void logout(UserLogoutRequest userLogoutRequest) throws  ParseException, JOSEException {
         try{
             SignedJWT signedJWT = verifyToken(userLogoutRequest.getToken(),true);
             String jwtId = signedJWT.getJWTClaimsSet().getJWTID();
@@ -77,6 +77,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         }
     }
+    @Override
     public IntrospectResponse introspect(IntrospectRequest introspectRequest) throws JOSEException, ParseException {
         var token = introspectRequest.getToken();
         boolean isValid = true;
@@ -90,7 +91,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return IntrospectResponse.builder().valid(isValid).build();
     }
 
-    private TokenInfo generateToken(User user) throws AppException {
+    private TokenInfo generateToken(User user) {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
 
         Date issueTime = new Date();
@@ -118,8 +119,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
     }
-
-    public UserLoginResponse refreshToken(RefreshRequest refreshRequest) throws AppException, ParseException, JOSEException {
+    @Override
+    public UserLoginResponse refreshToken(RefreshRequest refreshRequest) throws ParseException, JOSEException {
         SignedJWT signedJWT = verifyToken(refreshRequest.getToken(),true);
         // logout token hiện tại
         String jwtId = signedJWT.getJWTClaimsSet().getJWTID();

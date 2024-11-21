@@ -12,5 +12,5 @@ public interface ProductClient {
     ApiResponse<ProductResponse> getProductById(@PathVariable("productId") String productId);
 
     @RequestMapping(method = RequestMethod.PUT,value = "/product/reduce-stock")
-    void reduceProductStock(@RequestBody ProductStockRequest stockRequest);
+    ApiResponse<Boolean> reduceProductStock(@RequestBody ProductStockRequest stockRequest);
 }

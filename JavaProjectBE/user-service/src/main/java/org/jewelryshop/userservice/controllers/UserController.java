@@ -33,7 +33,7 @@ public class UserController {
     }
     @PostMapping("/changePassword/{username}")
     public ApiResponse<UserResponse> changePassword(@PathVariable String username
-            , @RequestBody ChangePasswordRequest changePasswordRequest) throws AppException {
+            , @RequestBody ChangePasswordRequest changePasswordRequest) {
         return ApiResponse.<UserResponse>builder()
                 .data(userService.changePassword(username,changePasswordRequest))
                 .build();
@@ -54,14 +54,14 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    ApiResponse<UserResponse> getUserById(@PathVariable("userId") String userId) throws AppException {
+    ApiResponse<UserResponse> getUserById(@PathVariable("userId") String userId) {
         return ApiResponse.<UserResponse>builder()
                 .data(userService.getUserById(userId))
                 .build();
     }
 
     @GetMapping("/my-info")
-    ApiResponse<UserResponse> getMyInfo() throws AppException {
+    ApiResponse<UserResponse> getMyInfo(){
         return ApiResponse.<UserResponse>builder()
                 .data(userService.getMyInfoFromToken())
                 .build();
@@ -74,7 +74,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    ApiResponse<UserResponse> updateUser(@PathVariable String userId, @RequestBody UserRequest userRequest) throws AppException {
+    ApiResponse<UserResponse> updateUser(@PathVariable String userId, @RequestBody UserRequest userRequest) {
         return ApiResponse.<UserResponse>builder()
                 .data(userService.updateUser(userId, userRequest))
                 .build();

@@ -3,6 +3,7 @@ import { AuthenticateService } from '../../../../services/authentication.service
 import { Router } from '@angular/router';
 import { UserResponse } from '../../../../models/user';
 import { UserService } from '../../../../services/user.service';
+import { CartService } from '../../../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -13,15 +14,55 @@ export class HeaderComponent implements OnInit{
 
   credential: any;
   user!:UserResponse;
-  constructor(private authService: AuthenticateService, private router:Router, private userService:UserService) {
+  cartItems: any[] = [];
+  cartCount: number = 0;
+  totalPrice: number = 0;
+  constructor(
+    private authService: AuthenticateService, 
+    private router:Router, 
+    private userService:UserService,
+    private cartService:CartService
+  ) {
     this.credential = this.authService.GetCredential
   }
   ngOnInit() {
+    this.loadCart();
   }
 
   IsAuthen = () => this.authService.LoggedIn
   ClickLogOut(){
     this.authService.Logout(this.authService.GetCredential?.data.token)
   }
+
+  loadCart(): void {
+    this.cartService.cartItems$.subscribe((items) => {
+      this.cartItems = items;
+      this.cartCount = items.reduce((count, item) => count + item.quantity, 0);
+    });
+    this.cartService.distinctProductCount$.subscribe((count) => {
+      this.cartCount = count;
+    });
+    this.cartService.totalPrice$.subscribe((price) => {
+      this.totalPrice = price;
+    });
+  }
+
+  removeFromCart(item: any): void {
+    this.cartService.removeFromCart(item.productId);
+  }
+
+  updateCart(): void {
+    localStorage.setItem('cart', JSON.stringify(this.cartItems)); 
+    this.cartCount = this.cartItems.length; 
+  }
+
+  // Tính tổng giá tiền
+  getTotalPrice() {
+    this.cartService.totalPrice$.subscribe((price) => {
+      this.totalPrice = price;
+    }); 
+  }
+
+  // Điều hướng đến trang thanh toán
 
 }

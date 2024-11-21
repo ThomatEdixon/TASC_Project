@@ -22,7 +22,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     private final OrderRepository orderRepository;
     @Override
     public OrderDetailResponse create(OrderDetailRequest orderDetailRequest) {
-        Order order = orderRepository.findById(orderDetailRequest.getOrderId()).orElseThrow();
+        Order order = orderRepository.findByOrderId(orderDetailRequest.getOrderId());
         OrderDetail orderDetail= orderDetailMapper.toOrderDetail(orderDetailRequest);
         orderDetail.setOrder(order);
         orderDetailRepository.save(orderDetail);
@@ -38,8 +38,10 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     public OrderDetailResponse getByOrderDetailId(String orderDetailId) {
-        OrderDetail orderDetail = orderDetailRepository.findById(orderDetailId).orElseThrow();
-        return orderDetailMapper.toOrderDetailResponse(orderDetail);
+        OrderDetail orderDetail = orderDetailRepository.findByOrderDetailId(orderDetailId);
+        OrderDetailResponse orderDetailResponse = orderDetailMapper.toOrderDetailResponse(orderDetail);
+        orderDetailResponse.setOrderId(orderDetail.getOrder().getOrderId());
+        return orderDetailResponse;
     }
 
     @Override

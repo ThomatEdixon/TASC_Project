@@ -1,4 +1,4 @@
-package org.jewelryshop.productservice.services.interfaces;
+package org.jewelryshop.productservice.services;
 
 import org.jewelryshop.productservice.entities.ProductImage;
 import org.springframework.web.multipart.MultipartFile;

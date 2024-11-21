@@ -48,9 +48,47 @@
         <a  class="nav-link">
           <i class="fas fa-heart icon"></i>
         </a>
-        <a  class="nav-link">
-          <i class="fas fa-shopping-cart icon"></i>
-        </a>
+        <div class="nav-item dropdown cart-dropdown">
+          <!-- Icon Cart -->
+          <a class="nav-link" data-toggle="dropdown">
+            <i class="fas fa-shopping-cart icon"></i>
+            <!-- Hiển thị số lượng nếu có sản phẩm -->
+            <span *ngIf="cartCount > 0" class="cart-count">{{ cartCount }}</span>
+          </a>
+      
+          <!-- Dropdown menu -->
+          <div class="dropdown-menu dropdown-menu-right cart-menu">
+            <!-- Nếu không có sản phẩm -->
+            <div *ngIf="cartItems.length === 0" class="empty-cart">
+              Chưa có sản phẩm nào trong giỏ hàng
+            </div>
+      
+            <!-- Nếu có sản phẩm -->
+            <div *ngIf="cartItems.length > 0">
+              <div class="cart-item" *ngFor="let item of cartItems">
+                <div class="cart-item-image">
+                  <img [src]="item.productImages[0]?.imageUrl" [alt]="item.name" />
+                </div>
+                <div class="cart-item-info">
+                  <h4>{{ item.name }}</h4>
+                  <p>{{ item.price | currency }}</p>
+                  <p>Số lượng: {{ item.quantity }}</p>
+                </div>
+                <div class="cart-item-actions">
+                  <button class="btn btn-danger btn-sm" (click)="removeFromCart(item)">
+                    <i class="fas fa-times remove-icon"></i>
+                  </button>
+                </div>
+              </div>
+      
+              <!-- Tổng tiền và nút thanh toán -->
+              <div class="cart-total">
+                <p>Tổng tiền: {{ totalPrice | currency }}</p>
+                <a class="btn btn-primary" [routerLink]="['/user/order']">Check out</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -85,10 +123,5 @@
       </div>
     </div>
   </nav>
-  <!-- Animated navbar -->
-
-  <!-- Background image -->
-
-  <!-- Background image -->
 </header>
 <!--Main Navigation-->

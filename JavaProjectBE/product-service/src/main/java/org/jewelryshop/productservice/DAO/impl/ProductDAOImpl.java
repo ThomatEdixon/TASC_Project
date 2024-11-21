@@ -4,8 +4,8 @@ import org.jewelryshop.productservice.DAO.interfaces.ProductDAO;
 import org.jewelryshop.productservice.client.OrderClient;
 import org.jewelryshop.productservice.contants.ProductStatus;
 import org.jewelryshop.productservice.dto.request.ProductStockRequest;
+import org.jewelryshop.productservice.dto.response.OrderDetailResponse;
 import org.jewelryshop.productservice.dto.response.ProductResponse;
-import org.jewelryshop.productservice.dto.response.StatusResponse;
 import org.jewelryshop.productservice.entities.Product;
 import org.jewelryshop.productservice.exceptions.AppException;
 import org.jewelryshop.productservice.exceptions.ErrorCode;
@@ -238,48 +238,53 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public boolean checkStock(ProductStockRequest stockRequest) {
-        String sql = "SELECT stock_quantity FROM product WHERE product_id = ?";
+        for (OrderDetailResponse orderDetail : stockRequest.getOrderDetailResponses()){
+            String sql = "SELECT stock_quantity FROM product WHERE product_id = ?";
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-            stmt.setString(1, stockRequest.getProductId());
+                stmt.setString(1, orderDetail.getProductId());
 
-            try (ResultSet resultSet = stmt.executeQuery()) {
-                if (resultSet.next()) {
-                    if(resultSet.getInt("stock_quantity") < stockRequest.getQuantity()){
-                        updateProductStatus(ProductStatus.OUT_OF_STOCK);
-                        throw new AppException(ErrorCode.OUT_OF_STOCK);
+                try (ResultSet resultSet = stmt.executeQuery()) {
+                    if (resultSet.next()) {
+                        if(resultSet.getInt("stock_quantity") < orderDetail.getQuantity()){
+                            updateProductStatus(ProductStatus.OUT_OF_STOCK);
+                            throw new AppException(ErrorCode.OUT_OF_STOCK);
+                        }
+                        else {
+                            return true;
+                        }
                     }
-                    else {
-                        return true;
-                    }
+                } catch (AppException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (AppException e) {
-                throw new RuntimeException(e);
+            }catch (SQLException e){
+                e.printStackTrace();
             }
-        }catch (SQLException e){
-            e.printStackTrace();
         }
         return false;
     }
 
     @Override
-    public void reduceStock(ProductStockRequest stockRequest) {
-        String sql = "UPDATE product SET  stock_quantity = (stock_quantity - ?) " +
-                "WHERE product_id = ?";
+    public boolean reduceStock(ProductStockRequest stockRequest) {
+        for (OrderDetailResponse orderDetail : stockRequest.getOrderDetailResponses()){
+            String sql = "UPDATE product SET  stock_quantity = (stock_quantity - ?) " +
+                    "WHERE product_id = ?";
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-            stmt.setInt(1,stockRequest.getQuantity());
-
-            stmt.executeUpdate();
-            updateProductStatus(ProductStatus.SUCCESS);
-        }catch (SQLException e){
-            updateProductStatus(ProductStatus.ERROR);
-            e.printStackTrace();
+                stmt.setInt(1,orderDetail.getQuantity());
+                stmt.executeUpdate();
+                updateProductStatus(ProductStatus.SUCCESS);
+                return true;
+            }catch (SQLException e){
+                updateProductStatus(ProductStatus.ERROR);
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 
     @Override

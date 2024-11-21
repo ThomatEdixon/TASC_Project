@@ -22,10 +22,10 @@
         <div *ngFor="let product of products" class="slider-item">
           <div class="product-card">
             <div class="product-image">
-              <img *ngIf="product.productImages[0].imageUrl" [src]="product.productImages[0].imageUrl" alt="{{ product.name }}" />
+              <img *ngIf="product.productImages[0]" [src]="product.productImages[0].imageUrl" alt="{{ product.name }}" />
               <div class="overlay-icons">
                 <span class="icon view-icon" (click)="onDetailProduct(product.productId)"><i class="fas fa-eye"></i></span>
-                <span class="icon cart-icon"><i class="fas fa-shopping-cart"></i></span>
+                <span class="icon cart-icon" (click)="addToCart(product)"><i class="fas fa-shopping-cart"></i></span>
               </div>
             </div>
             <div class="product-info">

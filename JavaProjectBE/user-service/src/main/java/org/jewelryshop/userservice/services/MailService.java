@@ -1,4 +1,4 @@
-package org.jewelryshop.userservice.services.interfaces;
+package org.jewelryshop.userservice.services;
 
 public interface MailService {
     String sendEmail(String email, String otp);

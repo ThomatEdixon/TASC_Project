@@ -37,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final OrderDetailService orderDetailService;
     @Override
+    @Transactional
     public OrderResponse createOrder(OrderRequest orderRequest){
 
         ApiResponse<UserResponse> userResponse = userClient.getUserById(orderRequest.getUserId());
@@ -86,11 +87,12 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toOrderResponse(order);
     }
     @Override
-    public OrderResponse updateStatusForPayment(OrderRequest orderRequest) {
-        OrderResponse orderResponse = createOrder(orderRequest);
+    public void confirmPaymentMethod(String orderId, String paymentMethod) {
+        Order order = orderRepository.findByOrderId(orderId);
         // Process Payment
-        PaymentRequest paymentRequest = new PaymentRequest(orderResponse.getOrderId(), PaymentMethod.PayOS);
-        ApiResponse<PaymentResponse> paymentResponse = paymentClient.createPayment(paymentRequest);
-        return orderResponse;
+        if(order.getStatus().equals(OrderStatus.PENDING)){
+            PaymentRequest paymentRequest = new PaymentRequest(orderId, PaymentMethod.PayOS);
+            paymentClient.createPayment(paymentRequest);
+        }
     }
 }

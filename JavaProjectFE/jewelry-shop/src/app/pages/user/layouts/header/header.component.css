@@ -1,113 +1,210 @@
-
-  .navbar-custom {
-    padding: 10px 0;
-  }
-
-  /* Upper navbar: logo, search, contact */
-  .upper-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  /* Center shop name in upper navbar */
-  .shop-name {
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    color: #12454d;
-  }
-
-  .upper-navbar .left-side,
-  .upper-navbar .right-side {
-    display: flex;
-    justify-content: space-between;
-  }
-  .upper-navbar .nav-link{
-    color: #12454d;
-  }
-
-  .upper-navbar .left-side > * {
-    display: flex;
-      align-items: center;
-    margin-right: 10px;
-  }
-
-  .upper-navbar .right-side > * {
-    margin-left: 10px;
-    color: #12454d;
-  }
-
-  .upper-navbar .right-side .icon {
-    font-size: 1.3rem;
-  }
-
-  /* Lower navbar: menu */
-  .lower-navbar {
-    padding: 10px 0;
-  }
-
-  .lower-navbar .navbar-nav {
-    display: flex;
-    justify-content: center;
-  }
-
-  .lower-navbar .nav-link {
-    color: #12454d;
-    padding: 10px 15px;
-  }
-
-  .lower-navbar .nav-link:hover {
-    color: #81d8d0;
-  }
-  /* Kiểu cho dropdown */
-.nav-item .dropdown-menu {
-  background-color: #ffffff; /* Màu nền trắng */
-  border: 1px solid #dcdcdc; /* Viền mỏng xám nhạt */
-  border-radius: 8px; /* Góc bo tròn nhẹ */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ để tạo hiệu ứng nổi */
-  min-width: 200px; /* Độ rộng tối thiểu */
-  padding: 10px 0; /* Khoảng cách bên trong */
+/* ==================== Tổng thể header ==================== */
+.navbar-custom {
+  padding: 10px 0;
 }
 
-/* Kiểu cho mỗi item trong dropdown */
-.nav-item .dropdown-item {
-  color: #12454d; /* Màu chữ ngọc lục bảo */
-  font-family: 'Playfair Display', serif; /* Font chữ thanh lịch */
-  font-size: 16px; /* Kích thước chữ */
-  padding: 10px 20px; /* Khoảng cách giữa các item */
-  text-align: center; /* Canh giữa */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
+.upper-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Hiệu ứng hover (khi rê chuột vào mỗi item) */
-.nav-item .dropdown-item:hover {
-  background-color: #50C878; /* Đổi nền sang màu ngọc lục bảo khi hover */
-  color: #ffffff; /* Chữ trắng khi hover */
-}
-
-/* Kiểu cho dòng phân cách giữa các mục */
-.nav-item .dropdown-divider {
-  border-color: #dcdcdc; /* Màu phân cách xám nhạt */
-  margin: 0; /* Không có khoảng cách giữa các mục */
-}
-
-/* Kiểu cho phần tiêu đề (ví dụ: Admin) */
-.nav-item .dropdown-item span {
+/* ==================== Phần logo và shop name ==================== */
+.shop-name {
+  font-size: 2rem;
   font-weight: bold;
-  font-size: 18px; /* Chữ to hơn */
-  color: #12454d; /* Màu chữ đậm hơn */
+  text-align: center;
+  color: #12454d;
+  font-family: 'Playfair Display', serif; /* Font sang trọng */
 }
 
-/* Tùy chỉnh icon user-circle */
+/* ==================== Phần liên kết (search, contact) ==================== */
+.upper-navbar .left-side,
+.upper-navbar .right-side {
+  display: flex;
+  justify-content: space-between;
+}
+
+.upper-navbar .nav-link {
+  color: #12454d;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 5px;
+  transition: color 0.3s ease;
+}
+
+.upper-navbar .nav-link:hover {
+  color: #50c878;
+}
+
+/* ==================== Phần icon ==================== */
+.upper-navbar .right-side .icon {
+  font-size: 1.3rem;
+  color: #12454d;
+  position: relative;
+  cursor: pointer;
+}
+
+.upper-navbar .right-side .icon:hover {
+  color: #50c878;
+}
+
+/* ==================== Dropdown ==================== */
+.nav-item .dropdown-menu {
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 300px;
+  padding: 10px 0;
+}
+
+/* Mỗi mục trong dropdown */
+.nav-item .dropdown-item {
+  color: #12454d;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  padding: 10px 20px;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-item .dropdown-item:hover {
+  background-color: #50c878;
+  color: #ffffff;
+}
+
+.nav-item .dropdown-divider {
+  border-color: #dcdcdc;
+  margin: 0;
+}
+
+/* ==================== Icon user-circle ==================== */
 .nav-link i {
-  color: #12454d; /* Màu ngọc lục bảo cho icon */
-  font-size: 24px; /* Tăng kích thước icon */
+  font-size: 24px;
+  color: #12454d;
+  transition: color 0.3s ease;
 }
 
-/* Kiểu cho dropdown menu khi đã mở */
-.nav-item .dropdown-menu.show {
-  display: block;
-  opacity: 1;
-  transition: opacity 0.3s ease;
+.nav-link i:hover {
+  color: #50c878;
+}
+
+/* ==================== Lower navbar (menu) ==================== */
+.lower-navbar {
+  padding: 10px 0;
+}
+
+.lower-navbar .nav-link {
+  color: #12454d;
+  padding: 10px 15px;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.lower-navbar .nav-link:hover {
+  color: #81d8d0;
+}
+
+/* ==================== Giỏ hàng (cart) ==================== */
+.cart-dropdown {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Dropdown menu của giỏ hàng */
+.cart-menu {
+  width: 300px;
+  padding: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  right: 0;
+  text-align: left;
+  font-family: 'Playfair Display', serif;
+}
+
+/* Hiển thị khi không có sản phẩm */
+.empty-cart {
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+.cart-item-actions {
+  margin-left: 10px;
+  padding-right: 10px;
+}
+
+.cart-item-image img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart-item-info {
+  margin-left: 10px;
+}
+
+.cart-item-info h4 {
+  font-size: 14px;
+  margin: 0;
+  color: #12454d;
+}
+
+.cart-item-info p {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+
+/* Tổng tiền và nút thanh toán */
+.cart-total {
+  border-top: 1px solid #dcdcdc;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.cart-total p {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.cart-total button {
+  background-color: #50c878;
+  color: white;
+  font-size: 14px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cart-total button:hover {
+  background-color: #45b167;
 }

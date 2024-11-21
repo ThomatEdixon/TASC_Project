@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     const model = this.form.getRawValue();
     this.authService.Login(model).subscribe({
       next: (res) => {
-        if (res.code === 100) {
+        if (res.errorCode === 200) {
           this.authService.credentialSubject.next(res);
           localStorage.setItem('credential', JSON.stringify(res));
           this.router.navigate(['user']);

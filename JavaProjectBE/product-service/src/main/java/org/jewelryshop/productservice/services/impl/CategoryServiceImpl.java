@@ -5,7 +5,7 @@ import org.jewelryshop.productservice.dto.request.CategoryRequest;
 import org.jewelryshop.productservice.dto.response.CategoryResponse;
 import org.jewelryshop.productservice.entities.Category;
 import org.jewelryshop.productservice.mappers.CategoryMapper;
-import org.jewelryshop.productservice.services.interfaces.CategoryService;
+import org.jewelryshop.productservice.services.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

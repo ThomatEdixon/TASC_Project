@@ -2,7 +2,7 @@ package org.jewelryshop.productservice.services.impl;
 
 import org.jewelryshop.productservice.DAO.impl.MaterialDAOImpl;
 import org.jewelryshop.productservice.entities.Material;
-import org.jewelryshop.productservice.services.interfaces.MaterialService;
+import org.jewelryshop.productservice.services.MaterialService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -6,7 +6,6 @@ import org.jewelryshop.productservice.entities.Product;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
-import java.util.Set;
 
 public interface ProductDAO {
     void save(Product product);
@@ -19,5 +18,5 @@ public interface ProductDAO {
     List<ProductResponse> searchProducts(int page , int size,String name, Double minPrice, Double maxPrice,
                                          String materialName, String categoryName , String brandName);
     boolean checkStock(ProductStockRequest stockRequest);
-    void reduceStock(ProductStockRequest stockRequest);
+    boolean reduceStock(ProductStockRequest stockRequest);
 }

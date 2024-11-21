@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.jewelryshop.userservice.dto.request.PermissionRequest;
 import org.jewelryshop.userservice.dto.response.ApiResponse;
 import org.jewelryshop.userservice.dto.response.PermissionResponse;
+import org.jewelryshop.userservice.services.PermissionService;
 import org.jewelryshop.userservice.services.iplm.PermissionServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping("/permission")
 @RequiredArgsConstructor
 public class PermissionController {
-    private final PermissionServiceImpl permissionService;
+    private final PermissionService permissionService;
     @PostMapping
     ApiResponse<PermissionResponse> create(@RequestBody PermissionRequest permissionRequest) {
         return ApiResponse.<PermissionResponse>builder()

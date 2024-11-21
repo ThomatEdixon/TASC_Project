@@ -2,27 +2,25 @@ package org.jewelryshop.paymentservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "transaction_id")
     private String transactionId;
 
     @Column(name = "transaction_code")
     private String transactionCode;
 
-    private Double amount;
+    private int amount;
 
     @Column(name = "transaction_status")
     private String transactionStatus;
@@ -30,10 +28,10 @@ public class Transaction {
     @Column(name = "payment_method")
     private String paymentMethod;
 
-    @Column(name = "create_at")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "update_at")
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @ManyToOne

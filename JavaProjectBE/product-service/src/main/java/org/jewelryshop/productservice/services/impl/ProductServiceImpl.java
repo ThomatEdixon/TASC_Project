@@ -5,12 +5,10 @@ import org.jewelryshop.productservice.client.OrderClient;
 import org.jewelryshop.productservice.client.PaymentClient;
 import org.jewelryshop.productservice.dto.request.ProductRequest;
 import org.jewelryshop.productservice.dto.request.ProductStockRequest;
-import org.jewelryshop.productservice.dto.response.OrderResponse;
-import org.jewelryshop.productservice.dto.response.PaymentResponse;
 import org.jewelryshop.productservice.dto.response.ProductResponse;
 import org.jewelryshop.productservice.entities.Product;
 import org.jewelryshop.productservice.mappers.ProductMapper;
-import org.jewelryshop.productservice.services.interfaces.ProductService;
+import org.jewelryshop.productservice.services.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -99,9 +96,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void reduceStock(ProductStockRequest stockRequest) {
+    public boolean reduceStock(ProductStockRequest stockRequest) {
         if(checkStock(stockRequest)){
-            productDAO.reduceStock(stockRequest);
+            return productDAO.reduceStock(stockRequest);
         }
+        return false;
     }
 }

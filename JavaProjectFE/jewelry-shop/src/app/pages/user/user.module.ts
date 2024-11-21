@@ -8,6 +8,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { ProductsComponent } from './pages/products/products.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductDetailComponent } from './pages/product-details/product-details.component';
+import { OrderComponent } from './pages/order/order.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ProductDetailComponent } from './pages/product-details/product-details.
     UserRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [UserComponent,HomepageComponent,HeaderComponent,FooterComponent,ProductsComponent,ProductDetailComponent]
+  declarations: [UserComponent,HomepageComponent,HeaderComponent,FooterComponent,ProductsComponent,ProductDetailComponent,OrderComponent]
 })
 export class UserModule { }

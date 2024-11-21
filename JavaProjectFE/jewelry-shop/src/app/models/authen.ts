@@ -1,5 +1,5 @@
 export interface AuthenResponse {
-    code:number,
+    errorCode:number,
     message:string,
     data:any
 }

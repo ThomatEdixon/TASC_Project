@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
         }
         ApiResponse apiResponse = new ApiResponse();
 
-        apiResponse.setCode(errorCode.getCode());
+        apiResponse.setErrorCode(errorCode.getErrorCode());
         apiResponse.setMessage(
                 Objects.nonNull(attributes)
                         ? mapAttribute(errorCode.getMessage(), attributes)
@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
     }
     private ApiResponse createApiResponse(ErrorCode errorCode){
         ApiResponse apiResponse = new ApiResponse<>();
-        apiResponse.setCode(errorCode.getCode());
+        apiResponse.setErrorCode(errorCode.getErrorCode());
         apiResponse.setMessage(errorCode.getMessage());
         return apiResponse;
     }

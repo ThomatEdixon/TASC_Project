@@ -15,7 +15,7 @@ public interface OrderClient {
     @GetMapping("/order/{orderId}")
     ApiResponse<OrderResponse> getOrderById(@PathVariable("orderId") String orderId);
     @PostMapping("/order/update-status/{orderId}")
-    void updateOrderStatus(@PathVariable String orderId, @RequestBody StatusResponse statusResponse);
+    ApiResponse<StatusResponse> updateOrderStatus(@PathVariable String orderId, @RequestBody StatusResponse statusResponse);
 
 }
 

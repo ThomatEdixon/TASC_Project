@@ -1,7 +1,7 @@
 package org.jewelryshop.userservice.services.iplm;
 
 import lombok.RequiredArgsConstructor;
-import org.jewelryshop.userservice.services.interfaces.MailService;
+import org.jewelryshop.userservice.services.MailService;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;

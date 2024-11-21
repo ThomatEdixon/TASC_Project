@@ -2,21 +2,20 @@ package org.jewelryshop.paymentservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "payment_id",insertable=false, updatable=false)
+    @Column(name = "payment_id")
     private String paymentId;
 
     @Column(name = "order_id")
@@ -37,7 +36,6 @@ public class Payment {
 
     @OneToMany(mappedBy = "payment" , fetch = FetchType.LAZY)
     @JsonIgnore
-    @Column(insertable=false, updatable=false)
     private List<Transaction> transactions;
 }
 

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetailResponse {
-    String orderId;
+    private String orderId;
     private String productId;
     private int quantity;
     private int pricePerUnit;

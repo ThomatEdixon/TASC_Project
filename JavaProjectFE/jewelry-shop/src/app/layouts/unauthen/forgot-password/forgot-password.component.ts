@@ -34,7 +34,7 @@ export class ForgotPasswordComponent implements OnInit {
     let model = this.forgotForm.getRawValue();
     console.log(model);
     this.userService.ForgotPassWord(model).pipe().subscribe((res)=>{
-      if(res.code == 100){
+      if(res.errorCode == 200){
         this.router.navigate(['verify'],{queryParams: { username : model.username}});
       }
     });

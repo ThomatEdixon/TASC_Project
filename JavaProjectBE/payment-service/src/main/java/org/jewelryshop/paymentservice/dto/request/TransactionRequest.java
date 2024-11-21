@@ -12,11 +12,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TransactionRequest {
 
+    private String transactionId;
+
     private String paymentId;
 
     private String transactionCode;
 
-    private Double amount;
+    private int amount;
 
     private String transactionStatus;
 

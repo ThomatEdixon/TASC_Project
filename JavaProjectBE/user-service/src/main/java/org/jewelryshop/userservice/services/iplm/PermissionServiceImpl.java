@@ -6,7 +6,7 @@ import org.jewelryshop.userservice.dto.response.PermissionResponse;
 import org.jewelryshop.userservice.entities.Permission;
 import org.jewelryshop.userservice.mappers.PermissionMapper;
 import org.jewelryshop.userservice.repositories.PermissionRepository;
-import org.jewelryshop.userservice.services.interfaces.PermissionService;
+import org.jewelryshop.userservice.services.PermissionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

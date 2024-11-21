@@ -11,6 +11,7 @@ import org.jewelryshop.userservice.dto.response.ApiResponse;
 import org.jewelryshop.userservice.dto.response.IntrospectResponse;
 import org.jewelryshop.userservice.dto.response.UserLoginResponse;
 import org.jewelryshop.userservice.exceptions.AppException;
+import org.jewelryshop.userservice.services.AuthenticationService;
 import org.jewelryshop.userservice.services.iplm.AuthenticationServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +21,9 @@ import java.text.ParseException;
 @RequestMapping(value = "/authentication")
 @RequiredArgsConstructor
 public class AuthenticationController {
-    private final AuthenticationServiceImpl authenticationService;
+    private final AuthenticationService authenticationService;
     @PostMapping("/login")
-    public ApiResponse<UserLoginResponse> login(@RequestBody @Valid UserLoginRequest userLoginRequest) throws AppException {
+    public ApiResponse<UserLoginResponse> login(@RequestBody @Valid UserLoginRequest userLoginRequest){
         UserLoginResponse userLoginResponse = authenticationService.login(userLoginRequest);
         return ApiResponse.<UserLoginResponse>builder().data(userLoginResponse).build();
     }
@@ -32,7 +33,7 @@ public class AuthenticationController {
         return ApiResponse.<IntrospectResponse>builder().data(introspectResponse).build();
     }
     @PostMapping("/logout")
-    ApiResponse<Void> logout(@RequestBody UserLogoutRequest request) throws ParseException, JOSEException, AppException {
+    ApiResponse<Void> logout(@RequestBody UserLogoutRequest request) throws ParseException, JOSEException {
         authenticationService.logout(request);
         return ApiResponse.<Void>builder().build();
     }

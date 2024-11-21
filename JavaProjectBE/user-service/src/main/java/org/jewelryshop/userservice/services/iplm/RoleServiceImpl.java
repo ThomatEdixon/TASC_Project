@@ -8,7 +8,7 @@ import org.jewelryshop.userservice.entities.Role;
 import org.jewelryshop.userservice.mappers.RoleMapper;
 import org.jewelryshop.userservice.repositories.PermissionRepository;
 import org.jewelryshop.userservice.repositories.RoleRepository;
-import org.jewelryshop.userservice.services.interfaces.RoleService;
+import org.jewelryshop.userservice.services.RoleService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
