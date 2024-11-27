@@ -6,27 +6,19 @@ import org.jewelryshop.orderservice.client.PaymentClient;
 import org.jewelryshop.orderservice.client.ProductClient;
 import org.jewelryshop.orderservice.client.UserClient;
 import org.jewelryshop.orderservice.constants.OrderStatus;
-import org.jewelryshop.orderservice.constants.PaymentMethod;
 import org.jewelryshop.orderservice.dto.request.*;
 import org.jewelryshop.orderservice.dto.response.*;
 import org.jewelryshop.orderservice.entities.Order;
-import org.jewelryshop.orderservice.entities.OrderDetail;
-import org.jewelryshop.orderservice.exceptions.AppException;
-import org.jewelryshop.orderservice.exceptions.ErrorCode;
 import org.jewelryshop.orderservice.mapper.OrderMapper;
-import org.jewelryshop.orderservice.repositories.OrderDetailRepository;
 import org.jewelryshop.orderservice.repositories.OrderRepository;
 import org.jewelryshop.orderservice.services.OrderDetailService;
 import org.jewelryshop.orderservice.services.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
-
-    private final OrderDetailRepository orderDetailRepository;
 
     private final UserClient userClient;
 
@@ -35,7 +27,10 @@ public class OrderServiceImpl implements OrderService {
     private final PaymentClient paymentClient;
 
     private final OrderMapper orderMapper;
+
     private final OrderDetailService orderDetailService;
+
+    private final OrderProducerService orderProducerService;
     @Override
     @Transactional
     public OrderResponse createOrder(OrderRequest orderRequest){
@@ -58,16 +53,17 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderMapper.toOrder(orderRequest);
         order.setTotalAmount(totalAmount);
         order.setStatus(OrderStatus.PENDING);
-        orderRepository.save(order);
+        order = orderRepository.save(order);
 
         // save orderDetail
         for (OrderDetailRequest orderDetailRequest : orderRequest.getOrderDetails()) {
             orderDetailRequest.setOrderId(order.getOrderId());
             orderDetailService.create(orderDetailRequest);
         }
+        OrderResponse orderResponse = orderMapper.toOrderResponse(order);
+        // send producer to topic kafka
 
-
-        return orderMapper.toOrderResponse(order);
+        return orderResponse;
 
     }
 
@@ -78,6 +74,9 @@ public class OrderServiceImpl implements OrderService {
 
         order.setStatus(response.getStatus());
 
+        // send producer to topic kafka
+        OrderResponse orderResponse = orderMapper.toOrderResponse(order);
+        orderProducerService.sendOrderEvent("order-topic", orderResponse);
         orderRepository.save(order);
     }
 
@@ -89,10 +88,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void confirmPaymentMethod(String orderId, String paymentMethod) {
         Order order = orderRepository.findByOrderId(orderId);
-        // Process Payment
-        if(order.getStatus().equals(OrderStatus.PENDING)){
-            PaymentRequest paymentRequest = new PaymentRequest(orderId, PaymentMethod.PayOS);
-            paymentClient.createPayment(paymentRequest);
-        }
+        OrderResponse orderResponse = orderMapper.toOrderResponse(order);
+        orderResponse.setPaymentMethod(paymentMethod);
+
     }
 }

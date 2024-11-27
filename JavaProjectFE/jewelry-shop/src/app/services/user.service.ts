@@ -28,8 +28,8 @@ export class UserService {
   ChangePassword(username:string, model:ChangePasswordRequest):Observable<AuthenResponse>{
     return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}/changePassword/${username}`, model);
   }
-  GetInfo():Observable<AuthenResponse>{
-    return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}/my-info`,);
+  GetInfo(token:string):Observable<AuthenResponse>{
+    return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}/my-info?token=${token}`,);
   }
   GetAll():Observable<AuthenResponse>{
     return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}`);

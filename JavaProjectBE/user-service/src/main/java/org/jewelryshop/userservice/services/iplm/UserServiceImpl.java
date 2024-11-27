@@ -2,6 +2,7 @@ package org.jewelryshop.userservice.services.iplm;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jewelryshop.userservice.configurations.CustomJwtDecoder;
 import org.jewelryshop.userservice.constants.PredefinedRole;
 import org.jewelryshop.userservice.dto.request.ChangePasswordRequest;
 import org.jewelryshop.userservice.dto.request.ForgotPasswordRequest;
@@ -22,6 +23,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final MailServiceImpl mailService;
     private final ForgotPasswordRepository forgotPasswordRepository;
+    private final CustomJwtDecoder customJwtDecoder;
 
     @Override
     public UserResponse createUser(UserRequest userRequest){
@@ -90,11 +93,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse getMyInfoFromToken() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        String name = context.getAuthentication().getName();
+    public UserResponse getMyInfoFromToken(String token) {
+        Jwt decodedJwt = customJwtDecoder.decode(token);
 
-        User user = userRepository.findByUsername(name);
+        User user = userRepository.findByUsername(decodedJwt.getSubject());
         if(user == null)
             throw new AppException(ErrorCode.USER_NOT_EXISTED);
 

@@ -19,4 +19,5 @@ public class OrderResponse {
     private String status;
     private int totalAmount;
     private List<OrderDetailResponse> orderDetails;
+    private String paymentMethod;
 }

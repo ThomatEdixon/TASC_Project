@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
 export class AppComponent {
   constructor(private authService: AuthenticateService,private router:Router) { }
   ngOnInit(){
-    if(!this.IsAuthen()){
-      this.router.navigateByUrl('user');
-    }else{
+    let role = localStorage.getItem('role');
+    if(role && JSON.parse(role) === 'ADMIN'){
       this.router.navigateByUrl('admin');
+    }else{
+      this.router.navigateByUrl('user');
     }
   }
-  IsAuthen = () => this.authService.LoggedIn
 
 }

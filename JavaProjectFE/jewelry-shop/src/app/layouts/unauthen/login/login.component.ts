@@ -3,6 +3,7 @@ import { AuthenticateService } from '../../../services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthenticateService,
+    private userService: UserService,
     private fb: FormBuilder, 
     private router: Router
   ) {}
@@ -30,27 +32,47 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  OnClickLogin() {
+  async OnClickLogin() {
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
+  
     const model = this.form.getRawValue();
-    this.authService.Login(model).subscribe({
-      next: (res) => {
-        if (res.errorCode === 200) {
-          this.authService.credentialSubject.next(res);
-          localStorage.setItem('credential', JSON.stringify(res));
-          this.router.navigate(['user']);
-        } else {
-          console.log('Authenticate fail: ' + res.message);
-        }
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status === 400) {
-          this.handleBackendErrors(error.error);
-        }
+  
+    try {
+      // Gọi API Login
+      const loginResponse = await this.authService.Login(model).toPromise();
+  
+      if (!loginResponse) {
+        console.error('Login response is undefined.');
+        return;
       }
-    });
+  
+      if (loginResponse.errorCode === 200) {
+        // Lưu thông tin token
+        this.authService.credentialSubject.next(loginResponse.data.token);
+        localStorage.setItem('token', JSON.stringify(loginResponse.data.token));
+  
+        // Gọi API GetInfo sau khi Login thành công
+        const userInfo = await this.userService.GetInfo(loginResponse.data.token).toPromise();
+        if (userInfo) {
+          localStorage.setItem('userId', JSON.stringify(userInfo.data.userId));
+          localStorage.setItem('role', JSON.stringify(userInfo.data.role.name));
+        }
+  
+        // Điều hướng sau khi hoàn thành
+        this.router.navigate(['user']);
+      } else {
+        console.log('Authenticate fail: ' + loginResponse.message);
+      }
+    } catch (error: any) {
+      if (error instanceof HttpErrorResponse && error.status === 400) {
+        this.handleBackendErrors(error.error);
+      } else {
+        console.error('An error occurred:', error.message);
+      }
+    }
   }
+  
   handleBackendErrors(errors: any) {
     this.backendErrors = {}; // Reset lỗi cũ
     if (errors && typeof errors === 'object') {

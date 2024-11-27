@@ -17,5 +17,5 @@ public interface ProductService {
                                          String materialName, String categoryName, String brandName);
     void addProductMaterial(String productId, String name);
     boolean checkStock(ProductStockRequest stockRequest);
-    boolean reduceStock(ProductStockRequest stockRequest);
+    boolean reduceStock(String orderId);
 }

@@ -26,4 +26,5 @@ public class OrderResponse {
     private int totalAmount;
 
     private List<OrderDetailResponse> orderDetails;
+    private String paymentMethod;
 }

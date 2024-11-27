@@ -10,9 +10,9 @@ const Endpoint = 'authentication';
   providedIn: 'root'
 })
 export class AuthenticateService {
-  credentialSubject: BehaviorSubject<AuthenResponse | null>;
+  credentialSubject: BehaviorSubject<string | null>;
   constructor(private httpClient: HttpClient, private router: Router) {
-    this.credentialSubject = new BehaviorSubject<AuthenResponse | null>(JSON.parse(localStorage.getItem('credential') || '{}'));
+    this.credentialSubject = new BehaviorSubject<string | null>(JSON.parse(localStorage.getItem('token') || '{}'));
   }
 
   get LoggedIn(): boolean { return !(JSON.stringify(this.credentialSubject.value) === '{}') }
@@ -23,8 +23,8 @@ export class AuthenticateService {
     return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}/login`, model);
   }
 
-  Logout(model:AuthenToken): Observable<AuthenResponse> {
-    localStorage.removeItem('credential');
+  Logout(model:any): Observable<AuthenResponse> {
+    localStorage.removeItem('token');
     this.credentialSubject.next(JSON.parse('{}'));
     this.router.navigateByUrl('/login');
     return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}/logout`, model);
@@ -32,7 +32,7 @@ export class AuthenticateService {
   Introspect(model:any): Observable<AuthenResponse> {
     return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}/introspect`, model);
   }
-  RefreshToken(model:AuthenToken):Observable<AuthenResponse>{
+  RefreshToken(model:any):Observable<AuthenResponse>{
     return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}/refresh`, model);
   }
 }

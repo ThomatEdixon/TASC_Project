@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TransactionService {
     Transaction createTransaction(TransactionRequest transactionRequest);
-    void update();
+    void update(String transactionId, String status);
     List<Transaction> getByPaymentId(String paymentId);
 
 }

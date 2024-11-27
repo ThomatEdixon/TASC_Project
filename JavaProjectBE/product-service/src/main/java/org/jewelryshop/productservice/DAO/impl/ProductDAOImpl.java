@@ -276,6 +276,7 @@ public class ProductDAOImpl implements ProductDAO {
                  PreparedStatement stmt = connection.prepareStatement(sql)) {
 
                 stmt.setInt(1,orderDetail.getQuantity());
+                stmt.setString(2, orderDetail.getProductId());
                 stmt.executeUpdate();
                 updateProductStatus(ProductStatus.SUCCESS);
                 return true;

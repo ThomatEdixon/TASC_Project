@@ -14,9 +14,11 @@ import java.time.LocalDateTime;
 public class PaymentResponse {
 
     private String paymentId;
-
     private String orderId;
-
+    private String paymentMethod;
     private String paymentStatus;
+    private int orderCode;
+    private LocalDateTime createdAt;
+    private String checkoutUrl;
 }
 

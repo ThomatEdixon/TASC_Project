@@ -15,7 +15,7 @@ export class NavbarComponent{
   }
 
   ClickLogOut(){
-    this.authService.Logout(this.authService.GetCredential?.data.token)
+    this.authService.Logout(this.authService.GetCredential)
   }
 
 }

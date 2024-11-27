@@ -9,5 +9,5 @@ export interface AuthenRequest {
     password: string
 }
 export interface AuthenToken{
-    token:any
+    token:string
 }

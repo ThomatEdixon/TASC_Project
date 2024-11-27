@@ -10,12 +10,12 @@ export class JwtInterceptor implements HttpInterceptor {
     let isLoggedIn = this.authService.LoggedIn;
     let currentUser = this.authService.GetCredential;
     if (isLoggedIn) {
-      req = req.clone({ setHeaders: { Authorization: `Bearer ${currentUser?.data.token}` } });
+      req = req.clone({ setHeaders: { Authorization: `Bearer ${currentUser}` } });
     }
     return next.handle(req).pipe(catchError(err => {
       if (err.status === 401){
-        if(this.authService.RefreshToken(currentUser?.data.token))
-        this.authService.Logout(currentUser?.data.token)
+        if(this.authService.RefreshToken(currentUser))
+        this.authService.Logout(currentUser)
       };
       return throwError(() => err);
     }));

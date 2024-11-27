@@ -12,7 +12,7 @@ import { CartService } from '../../../../services/cart.service';
 })
 export class HeaderComponent implements OnInit{
 
-  credential: any;
+  token: any;
   user!:UserResponse;
   cartItems: any[] = [];
   cartCount: number = 0;
@@ -23,15 +23,22 @@ export class HeaderComponent implements OnInit{
     private userService:UserService,
     private cartService:CartService
   ) {
-    this.credential = this.authService.GetCredential
+    this.token = this.authService.GetCredential
   }
   ngOnInit() {
     this.loadCart();
   }
 
-  IsAuthen = () => this.authService.LoggedIn
+  IsAdmin():boolean{
+    let role = localStorage.getItem('role');
+    if(role && JSON.parse(role) === 'ADMIN'){
+      return true;
+    }else{
+      return false;
+    }
+  }
   ClickLogOut(){
-    this.authService.Logout(this.authService.GetCredential?.data.token)
+    this.authService.Logout(this.authService.GetCredential)
   }
 
   loadCart(): void {

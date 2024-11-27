@@ -1,0 +1,121 @@
+/* Background and Container */
+.background-wrapper {
+    background-image: url('https://static.vecteezy.com/system/resources/previews/038/811/348/non_2x/ai-generated-beautiful-background-for-jewelry-advertising-free-photo.jpeg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .payment-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    max-width: 1200px;
+    width: 100%;
+  }
+  
+  /* Section Titles */
+  .section-title {
+    font-size: 1.5rem;
+    color: #12454d;
+    border-bottom: 2px solid #50c878;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Cart Section */
+  .cart-section {
+    border-right: 1px solid #dcdcdc;
+    padding-right: 20px;
+  }
+  
+  .product-table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+  }
+  
+  .product-table th,
+  .product-table td {
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+  }
+  
+  .product-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .product-thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .total-amount {
+    font-size: 1.2rem;
+    color: #12454d;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  /* Payment Section */
+  .payment-section {
+    padding-left: 20px;
+  }
+  
+  .payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .payment-method {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .payment-method.active {
+    border-color: #50c878;
+    background-color: #eaf7ec;
+  }
+  
+  .method-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .payment-method:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .btn-confirm {
+    margin-top: 20px;
+    background-color: #50c878;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-confirm:hover {
+    background-color: #45b167;
+  }
+  

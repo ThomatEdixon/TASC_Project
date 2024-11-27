@@ -44,14 +44,6 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     @Transactional
     public PaymentResponse createPayment(PaymentRequest paymentRequest)  {
-        ApiResponse<OrderResponse> order;
-
-        order = orderClient.getOrderById(paymentRequest.getOrderId());
-        System.out.println(order);
-
-        if (!PaymentStatus.PENDING.equals(order.getData().getStatus())) {
-            throw new AppException(ErrorCode.ORDER_NOT_PENDING);
-        }
 
         Payment payment = paymentMapper.toPayment(paymentRequest);
         payment.setPaymentStatus(PaymentStatus.PENDING);
@@ -59,7 +51,7 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setCreatedAt(LocalDateTime.now());
         payment.setUpdatedAt(LocalDateTime.now());
         paymentRepository.save(payment);
-        // Trả về thông tin thanh toán
+
         return paymentMapper.toPaymentResponse(payment);
     }
 
@@ -68,6 +60,11 @@ public class PaymentServiceImpl implements PaymentService {
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow();
 
+        return paymentMapper.toPaymentResponse(payment);
+    }
+    @Override
+    public PaymentResponse getPaymentByOrderCode(int orderCode)  {
+        Payment payment = paymentRepository.findByOrderCode(orderCode);
         return paymentMapper.toPaymentResponse(payment);
     }
 
@@ -101,8 +98,8 @@ public class PaymentServiceImpl implements PaymentService {
                         String urlPayment = payOSService.createPaymentRequest(payOSRequest);
                         ObjectMapper objectMapper = new ObjectMapper();
                         PayOSResponse response = objectMapper.readValue(urlPayment, PayOSResponse.class);
-                        paymentResponse.setCheckoutUrl(response.getData().getCheckoutUrl());
                         System.out.printf(response.toString());
+                        paymentResponse.setCheckoutUrl(response.getData().getCheckoutUrl());
                         TransactionRequest transactionRequest = TransactionRequest.builder()
                                 .transactionId(response.getData().getPaymentLinkId())
                                 .paymentMethod(payment.getPaymentMethod())

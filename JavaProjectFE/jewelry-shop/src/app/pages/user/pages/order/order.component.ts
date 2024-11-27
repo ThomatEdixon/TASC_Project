@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../../../services/cart.service';
+import { OrderService } from '../../../../services/order.service';
+import { OrderDetailRequest, OrderRequest } from '../../../../models/order';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -9,16 +12,26 @@ import { CartService } from '../../../../services/cart.service';
 })
 export class OrderComponent implements OnInit {
   orderForm!: FormGroup;
-  cartItems: any[] = []; // Placeholder for cart items
-  totalPrice: number = 0; // Total amount placeholder
-  couponDiscount: number = 0; // Discount placeholder
+  cartItems: any[] = [];
+  totalPrice: number = 0;
+  order: OrderRequest = {
+    userId: null,
+    orderDetails: [],
+    orderDate: new Date().toISOString(), 
+    status: 'PENDING', 
+  }
+  userId!: string | null;
 
-  constructor(private fb: FormBuilder,private cartService:CartService) {}
+  constructor(
+    private fb: FormBuilder,
+    private cartService: CartService,
+    private orderService: OrderService,
+    private router:Router
+  ) {  }
 
   ngOnInit(): void {
     this.initializeForm();
-    this.loadCartItems(); 
-    this.calculateTotalAmount(); 
+    this.loadCartItems();
   }
 
   initializeForm(): void {
@@ -35,7 +48,6 @@ export class OrderComponent implements OnInit {
   }
 
   loadCartItems(): void {
-    // Placeholder: Add logic to fetch cart items
     this.cartService.cartItems$.subscribe((items) => {
       this.cartItems = items;
     });
@@ -44,37 +56,51 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  calculateTotalAmount(): void {
-    // Placeholder: Add logic to calculate the total amount
-    console.log('Calculate total amount');
-  }
-
-  applyCoupon(): void {
-    // Placeholder: Add logic to apply a coupon
-    console.log('Apply coupon');
-  }
-
   placeOrder(): void {
+    this.orderForm.markAllAsTouched();
+    if (this.orderForm.invalid) return;
+  
+    const model = this.orderForm.getRawValue();
     if (this.orderForm.valid) {
-      // Placeholder: Add logic to handle order placement
-      console.log('Order placed:', this.orderForm.value);
+      debugger
+      this.order.userId= localStorage.getItem('userId'); 
+      this.order.userId= this.order.userId.replace(/^"|"$/g, '');
+      this.order.orderDetails = this.cartItems.map(item => {
+        const orderDetail: OrderDetailRequest = {
+          orderId:'',
+          productId: item.productId,
+          quantity: item.quantity,
+          pricePerUnit: item.price,
+          totalPrice: item.quantity * item.price, 
+        };
+        return orderDetail;
+      });
+      this.orderService.createOrder(this.order).pipe().subscribe((res)=>{
+        localStorage.removeItem('orderId');
+        localStorage.setItem('orderId', JSON.stringify(res.data.orderId) );
+      });
+      console.log(model.payment_method);
+      
+      if(model.payment_method === 'cod'){
+        
+      }else{
+        console.log(this.order)
+        this.router.navigateByUrl('/user/payment-method');
+      }
     } else {
       console.log('Form is invalid');
     }
   }
 
   increaseQuantity(index: number): void {
-    // Placeholder: Add logic to increase product quantity
     console.log(`Increase quantity for item at index: ${index}`);
   }
 
   decreaseQuantity(index: number): void {
-    // Placeholder: Add logic to decrease product quantity
     console.log(`Decrease quantity for item at index: ${index}`);
   }
 
   confirmDelete(index: number): void {
-    // Placeholder: Add logic to confirm and remove an item from the cart
     console.log(`Confirm delete for item at index: ${index}`);
   }
 }

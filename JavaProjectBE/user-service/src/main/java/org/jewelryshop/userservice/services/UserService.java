@@ -15,7 +15,7 @@ public interface UserService {
     UserResponse updateUser(String id,UserRequest userRequest) ;
     void deleteUser(String id);
     UserResponse getUserById(String id) ;
-    UserResponse getMyInfoFromToken() ;
+    UserResponse getMyInfoFromToken(String token) ;
     UserResponse changePassword(String userId, ChangePasswordRequest changePasswordRequest) ;
     boolean forgotPassword(ForgotPasswordRequest forgotPasswordRequest);
     boolean verifyOTP(String userId, VerifyRequest verifyRequest);

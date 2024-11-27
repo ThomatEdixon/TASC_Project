@@ -34,8 +34,9 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public void update() {
-
+    public void update(String transactionId, String status) {
+        Transaction existingTransaction  = transactionRepository.findById(transactionId).orElseThrow();
+        existingTransaction.setTransactionStatus(status);
     }
 
     @Override

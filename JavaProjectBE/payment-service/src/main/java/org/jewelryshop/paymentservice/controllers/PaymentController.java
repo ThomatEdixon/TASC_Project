@@ -6,9 +6,9 @@ import org.jewelryshop.paymentservice.dto.request.PaymentRequest;
 import org.jewelryshop.paymentservice.dto.response.ApiResponse;
 import org.jewelryshop.paymentservice.dto.response.PaymentResponse;
 import org.jewelryshop.paymentservice.dto.response.StatusResponse;
-import org.jewelryshop.paymentservice.entities.Payment;
-import org.jewelryshop.paymentservice.exceptions.AppException;
 import org.jewelryshop.paymentservice.services.PaymentService;
+import org.jewelryshop.paymentservice.services.TransactionService;
+import org.jewelryshop.paymentservice.services.impl.PaymentProducerService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class PaymentController {
 
     private final PaymentService paymentService;
+    private final TransactionService transactionService;
+    private final PaymentProducerService paymentProducerService;
 
     @PostMapping
     public ApiResponse<PaymentResponse> createPayment(@RequestBody PaymentRequest paymentRequest) {
@@ -52,16 +54,27 @@ public class PaymentController {
             @RequestParam String status,
             @RequestParam Long orderCode) {
         StatusResponse statusResponse = new StatusResponse();
+        PaymentResponse paymentResponse = paymentService.getPaymentByOrderCode(Math.toIntExact(orderCode));
         if(!cancel){
             if(status.equals("PAID")){
-                paymentService.reduceStock(Math.toIntExact(orderCode));
+                statusResponse.setStatus(PaymentStatus.SUCCESS);
+                paymentResponse.setPaymentStatus(PaymentStatus.SUCCESS);
+                paymentService.updatePaymentStatus(Math.toIntExact(orderCode),statusResponse);
+                transactionService.update(id,PaymentStatus.SUCCESS);
+                paymentProducerService.sendPaymentEvent("payment-topic",paymentResponse);
                 return ApiResponse.<Boolean>builder().data(true).build();
+            }else {
+                statusResponse.setStatus(status);
+                paymentResponse.setPaymentMethod(status);
+                paymentService.updatePaymentStatus(Math.toIntExact(orderCode),statusResponse);
             }
         }else {
             statusResponse.setStatus(PaymentStatus.CANCEL);
+            paymentResponse.setPaymentMethod(PaymentStatus.CANCEL);
             paymentService.updatePaymentStatus(Math.toIntExact(orderCode),statusResponse);
         }
-
+        transactionService.update(id,status);
+        paymentProducerService.sendPaymentEvent("payment-topic",paymentResponse);
         return ApiResponse.<Boolean>builder().data(false).build();
     }
 }

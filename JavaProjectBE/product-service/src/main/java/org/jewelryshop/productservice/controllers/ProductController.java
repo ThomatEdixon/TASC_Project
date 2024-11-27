@@ -73,8 +73,8 @@ public class ProductController {
         return ApiResponse.<Boolean>builder().data(productService.checkStock(stockRequest)).build();
     }
 
-    @PutMapping("/reduce-stock")
-    public ApiResponse<Boolean> reduceProductStock(@RequestBody ProductStockRequest stockRequest) {
-        return ApiResponse.<Boolean>builder().data(productService.reduceStock(stockRequest)).build();
+    @PutMapping("/reduce-stock/{id}")
+    public ApiResponse<Boolean> reduceProductStock(@PathVariable String id) {
+        return ApiResponse.<Boolean>builder().data(productService.reduceStock(id)).build();
     }
 }

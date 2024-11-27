@@ -5,6 +5,8 @@ import org.jewelryshop.productservice.client.OrderClient;
 import org.jewelryshop.productservice.client.PaymentClient;
 import org.jewelryshop.productservice.dto.request.ProductRequest;
 import org.jewelryshop.productservice.dto.request.ProductStockRequest;
+import org.jewelryshop.productservice.dto.response.ApiResponse;
+import org.jewelryshop.productservice.dto.response.OrderResponse;
 import org.jewelryshop.productservice.dto.response.ProductResponse;
 import org.jewelryshop.productservice.entities.Product;
 import org.jewelryshop.productservice.mappers.ProductMapper;
@@ -96,7 +98,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean reduceStock(ProductStockRequest stockRequest) {
+    public boolean reduceStock(String orderId) {
+        ApiResponse<OrderResponse> orderResponse = orderClient.getOrderById(orderId);
+        ProductStockRequest stockRequest = ProductStockRequest.builder().orderDetailResponses(orderResponse.getData().getOrderDetails()).build();
         if(checkStock(stockRequest)){
             return productDAO.reduceStock(stockRequest);
         }

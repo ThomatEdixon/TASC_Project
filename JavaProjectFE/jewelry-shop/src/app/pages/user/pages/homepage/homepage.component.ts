@@ -65,7 +65,7 @@ export class HomepageComponent implements OnInit {
   }
 
 
-  addToCart(product: any): void {
+  addToCart(product: ProductResponse): void {
     this.cartService.addToCart(product); // Gọi service để thêm vào cart
   }
 

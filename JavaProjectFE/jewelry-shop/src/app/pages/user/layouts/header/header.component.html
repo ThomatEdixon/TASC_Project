@@ -31,7 +31,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <!-- Nếu đã đăng nhập -->
-            <ng-container *ngIf="IsAuthen(); else unauthDropdown">
+            <ng-container *ngIf="IsAdmin(); else unauthDropdown">
               <span class="dropdown-item">Admin</span>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item dropdown-footer" (click)="ClickLogOut()">Logout</a>

@@ -61,9 +61,9 @@ public class UserController {
     }
 
     @GetMapping("/my-info")
-    ApiResponse<UserResponse> getMyInfo(){
+    ApiResponse<UserResponse> getMyInfoFormToken(@RequestParam String token){
         return ApiResponse.<UserResponse>builder()
-                .data(userService.getMyInfoFromToken())
+                .data(userService.getMyInfoFromToken(token))
                 .build();
     }
 

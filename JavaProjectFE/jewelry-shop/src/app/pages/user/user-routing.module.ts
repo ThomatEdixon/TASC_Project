@@ -6,6 +6,8 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductDetailComponent } from './pages/product-details/product-details.component';
 import { OrderComponent } from './pages/order/order.component';
+import { PaymentMethodComponent } from './pages/payment-method/payment-method.component';
+import { UrlPayOSComponent } from './pages/urlPayOS/urlPayOS.component';
 
 const routes: Routes = [
   {
@@ -27,6 +29,14 @@ const routes: Routes = [
       {
         path:'order',
         component: OrderComponent
+      },
+      {
+        path:'payment-method',
+        component:PaymentMethodComponent
+      },
+      {
+        path:"payos?code = &id = &cancel = &status = &orderCode",
+        component:UrlPayOSComponent
       }
     ]
   },

@@ -8,6 +8,16 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 22102003
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: jewelry-shop-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 eureka:
   client:
     service-url:
