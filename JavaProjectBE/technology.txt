@@ -1,0 +1,43 @@
+Main Techlonogy 
+
+Jewelry Shop
+
+Các công nghệ chính sử dụng:
+
+-Microservice:Chia nhỏ ứng dụng thành các service nghiệp vụ,các service chính:
+        +Discovery:quản lý các service nghiệp vụ,các service nghiệp vụ phải đăng kí với eureka
+        +Gatewave:sử dụng để routing,author một vài api quan trọng
+        +UserService: service chính sử dụng để xác thực và phân quyền,quản lý các tài khoản,đăng kí,đăng nhập,quên mật khẩu,..
+        +OrderService: có vai trò lên đơn hàng.
+        +PaymentService: sử dụng để thanh toán (PayOS).
+        +ProductService: lưu trữ thông tin sản phẩm .
+        +NotificationService: gửi thông báo tới khách hàng khi .
+
+    - Eureka + API Gatewave:2 thành phần quan trọng trong mô hình microservice,Eureka sẽ đóng vai trò là thằng quản lý chung,tất cả các service đều phải đăng kí với
+    eureka,còn API Gatewave đóng vai trò tở thành đầu vào duy nhất của ứng dụng,tất cả các yêu cầu từ client phải thông qua gatewave trước khi được định tuyến đến các 
+    service nghiệp vụ,routing,kiểm tra quyền truy cập một vài đầu api quan trọng,..
+
+    - SpringSecurity + JWT
+        :Sử dụng trong phần xác thực(Authentication) tài khoản và phân quyền(Authorization) cho các role được sử dụng tại 2 service là gateway và userService
+            + UserService : nhận thông tin đăng nhập từ khách hàng (username, password) kiểm tra database xem người dùng đăng ký chưa , nếu rồi trả về 1 chuỗi jwt token 
+            + Gateway: điều hướng các request đi qua UserService để xác định quyền của user. 
+
+    -Giao tiếp giữa các service : 
+        + FeignClient: dùng cho các tác vụ yêu cầu xử lý real-time.
+        + Kafka : dùng sử lý sự kiện không yêu cầu real-time và có độ trễ.
+
+    -Transaction: sử dụng trong 1 luồng thanh toán .
+        : Sử dụng Saga Pattern để quản lý 1 transaction trong hệ thống micro service.
+            + Quản lý transaction tại từng service.
+            + Lắng nghe sự thay đổi của từng service qua sự thay đổi status.
+            + Sử dụng các giao dịch hoàn trả để rollback dữ liệu nếu có lỗi trả dữ liệu về trước khi thực hiện 1 transaction.
+
+    -JPA: sử dụng chủ yếu cho UserService,..
+
+    -Jdbc Template: sử dụng cho Product,...
+
+    -Non-Cluster: để đánh vào cột email,username trong bảng user vì thường xuyên truy cập
+
+    -Redis: Hiện tại chưa áp dụng 
+        + Trong tương lai sẽ sử dụng để cache token sau khi xác thực xong , mục đích giảm tải lượng request đến UserService quá nhiều tại cùng 1 thời điểm .
+        + Sử dụng hàng đợi queue và mutilThread để cache token .

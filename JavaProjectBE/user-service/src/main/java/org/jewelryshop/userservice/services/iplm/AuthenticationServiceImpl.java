@@ -106,6 +106,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(user))
                 .claim("email",user.getEmail())
+                .claim("username",user.getUsername())
                 .build();
 
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
