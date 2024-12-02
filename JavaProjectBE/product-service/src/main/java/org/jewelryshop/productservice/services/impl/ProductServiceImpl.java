@@ -1,5 +1,8 @@
 package org.jewelryshop.productservice.services.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.jewelryshop.productservice.DAO.impl.ProductDAOImpl;
 import org.jewelryshop.productservice.client.OrderClient;
 import org.jewelryshop.productservice.client.PaymentClient;
@@ -11,6 +14,7 @@ import org.jewelryshop.productservice.dto.response.ProductResponse;
 import org.jewelryshop.productservice.entities.Product;
 import org.jewelryshop.productservice.mappers.ProductMapper;
 import org.jewelryshop.productservice.services.ProductService;
+import org.jewelryshop.productservice.services.RedisService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -23,18 +27,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class ProductServiceImpl implements ProductService {
     private final ProductDAOImpl productDAO;
     private final ProductMapper productMapper;
     private final PaymentClient paymentClient;
     private final OrderClient orderClient;
+    private final RedisService redisService;
 
-    public ProductServiceImpl(ProductDAOImpl productDAO, ProductMapper productMapper, PaymentClient paymentClient, OrderClient orderClient) {
+    public ProductServiceImpl(ProductDAOImpl productDAO, ProductMapper productMapper, PaymentClient paymentClient, OrderClient orderClient, RedisService redisService) {
         this.productDAO = productDAO;
         this.productMapper = productMapper;
         this.paymentClient = paymentClient;
         this.orderClient = orderClient;
+        this.redisService = redisService;
     }
 
     @Override
@@ -45,27 +50,60 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductResponse> getAll(int page , int size) {
-        List<Product> products = new ArrayList<>();
-        for (Product product : productDAO.getAll(page,size)) {
-            products.add(product);
+    public Page<ProductResponse> getAll(int page, int size) {
+        String cacheKey = "product_cache_key";
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
+        // Kiểm tra cache
+        List<Product> cachedProducts = redisService.getValues(cacheKey, new TypeReference<List<Product>>() {});
+        if (cachedProducts != null && !cachedProducts.isEmpty()) {
+            List<ProductResponse> productResponses = cachedProducts.stream()
+                    .map(productMapper::toProductResponse)
+                    .collect(Collectors.toList());
+
+            Pageable pageable = PageRequest.of(page, size);
+            return new PageImpl<>(productResponses, pageable, cachedProducts.size());
         }
+
+        // Nếu không có trong cache, lấy từ database
+        Page<Product> products = productDAO.getAll(page, size);
+
         List<ProductResponse> productResponses = products.stream()
                 .map(productMapper::toProductResponse)
                 .collect(Collectors.toList());
 
+        // Lưu vào Redis
+        redisService.setValue(cacheKey, products.getContent());
+
         Pageable pageable = PageRequest.of(page, size);
-
-        long totalProducts = productDAO.getTotalProduct();
-
-        return new PageImpl<>(productResponses, pageable, totalProducts);
+        return new PageImpl<>(productResponses, pageable, products.getTotalElements());
     }
+
+
+
 
     @Override
     public ProductResponse getById(String productId) {
+        String cacheKey = "product_" + productId;
+
+        // Kiểm tra cache
+        Product cachedProduct = (Product) redisService.getValue(cacheKey);
+        if (cachedProduct != null) {
+            // Nếu có cache thì trả về kết quả từ Redis
+            return productMapper.toProductResponse(cachedProduct);
+        }
+
+        // Nếu không có trong cache, lấy từ database
         Product product = productDAO.findById(productId);
-        return productMapper.toProductResponse(product);
+        ProductResponse productResponse = productMapper.toProductResponse(product);
+
+        // Lưu vào Redis cache
+        redisService.setValue(cacheKey, productResponse);
+
+        return productResponse;
     }
+
 
     @Override
     public ProductResponse updateProduct(String productId, ProductRequest productRequest) {
@@ -105,5 +143,10 @@ public class ProductServiceImpl implements ProductService {
             return productDAO.reduceStock(stockRequest);
         }
         return false;
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productDAO.getAllProducts();
     }
 }

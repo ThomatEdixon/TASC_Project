@@ -97,6 +97,40 @@ public class ProductDAOImpl implements ProductDAO {
             throw new RuntimeException("Error fetching products", e);
         }
     }
+    @Override
+    public List<Product> getAllProducts() {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM product WHERE 1=1";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            try(ResultSet resultSet = preparedStatement.executeQuery(sql)){
+                while (resultSet.next()) {
+                    Product product = Product.builder()
+                            .productId(resultSet.getString("product_id"))
+                            .name(resultSet.getString("name"))
+                            .description(resultSet.getString("description"))
+                            .price(resultSet.getInt("price"))
+                            .originalPrice(resultSet.getInt("original_price"))
+                            .stockQuantity(resultSet.getInt("stock_quantity"))
+                            .categoryId(resultSet.getString("category_id"))
+                            .brandId(resultSet.getString("brand_id"))
+                            .status(resultSet.getString("status"))
+                            .createdAt(resultSet.getTimestamp("created_at").toLocalDateTime())
+                            .updatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime())
+                            .build();
+                    product.setProductImages(productImageDAO.getProductImagesByProductId(resultSet.getString("product_id")));
+                    product.setMaterials(materialDAO.getMaterialByProductId(resultSet.getString("product_id")));
+                    products.add(product);
+                }
+            }
+            // Câu truy vấn đếm tổng số sản phẩm
+            return products;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error fetching products", e);
+        }
+    }
 
     @Override
     public Long getTotalProduct(){

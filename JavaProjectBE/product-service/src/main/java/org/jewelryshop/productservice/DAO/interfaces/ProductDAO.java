@@ -19,4 +19,5 @@ public interface ProductDAO {
                                          String materialName, String categoryName , String brandName);
     boolean checkStock(ProductStockRequest stockRequest);
     boolean reduceStock(ProductStockRequest stockRequest);
+    List<Product> getAllProducts();
 }

@@ -7,6 +7,8 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
     ports:
       - "2181:2181"
+    networks:
+      - app_network
 
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -20,3 +22,26 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     ports:
       - "9092:9092"
+    networks:
+      - app_network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    environment:
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis_data:/data'
+    networks:
+      - app_network
+
+volumes:
+  redis_data:
+    driver: local
+
+networks:
+  app_network:
+    driver: bridge

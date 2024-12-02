@@ -13,6 +13,13 @@ spring :
       enabled: true
       max-file-size: 20MB
       max-request-size: 100MB
+  cache:
+    type: redis
+    redis:
+      host: localhost
+      port: 6379
+      password:
+
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
