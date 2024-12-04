@@ -30,7 +30,7 @@
     <div class="col-md-6">
       <div class="product-details">
         <p class="product-description">{{ product.description }}</p>
-        <p class="product-price">{{ product.price }}</p>
+        <p class="product-price">{{ product.price | currency : "$"}}</p>
         <div class="product-action">
           <button type="button" class="btn btn-primary" (click)="addToCart()">Add cart</button>
           <button type="button" class="btn btn-success" (click)="buyNow()">Buy now</button>

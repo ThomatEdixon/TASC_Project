@@ -20,4 +20,5 @@ public interface ProductDAO {
     boolean checkStock(ProductStockRequest stockRequest);
     boolean reduceStock(ProductStockRequest stockRequest);
     List<Product> getAllProducts();
+    List<String> findProductRelatedByBrandId(String productId);
 }

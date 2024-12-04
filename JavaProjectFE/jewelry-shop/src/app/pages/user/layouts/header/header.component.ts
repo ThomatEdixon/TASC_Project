@@ -37,6 +37,13 @@ export class HeaderComponent implements OnInit{
       return false;
     }
   }
+  IsAuthen():boolean{
+    let token = localStorage.getItem('token') ;
+    if(token){
+      return true;
+    }
+    return false;
+  }
   ClickLogOut(){
     this.authService.Logout(this.authService.GetCredential)
   }

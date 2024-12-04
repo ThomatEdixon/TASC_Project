@@ -57,7 +57,7 @@ public class ProductCacheManager {
 
         // Consumer cho sản phẩm liên quan
         for (int i = 0; i < NUMBER_CONSUMER / 2; i++) {
-            executorService.submit(new ProductRelatedCacheProcess(redisCacheService, productService));
+            executorService.submit(new ProductRelatedCacheProcess(redisCacheService,relatedProductQueue ,productService));
         }
 
         System.out.println("Started cache processes for products and related products.");
@@ -69,9 +69,7 @@ public class ProductCacheManager {
         loadProductsIntoQueue(); // Load sản phẩm từ database
         startCacheProcesses(); // Bắt đầu caching
     }
-
-    // Scheduled job để kiểm tra và cập nhật sản phẩm đã thay đổi mỗi 15 phút
-    @Scheduled(cron = "0 */15 * * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
     public void checkAndUpdateProductCache() {
         System.out.println("Checking and updating product cache...");
 

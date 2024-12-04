@@ -20,4 +20,5 @@ public interface ProductService {
     boolean checkStock(ProductStockRequest stockRequest);
     boolean reduceStock(String orderId);
     List<Product> getAllProducts();
+    List<String> getRelatedProductByBrandId(String productId);
 }

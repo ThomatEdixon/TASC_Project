@@ -1,97 +1,43 @@
 .container {
-    padding: 20px;
-    max-width: 1600px;
+    padding: 0px;
+    max-width: 1300px; /* Thu nhỏ chiều rộng tổng thể để hai phần sát nhau hơn */
     margin: auto;
     display: flex;
 }
 
 /* Sidebar styling */
 .sidebar {
-    width: 300px;
-    background-color: #f0f4f7;
-    border-right: 2px solid #004d40;
+    width: 22%; /* Tăng chiều rộng sidebar để cân đối */
+    background-color: #46c4af;
     padding: 20px;
-    margin-right: 20px; /* Khoảng cách với phần hiển thị sản phẩm */
-    position: sticky;
-    top: 20px;
-    height: 100vh;
+    height: auto;
     overflow-y: auto;
 }
 
-.sidebar h2 {
-    color: #004d40;
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.filter-group {
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #004d40; /* Gạch dưới cho mỗi nhóm menu */
-}
-.filter-group h5{
+.filter-group h5 {
     color: #004d40;
     cursor: pointer;
     padding: 10px 0;
-    position: relative;
-    transition: color 0.3s ease, background-color 0.3s ease;
-}.filter-group h5:hover {
-    color: white; /* Màu chữ khi hover */
-    background-color: #00695c; /* Màu nền khi hover */
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa icon và chữ */
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.filter-group h5:hover {
+    color: white;
+    background-color: #00695c;
     border-radius: 5px;
-    padding-left: 10px; /* Đẩy chữ ra một chút khi hover */
-}
-/* Tăng kích thước chữ của menu và loại bỏ icon của radio button */
-.filter-group li {
-    font-size: 1.1em;
-    color: #004d40;
-    cursor: pointer;
-    padding: 10px 0;
-    position: relative;
-    transition: color 0.3s ease, background-color 0.3s ease;
-}
-
-.filter-group input[type="radio"] {
-    display: none; /* Ẩn radio button */
-}
-
-.filter-group li:hover {
-    color: white; /* Màu chữ khi hover */
-    background-color: #00695c; /* Màu nền khi hover */
-    border-radius: 5px;
-    padding-left: 10px; /* Đẩy chữ ra một chút khi hover */
-}
-
-.filter-group li:active {
-    transform: translateY(2px); /* Hiệu ứng nhấn nút */
-}
-
-/* Price Range styling */
-.price-range {
-    margin-top: 20px;
-}
-
-.price-range input[type="range"] {
-    width: 100%;
+    padding-left: 10px;
 }
 
 /* Product section styling */
 .product-section {
     flex: 1;
-    background-color: #e8f5e9;
-}
-
-/* Search box styling */
-.search-box {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 20px;
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 78%; /* Giảm chiều rộng product section để cân đối với sidebar */
+    background-color: #00695c;
+    padding-right: 30px;
 }
 
 /* Product item styling */
@@ -103,43 +49,134 @@
     text-align: center;
     transition: transform 0.3s;
     margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 500px; /* Điều chỉnh chiều cao để cân đối với ảnh */
+    overflow: hidden; /* Ẩn nội dung tràn */
 }
 
 .product-item:hover {
     transform: translateY(-10px);
 }
 
-.product-item img {
+/* Image container styling */
+.image-container {
+    position: relative;
+    overflow: hidden;
     width: 100%;
-    height: 400px;
-    object-fit: cover;
+    height: 350px; /* Điều chỉnh chiều cao ảnh */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Giữ tỷ lệ ảnh và cắt nếu cần */
+    display: block;
+    transition: transform 0.3s;
+}
+
+/* Hover effect cho ảnh */
+.image-container:hover img {
+    transform: scale(1.1); /* Hiệu ứng phóng to nhẹ */
+}
+
+/* Hover icons for cart and view */
+.overlay-icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 15px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.image-container:hover .overlay-icons {
+    opacity: 1; /* Hiển thị các icon khi hover */
+}
+
+.icon-btn {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.icon-btn:hover {
+    background-color: #004d40;
+}
+
+.icon-btn i {
+    font-size: 16px;
+}
+
+/* Giới hạn chiều cao của tên và mô tả */
 .product-name {
     font-size: 1.2em;
     color: #004d40;
     margin: 10px 0;
+    height: 40px; /* Giới hạn chiều cao tên */
+    overflow: hidden; /* Ẩn văn bản tràn */
+    text-overflow: ellipsis; /* Thêm dấu "..." nếu văn bản tràn */
+    white-space: nowrap; /* Không xuống dòng */
 }
 
 .product-description {
     font-size: 0.9em;
     color: #757575;
     margin-bottom: 10px;
+    height: 60px; /* Giới hạn chiều cao mô tả */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Hiển thị tối đa 3 dòng */
+    -webkit-box-orient: vertical;
 }
 
 .product-price {
     font-size: 1.1em;
     color: #003366;
+    margin-top: auto; /* Đẩy giá xuống cuối thẻ */
 }
 
-/* Flex settings for three columns */
+/* Đảm bảo bố cục các thẻ đều nhau */
 .row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
+.col-lg-4,
+.col-md-6 {
+    display: flex;
+    justify-content: center; /* Căn giữa các thẻ */
+    align-items: stretch; /* Đảm bảo chiều cao đồng đều */
+}
+
+.col-lg-4 .product-item,
+.col-md-6 .product-item {
+    width: 100%; /* Đảm bảo thẻ chiếm hết chiều rộng cột */
+}
+
 /* Pagination styles */
+.pagination {
+    margin-top: 40px;
+}
+
 .pagination .page-item .page-link {
     color: #003366;
 }
@@ -153,20 +190,38 @@
 /* Responsive adjustments */
 @media (max-width: 992px) {
     .sidebar {
-        display: none;
-    }
-    
-    .product-section {
-        padding-left: 0;
+        width: 100%;
     }
 
-    .col-lg-4, .col-md-6 {
+    .product-section {
+        width: 100%;
+    }
+
+    .col-lg-4,
+    .col-md-6 {
         flex: 0 0 48%;
+    }
+
+    .product-item {
+        height: 600px; /* Giảm chiều cao cho thiết bị nhỏ */
+    }
+
+    .image-container {
+        height: 300px;
     }
 }
 
 @media (max-width: 768px) {
-    .col-lg-4, .col-md-6 {
+    .col-lg-4,
+    .col-md-6 {
         flex: 0 0 100%;
+    }
+
+    .product-item {
+        height: 700px; /* Tối ưu chiều cao hơn nữa */
+    }
+
+    .image-container {
+        height: 350px;
     }
 }

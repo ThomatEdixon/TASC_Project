@@ -133,6 +133,30 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
+    public List<String> findProductRelatedByBrandId(String productId) {
+        String sql = "SELECT p.product_id FROM products p " +
+                "WHERE p.brand_id = (SELECT p2.brand_id FROM products p2 WHERE p2.product_id = ?) " +
+                "AND p.product_id <> ? " +
+                "LIMIT 5";
+        List<String> productIds = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, productId);
+            stmt.setString(2, productId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    // Thêm productId vào danh sách
+                    productIds.add(rs.getString("product_id"));
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return productIds;
+    }
+
+    @Override
     public Long getTotalProduct(){
         String sql = "SELECT COUNT(*) FROM product";
         Long total = 0L;

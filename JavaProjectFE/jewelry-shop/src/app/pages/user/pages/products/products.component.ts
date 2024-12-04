@@ -8,6 +8,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Brand, BrandResponse } from '../../../../models/brand';
 import { BrandService } from '../../../../services/brand.service';
 import { MaterialService } from '../../../../services/material.service';
+import { CartService } from '../../../../services/cart.service';
 interface Filter {
   label: string;
   value: any;
@@ -46,7 +47,8 @@ export class ProductsComponent implements OnInit {
     private categoryService: CategoryService,
     private fb: FormBuilder,
     private brandService: BrandService,
-    private materialService: MaterialService
+    private materialService: MaterialService,
+    private cartService: CartService
   ) { }
 
   ngOnInit() {
@@ -131,5 +133,11 @@ export class ProductsComponent implements OnInit {
   get paginatedProducts() {
     const start = this.currentPage * this.itemsPerPage;
     return this.products.slice(start, start + this.itemsPerPage);
+  }
+  addToCart(product: ProductResponse): void {
+    this.cartService.addToCart(product); // Gọi service để thêm vào cart
+  }
+  onDetailProduct(productId: string) {
+    this.router.navigate(['user/product-detail'], { queryParams: { productId: productId } });
   }
 }

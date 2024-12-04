@@ -1,77 +1,132 @@
 <div class="container">
     <div class="row">
+        <!-- Sidebar -->
         <div class="sidebar">
             <!-- Material Filter -->
-            <div class="filter-group" >
-                <h5 (click)="toggleDropdown('material')">Material</h5>
+            <div class="filter-group">
+                <h5 (click)="toggleDropdown('material')">
+                    <i class="fas fa-gem"></i> Material
+                </h5>
                 <ul *ngIf="dropdowns.material" class="dropdown-list">
                     <li *ngFor="let material of materials">
-                        <input type="radio" name="material" [value]="material.name"
+                        <input
+                            type="radio"
+                            name="material"
+                            [value]="material.name"
                             (change)="onFilterChange('material', material.name)"
-                             />
+                        />
                         {{ material.name }}
                     </li>
                 </ul>
             </div>
 
             <!-- Category Filter -->
-            <div class="filter-group" >
-                <h5 (click)="toggleDropdown('category')">Category</h5>
+            <div class="filter-group">
+                <h5 (click)="toggleDropdown('category')">
+                    <i class="fas fa-layer-group"></i> Category
+                </h5>
                 <ul *ngIf="dropdowns.category" class="dropdown-list">
                     <li *ngFor="let category of categories">
-                        <input type="radio" name="category" [value]="category.name"
+                        <input
+                            type="radio"
+                            name="category"
+                            [value]="category.name"
                             (change)="onFilterChange('category', category.name)"
-                             />
+                        />
                         {{ category.name }}
                     </li>
                 </ul>
             </div>
 
             <!-- Brand Filter -->
-            <div class="filter-group" >
-                <h5 (click)="toggleDropdown('brand')">Brand</h5>
+            <div class="filter-group">
+                <h5 (click)="toggleDropdown('brand')">
+                    <i class="fas fa-tags"></i> Brand
+                </h5>
                 <ul *ngIf="dropdowns.brand" class="dropdown-list">
                     <li *ngFor="let brand of brands">
-                        <input type="radio" name="brand" [value]="brand.name" 
-                        (change)="onFilterChange('brand', brand.name)"
-                             />
+                        <input
+                            type="radio"
+                            name="brand"
+                            [value]="brand.name"
+                            (change)="onFilterChange('brand', brand.name)"
+                        />
                         {{ brand.name }}
                     </li>
                 </ul>
             </div>
 
             <!-- Price Range Filter -->
-            <div class="filter-group" >
-                <h5>Price Range</h5>
+            <div class="filter-group">
+                <h5>
+                    <i class="fas fa-dollar-sign"></i> Price Range
+                </h5>
                 <label>Min Price: {{ minPrice }}</label>
-                <input type="range" name="minPrice" min="0" max="5000"
-                    (formControl)="onFilterChange('minPrice', minPrice)" />
+                <input
+                    type="range"
+                    name="minPrice"
+                    min="0"
+                    max="5000"
+                    (formControl)="onFilterChange('minPrice', minPrice)"
+                />
 
                 <label>Max Price: {{ maxPrice }}</label>
-                <input type="range" name="maxPrice" min="0" max="5000"
-                    (formControl)="onFilterChange('maxPrice', maxPrice)" />
+                <input
+                    type="range"
+                    name="maxPrice"
+                    min="0"
+                    max="5000"
+                    (formControl)="onFilterChange('maxPrice', maxPrice)"
+                />
             </div>
         </div>
 
         <!-- Product Display Section -->
         <div class="col-lg-9 product-section">
             <!-- Selected Filters Display -->
-            <form [formGroup]="searchForm" class="search-box" *ngIf="isSearchFormVisible">
+            <form
+                [formGroup]="searchForm"
+                class="search-box"
+                *ngIf="isSearchFormVisible"
+            >
                 <div class="search-filters">
                     <div *ngFor="let filter of selectedFilters" class="filter-tag">
                         <span>{{ filter.label }}: {{ filter.value }}</span>
                         <button (click)="removeFilter(filter)">X</button>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary ml-2" (click)="searchProducts()">Search</button>
+                <button
+                    type="button"
+                    class="btn btn-primary ml-2"
+                    (click)="searchProducts()"
+                >
+                    Search
+                </button>
             </form>
 
             <!-- Product List -->
             <div class="row">
                 <div *ngFor="let product of products" class="col-lg-4 col-md-6">
                     <div class="product-item">
-                        <img *ngIf="product.productImages[0]?.imageUrl" [src]="product.productImages[0].imageUrl"
-                            alt="{{ product.name }}" />
+                        <div class="image-container">
+                            <img
+                                *ngIf="product.productImages[0]?.imageUrl"
+                                [src]="product.productImages[0].imageUrl"
+                                alt="{{ product.name }}"
+                            />
+                            <!-- Overlay Icons -->
+                            <div class="overlay-icons">
+                                <button class="icon-btn" (click)="addToCart(product)">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                                <button
+                                    class="icon-btn"
+                                    (click)="onDetailProduct(product.productId)"
+                                >
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
                         <h3 class="product-name">{{ product.name }}</h3>
                         <p class="product-description">{{ product.description }}</p>
                         <p class="product-price">Price: ${{ product.price }}</p>
@@ -81,7 +136,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Pagination -->
 <div class="d-flex justify-content-center">

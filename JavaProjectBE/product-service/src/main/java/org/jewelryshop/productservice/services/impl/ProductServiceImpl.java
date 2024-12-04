@@ -51,19 +51,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductResponse> getAll(int page, int size) {
-        String cacheKey = "product_cache_key";
+        String cacheKey = "products_page:"+ page +"_size"+size;
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
 
         // Kiểm tra cache
-        List<Product> cachedProducts = redisService.getValues(cacheKey, new TypeReference<List<Product>>() {});
-        if (cachedProducts != null && !cachedProducts.isEmpty()) {
-            List<ProductResponse> productResponses = cachedProducts.stream()
-                    .map(productMapper::toProductResponse)
-                    .collect(Collectors.toList());
+        if(redisService.checkExistsKey(cacheKey)){
+            List<Product> cachedProducts = redisService.getValues(cacheKey, new TypeReference<List<Product>>() {});
+            if (cachedProducts != null && !cachedProducts.isEmpty()) {
+                List<ProductResponse> productResponses = cachedProducts.stream()
+                        .map(productMapper::toProductResponse)
+                        .collect(Collectors.toList());
 
-            Pageable pageable = PageRequest.of(page, size);
-            return new PageImpl<>(productResponses, pageable, cachedProducts.size());
+                Pageable pageable = PageRequest.of(page, size);
+                return new PageImpl<>(productResponses, pageable, cachedProducts.size());
+            }
         }
 
         // Nếu không có trong cache, lấy từ database
@@ -148,5 +150,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getAllProducts() {
         return productDAO.getAllProducts();
+    }
+
+    @Override
+    public List<String> getRelatedProductByBrandId(String productId) {
+        return productDAO.findProductRelatedByBrandId(productId);
     }
 }

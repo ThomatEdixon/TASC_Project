@@ -2,25 +2,27 @@ Main Techlonogy
 
 Jewelry Shop
 
-Các công nghệ chính sử dụng:
-
--Microservice:Chia nhỏ ứng dụng thành các service nghiệp vụ,các service chính:
+-Kiến trúc Microservice : Chia nhỏ ứng dụng thành các service nghiệp vụ,các service chính:
         +Discovery:quản lý các service nghiệp vụ,các service nghiệp vụ phải đăng kí với eureka
-        +Gatewave:sử dụng để routing,author một vài api quan trọng
-        +UserService: service chính sử dụng để xác thực và phân quyền,quản lý các tài khoản,đăng kí,đăng nhập,quên mật khẩu,..
+        +Gatewave:sử dụng để routing từ client đến các service tương ứng  
+        +UserService: service chính sử dụng để xác thực(authen),quản lý các tài khoản,đăng kí,đăng nhập,quên mật khẩu,..
         +OrderService: có vai trò lên đơn hàng.
         +PaymentService: sử dụng để thanh toán (PayOS).
         +ProductService: lưu trữ thông tin sản phẩm .
-        +NotificationService: gửi thông báo tới khách hàng khi .
+        +NotificationService: gửi thông báo tới khách hàng.
 
-    - Eureka + API Gatewave:2 thành phần quan trọng trong mô hình microservice,Eureka sẽ đóng vai trò là thằng quản lý chung,tất cả các service đều phải đăng kí với
-    eureka,còn API Gatewave đóng vai trò tở thành đầu vào duy nhất của ứng dụng,tất cả các yêu cầu từ client phải thông qua gatewave trước khi được định tuyến đến các 
-    service nghiệp vụ,routing,kiểm tra quyền truy cập một vài đầu api quan trọng,..
+    Các công nghệ chính sử dụng:
 
+    - Eureka(Discovery) + API Gatewave: 
+        - 2 thành phần quan trọng trong mô hình microservice,Eureka sẽ đóng vai trò là quản lý chung:
+            +tất cả các service đều phải đăng kí với eureka.
+            +Còn API Gatewave đóng vai trò trở thành đầu vào duy nhất của ứng dụng,tất cả các yêu cầu từ client phải thông qua gatewave trước khi được định tuyến đến các 
+            service nghiệp vụ,routing,kiểm tra quyền truy cập một vài đầu api quan trọng,..
+    
     - SpringSecurity + JWT
         :Sử dụng trong phần xác thực(Authentication) tài khoản và phân quyền(Authorization) cho các role được sử dụng tại 2 service là gateway và userService
             + UserService : nhận thông tin đăng nhập từ khách hàng (username, password) kiểm tra database xem người dùng đăng ký chưa , nếu rồi trả về 1 chuỗi jwt token 
-            + Gateway: điều hướng các request đi qua UserService để xác định quyền của user. 
+            + Gateway: thông qua jwt token ở header của request để kiểm quyền xem người dùng có quyền để vào service(author) có tính năng mà người dùng muốn sử dụng không. 
 
     -Giao tiếp giữa các service : 
         + FeignClient: dùng cho các tác vụ yêu cầu xử lý real-time.
@@ -29,15 +31,75 @@ Các công nghệ chính sử dụng:
     -Transaction: sử dụng trong 1 luồng thanh toán .
         : Sử dụng Saga Pattern để quản lý 1 transaction trong hệ thống micro service.
             + Quản lý transaction tại từng service.
+
             + Lắng nghe sự thay đổi của từng service qua sự thay đổi status.
-            + Sử dụng các giao dịch hoàn trả để rollback dữ liệu nếu có lỗi trả dữ liệu về trước khi thực hiện 1 transaction.
 
-    -JPA: sử dụng chủ yếu cho UserService,..
+            + Sử dụng các giao dịch hoàn trả(các hành động đối lập ) nếu transaction thất bại như :
+                - Hoàn tiền cho khách , nếu khách hàng đã thanh toán trước >< thanh toán trước 
+                - Cập nhật lại số sản phẩm trong kho >< trừ kho
+                - Cập nhật lại trạng thái của đơn hàng.
 
-    -Jdbc Template: sử dụng cho Product,...
+            + Mục đích đảm bảo tính nhất quán của dữ liệu sau khi kết thúc 1 transaction.
 
-    -Non-Cluster: để đánh vào cột email,username trong bảng user vì thường xuyên truy cập
+    -JPA: Sử dụng chủ yếu cho UserService
+        - Ưu điểm:
+        Không cần phải viết các câu lệnh SQL thủ công, giúp giảm đáng kể thời gian phát triển dịch vụ.
+        Hỗ trợ các thao tác CRUD và tìm kiếm đối tượng một cách nhanh chóng thông qua các phương thức mặc định của Spring Data JPA.
+        
+        - Nhược điểm:
+            + Tốc độ truy vấn có thể chậm hơn so với việc sử dụng JDBC thuần, đặc biệt khi thao tác với khối lượng dữ liệu lớn.
+            + Dễ xảy ra vấn đề N+1 query, có thể dẫn đến việc lấy thêm dữ liệu không cần thiết từ cơ sở dữ liệu.
+        
+        - Ứng dụng trong dự án:
 
-    -Redis: Hiện tại chưa áp dụng 
-        + Trong tương lai sẽ sử dụng để cache token sau khi xác thực xong , mục đích giảm tải lượng request đến UserService quá nhiều tại cùng 1 thời điểm .
-        + Sử dụng hàng đợi queue và mutilThread để cache token .
+        Trong dự án của em, em đã chọn sử dụng JPA trong UserService vì những lý do sau:
+
+            + Dữ liệu người dùng không lớn, nên sự chênh lệch tốc độ truy vấn giữa JPA và JDBC thuần là không đáng kể.
+            + Thao tác chính của em với cơ sở dữ liệu chủ yếu là CRUD và các phương thức tìm kiếm, và các thao tác này đã được hỗ trợ tốt bởi Spring Data JPA.
+            + Khi truy vấn dữ liệu từ cơ sở dữ liệu, không yêu cầu các câu lệnh JOIN phức tạp, điều này giúp tận dụng tốt các tính năng của JPA mà không gây ra các vấn đề về hiệu suất.
+
+    -JdbcTemplate: Sử dụng cho Product
+        - Ưu điểm:
+
+            + Tối ưu hiệu suất: JdbcTemplate cung cấp hiệu suất cao hơn khi thực hiện các truy vấn phức tạp, đặc biệt là với khối lượng dữ liệu lớn, nhờ khả năng tương tác trực tiếp với SQL.
+            + Kiểm soát truy vấn tốt hơn: Với JdbcTemplate, lập trình viên có thể viết truy vấn SQL một cách chi tiết và kiểm soát tốt hơn cách thức thực hiện các thao tác trên cơ sở dữ liệu, từ đó giúp tối ưu hóa các câu lệnh SQL cho hiệu suất.
+            + Linh hoạt khi sử dụng truy vấn tùy chỉnh: Dễ dàng viết các truy vấn tùy chỉnh cho các yêu cầu phức tạp, đặc biệt là khi cần thực hiện các thao tác JOIN, GROUP BY, hoặc xử lý dữ liệu lớn với các điều kiện phức tạp.
+        - Nhược điểm:
+            + Mất nhiều thời gian viết truy vấn vì so với JPA, sử dụng JdbcTemplate đòi hỏi phải viết các câu lệnh SQL thủ công, điều này có thể tốn thời gian và công sức phát triển.
+        - Ứng dụng trong dự án:
+        Trong dự án của em, em đã quyết định sử dụng JdbcTemplate cho phần Product vì những lý do sau:
+
+            + Dữ liệu sản phẩm lớn hơn . Khối lượng dữ liệu của sản phẩm thường lớn hơn so với dữ liệu người dùng, do đó yêu cầu cần tối ưu hóa các truy vấn để đảm bảo hiệu suất, đặc biệt khi có các truy vấn phức tạp như JOIN hoặc tính toán trên nhiều bảng. 
+
+            + Đối với sản phẩm, em thường cần thực hiện các truy vấn phức tạp hoặc tối ưu cho các điều kiện đặc biệt mà JPA không đáp ứng tốt. JdbcTemplate cho phép em viết SQL trực tiếp để có thể điều chỉnh và tối ưu từng câu truy vấn cho phù hợp với yêu cầu cụ thể.
+
+            + Hiệu suất tốt hơn: Khi làm việc với bảng product có dữ liệu lớn, JdbcTemplate cho phép em thực hiện truy vấn theo các điều kiện yêu cầu, giúp tối ưu hóa và tăng hiệu suất, điều này đặc biệt quan trọng với phần Product, nơi mà các truy vấn dữ liệu có thể phức tạp hơn và yêu cầu hiệu suất cao hơn.
+
+    -Non-Cluster Index: để đánh vào cột email,username trong bảng user vì thường xuyên truy cập.
+
+    -Redis: Dùng để cache thông tin sản phẩm 
+        Ưu điểm : 
+         - Tốc độ truy xuất nhanh , do Redis hoạt động chủ yếu trong bộ nhớ (RAM) nên tốc đọ truy vấn nhanh hơn nhiều so với database
+         - Giảm số lượng truy vấn trực tiếp(câu query) tới cơ sở dữ liệu.
+        Nhược điểm :
+         - Có thể xảy ra trường hợp data trong redis bị cũ (stable data) do không đồng bộ với dữ liệu trong database.
+         - Có thể bị out of memory nếu dữ liệu quá lớn. 
+        Cách triển khai trong dự án :
+            - Để đảm bảo dữ liệu trong Redis được cập nhật thường xuyên và đồng bộ với cơ sở dữ liệu, em đã triển khai hai job khác nhau:
+
+                + Job 1: Thực thi 1 lần/ngày vào thời gian ít người dùng, khi cơ sở dữ liệu ít bị thay đổi, để cập nhật dữ liệu từ cơ sở dữ liệu lên Redis. Điều này đảm bảo dữ liệu cơ bản trong Redis được làm mới hàng ngày.
+
+                + Job 2: Thực thi sau mỗi phút để đồng bộ dữ liệu giữa Redis và cơ sở dữ liệu. Job này kiểm tra trường updatedAt của dữ liệu. Nếu dữ liệu trong Redis khác với cơ sở dữ liệu (dựa trên updatedAt), hệ thống sẽ đồng bộ và cập nhật lại Redis.
+
+            - Cụ thể trong một job:
+
+                + Lấy dữ liệu từ DB và lưu vào hàng đợi (queue): Dữ liệu từ cơ sở dữ liệu sẽ được đưa vào một hàng đợi để xử lý tuần tự.
+
+                + Sử dụng đa luồng (multithread) để lưu dữ liệu vào Redis:
+
+                + Tạo 2 luồng (thread) với các nhiệm vụ khác nhau:
+                    - Thread 1: Lưu sản phẩm với key là productId và value là thông tin sản phẩm.
+                    - Thread 2: Lưu danh sách các sản phẩm liên quan (related products) với key là productId và value là danh sách các productId của các sản phẩm cùng thương hiệu với sản phẩm có productId là key.
+                + Tối ưu hóa luồng bằng ExecutorService:
+                    - Sử dụng ExecutorService để tạo ra một thread pool, trong đó giới hạn số lượng luồng min và max theo tài nguyên máy chủ. Điều này giúp tối ưu hóa thời gian lưu dữ liệu vào Redis mà không gây quá tải cho hệ thống.             
+

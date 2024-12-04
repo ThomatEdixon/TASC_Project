@@ -60,6 +60,7 @@ export class HomepageComponent implements OnInit {
     const translateX = -this.currentIndex * 100;
     sliderTrack.style.transform = `translateX(${translateX}%)`;
   }
+  
   onDetailProduct(productId: string) {
     this.router.navigate(['user/product-detail'], { queryParams: { productId: productId } });
   }

@@ -25,6 +25,8 @@ export class AuthenticateService {
 
   Logout(model:any): Observable<AuthenResponse> {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('role');
     this.credentialSubject.next(JSON.parse('{}'));
     this.router.navigateByUrl('/login');
     return this.httpClient.post<AuthenResponse>(`${BaseUrl}/${Endpoint}/logout`, model);
