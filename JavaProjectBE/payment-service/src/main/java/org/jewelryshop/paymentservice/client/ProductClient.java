@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @Component
 @FeignClient(name = "product-service", url = "http://localhost:9001")
 public interface ProductClient {
-    @PostMapping("/product/reduce-stock")
-    ApiResponse<Boolean> reduceProductStock(@RequestBody ProductStockRequest stockRequest);
+    @PutMapping("/product/reduce-stock/{id}")
+    ApiResponse<Boolean> reduceProductStock(@PathVariable String id);
 
 }

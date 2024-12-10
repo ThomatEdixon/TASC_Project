@@ -11,6 +11,7 @@ export class SidebarComponent implements OnInit {
   constructor(private router:Router) { }
   isProductMenuOpen = false;
   isUserMenuOpen = false;
+  isOrderMenuOpen = false
   ngOnInit() {
   }
   toggleProductMenu() {
@@ -18,6 +19,9 @@ export class SidebarComponent implements OnInit {
   }
   toggleUserMenu() {
     this.isUserMenuOpen = !this.isUserMenuOpen;
+  }
+  toggleOrderMenu() {
+    this.isOrderMenuOpen = !this.isOrderMenuOpen;
   }
 
 }

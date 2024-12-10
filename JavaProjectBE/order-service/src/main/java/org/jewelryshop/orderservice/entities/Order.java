@@ -33,7 +33,6 @@ public class Order {
 
     @OneToMany(mappedBy = "order" , fetch = FetchType.LAZY)
     @JsonIgnore
-    @Column(insertable=false, updatable=false)
     private List<OrderDetail> orderDetails;
 
 }

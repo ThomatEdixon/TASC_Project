@@ -23,4 +23,7 @@ export class OrderService {
   getOrderById(orderId:string) : Observable<AuthenResponse>{
     return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}/`+ orderId);
   }
+  getAll(page:number,size:number):Observable<AuthenResponse>{
+    return this.httpClient.get<AuthenResponse>(`${BaseUrl}/${Endpoint}?pageNumber=${page}&pageSize=${size}`);
+  }
 }

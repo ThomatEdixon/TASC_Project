@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../../../services/product.service';
+import { ProductService } from '../../../../../services/product.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Category, CategoryResponse } from '../../../../models/category';
-import { Brand, BrandResponse } from '../../../../models/brand';
-import { Material } from '../../../../models/product';
+import { Category, CategoryResponse } from '../../../../../models/category';
+import { Brand, BrandResponse } from '../../../../../models/brand';
+import { Material } from '../../../../../models/product';
 import { Router } from '@angular/router';
-import { BrandService } from '../../../../services/brand.service';
-import { CategoryService } from '../../../../services/category.service';
-import { MaterialService } from '../../../../services/material.service';
+import { BrandService } from '../../../../../services/brand.service';
+import { CategoryService } from '../../../../../services/category.service';
+import { MaterialService } from '../../../../../services/material.service';
 import { fi } from 'date-fns/locale';
 
 @Component({

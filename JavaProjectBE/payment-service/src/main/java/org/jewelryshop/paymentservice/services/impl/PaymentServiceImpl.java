@@ -41,6 +41,8 @@ public class PaymentServiceImpl implements PaymentService {
     private final PayOSService payOSService;
 
     private final TransactionService transactionService;
+
+    private final PaymentProducerService paymentProducerService;
     @Override
     @Transactional
     public PaymentResponse createPayment(PaymentRequest paymentRequest)  {
@@ -117,6 +119,18 @@ public class PaymentServiceImpl implements PaymentService {
                     break;
                 case PaymentMethod.VNPay:
                     break;
+                case PaymentMethod.COD:
+                    Boolean reduced = productClient.reduceProductStock(order.getData().getOrderId()).getData();
+                    if(reduced){
+                        payment.setPaymentStatus(PaymentStatus.PROCESSING);
+                        paymentResponse = paymentMapper.toPaymentResponse(payment);
+                        paymentProducerService.sendPaymentEvent("payment-topic",paymentResponse);
+                    }else {
+                        payment.setPaymentStatus(PaymentStatus.ERROR);
+                        paymentResponse = paymentMapper.toPaymentResponse(payment);
+                        paymentProducerService.sendPaymentEvent("payment-topic",paymentResponse);
+                    }
+                    break;
             }
         }
         return paymentResponse;
@@ -127,9 +141,7 @@ public class PaymentServiceImpl implements PaymentService {
         StatusResponse statusResponse = new StatusResponse();
         Payment payment = paymentRepository.findByOrderCode(orderCode);
         ApiResponse<OrderResponse> order = orderClient.getOrderById(payment.getOrderId());
-        ProductStockRequest productStockRequest = new ProductStockRequest();
-        productStockRequest.setOrderDetailResponses(order.getData().getOrderDetails());
-        boolean reduceStock = productClient.reduceProductStock(productStockRequest).getData();
+        boolean reduceStock = productClient.reduceProductStock(order.getData().getOrderId()).getData();
         if(reduceStock){
             statusResponse.setStatus(PaymentStatus.SUCCESS);
         }else {

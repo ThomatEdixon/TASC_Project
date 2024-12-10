@@ -5,8 +5,9 @@ import org.jewelryshop.orderservice.dto.request.OrderRequest;
 import org.jewelryshop.orderservice.dto.response.ApiResponse;
 import org.jewelryshop.orderservice.dto.response.OrderResponse;
 import org.jewelryshop.orderservice.dto.response.StatusResponse;
-import org.jewelryshop.orderservice.exceptions.AppException;
+
 import org.jewelryshop.orderservice.services.OrderService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,16 @@ public class OrderController {
                 .data(orderService.createOrder(orderRequest))
                 .build();
     }
+    @GetMapping
+    public ApiResponse<Page<OrderResponse>> getAll(@RequestParam int pageNumber, @RequestParam int pageSize) {
+        Page<OrderResponse> ordersPage = orderService.getAll(pageNumber, pageSize);
+
+        // Trả về phản hồi dạng ApiResponse
+        return ApiResponse.<Page<OrderResponse>>builder()
+                .data(ordersPage)
+                .build();
+    }
+
     @GetMapping("/{orderId}")
     public ApiResponse<OrderResponse> getOrderById(@PathVariable String orderId){
         return ApiResponse.<OrderResponse>builder()

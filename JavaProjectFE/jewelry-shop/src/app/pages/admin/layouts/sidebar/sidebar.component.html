@@ -73,6 +73,32 @@
             </li>
           </ul>
         </li>
+        <li class="nav-item has-treeview" [class.menu-open]="isOrderMenuOpen">
+          <a (click)="toggleOrderMenu()" class="nav-link">
+            <i class="nav-icon fas fa-box"></i>
+            <p>
+              Order
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview" *ngIf="isOrderMenuOpen">
+            <li class="nav-item">
+              <a [routerLink]="['/admin/order/create']" routerLinkActive="router-link-active" class="nav-link">
+                <p>Create Order</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/admin/order/']" routerLinkActive="router-link-active" class="nav-link">
+                <p>List Orders</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/admin/order/edit']" routerLinkActive="router-link-active" class="nav-link">
+                <p>Edit Order</p>
+              </a>
+            </li>
+          </ul>
+        </li>
 
       </ul>
     </nav>

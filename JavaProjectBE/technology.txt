@@ -60,7 +60,6 @@ Jewelry Shop
 
     -JdbcTemplate: Sử dụng cho Product
         - Ưu điểm:
-
             + Tối ưu hiệu suất: JdbcTemplate cung cấp hiệu suất cao hơn khi thực hiện các truy vấn phức tạp, đặc biệt là với khối lượng dữ liệu lớn, nhờ khả năng tương tác trực tiếp với SQL.
             + Kiểm soát truy vấn tốt hơn: Với JdbcTemplate, lập trình viên có thể viết truy vấn SQL một cách chi tiết và kiểm soát tốt hơn cách thức thực hiện các thao tác trên cơ sở dữ liệu, từ đó giúp tối ưu hóa các câu lệnh SQL cho hiệu suất.
             + Linh hoạt khi sử dụng truy vấn tùy chỉnh: Dễ dàng viết các truy vấn tùy chỉnh cho các yêu cầu phức tạp, đặc biệt là khi cần thực hiện các thao tác JOIN, GROUP BY, hoặc xử lý dữ liệu lớn với các điều kiện phức tạp.

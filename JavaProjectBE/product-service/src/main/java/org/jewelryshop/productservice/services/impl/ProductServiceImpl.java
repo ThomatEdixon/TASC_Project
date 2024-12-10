@@ -90,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
         String cacheKey = "product_" + productId;
 
         // Kiểm tra cache
-        Product cachedProduct = (Product) redisService.getValue(cacheKey);
+        Product cachedProduct = redisService.getValues(cacheKey, new TypeReference<Product>() {});
         if (cachedProduct != null) {
             // Nếu có cache thì trả về kết quả từ Redis
             return productMapper.toProductResponse(cachedProduct);

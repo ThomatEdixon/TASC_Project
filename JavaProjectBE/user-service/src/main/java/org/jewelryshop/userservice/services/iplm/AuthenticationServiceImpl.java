@@ -5,6 +5,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.jewelryshop.userservice.dto.request.IntrospectRequest;
 import org.jewelryshop.userservice.dto.request.RefreshRequest;
@@ -19,6 +20,7 @@ import org.jewelryshop.userservice.exceptions.ErrorCode;
 import org.jewelryshop.userservice.repositories.InvalidatedTokenRepository;
 import org.jewelryshop.userservice.repositories.UserRepository;
 import org.jewelryshop.userservice.services.AuthenticationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,12 +36,12 @@ import java.util.StringJoiner;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+
 public class AuthenticationServiceImpl implements AuthenticationService {
-
-    private final UserRepository userRepository;
-
-    private final InvalidatedTokenRepository invalidatedTokenRepository;
+    @Resource
+    private UserRepository userRepository;
+    @Resource
+    private InvalidatedTokenRepository invalidatedTokenRepository;
 
     @Value("${jwt.signerKey}")
     private String signerKey;

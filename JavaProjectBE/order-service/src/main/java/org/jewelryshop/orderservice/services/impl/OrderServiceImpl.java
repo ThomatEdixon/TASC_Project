@@ -9,11 +9,20 @@ import org.jewelryshop.orderservice.constants.OrderStatus;
 import org.jewelryshop.orderservice.dto.request.*;
 import org.jewelryshop.orderservice.dto.response.*;
 import org.jewelryshop.orderservice.entities.Order;
+import org.jewelryshop.orderservice.entities.OrderDetail;
+import org.jewelryshop.orderservice.mapper.OrderDetailMapper;
 import org.jewelryshop.orderservice.mapper.OrderMapper;
 import org.jewelryshop.orderservice.repositories.OrderRepository;
 import org.jewelryshop.orderservice.services.OrderDetailService;
 import org.jewelryshop.orderservice.services.OrderService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +37,8 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderMapper orderMapper;
 
+    private final OrderDetailMapper orderDetailMapper;
+
     private final OrderDetailService orderDetailService;
 
     private final OrderProducerService orderProducerService;
@@ -36,8 +47,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse createOrder(OrderRequest orderRequest){
 
         ApiResponse<UserResponse> userResponse = userClient.getUserById(orderRequest.getUserId());
-
-        System.out.printf(userResponse.toString());
+        List<OrderDetail> orderDetails = new ArrayList<>();
         //  Get totalAmount
         int totalAmount = 0;
         for (OrderDetailRequest orderDetailRequest : orderRequest.getOrderDetails()) {
@@ -47,12 +57,14 @@ public class OrderServiceImpl implements OrderService {
             orderDetailRequest.setPricePerUnit(orderDetailRequest.getPricePerUnit());
             orderDetailRequest.setTotalPrice(orderDetailRequest.getQuantity() * orderDetailRequest.getPricePerUnit());
             totalAmount += orderDetailRequest.getTotalPrice();
+            orderDetails.add(orderDetailMapper.toOrderDetail(orderDetailRequest));
         }
 
         // Create Order
         Order order = orderMapper.toOrder(orderRequest);
         order.setTotalAmount(totalAmount);
         order.setStatus(OrderStatus.PENDING);
+        order.setOrderDetails(orderDetails);
         order = orderRepository.save(order);
 
         // save orderDetail
@@ -92,4 +104,14 @@ public class OrderServiceImpl implements OrderService {
         orderResponse.setPaymentMethod(paymentMethod);
 
     }
+
+    @Override
+    public Page<OrderResponse> getAll(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Order> orders = orderRepository.findAll(pageable);
+        Page<OrderResponse> orderResponses = orders.map(orderMapper::toOrderResponse);
+
+        return orderResponses;
+    }
+
 }

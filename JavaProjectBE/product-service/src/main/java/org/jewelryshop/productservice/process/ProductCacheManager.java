@@ -1,5 +1,6 @@
 package org.jewelryshop.productservice.process;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.jewelryshop.productservice.entities.Product;
 import org.jewelryshop.productservice.services.ProductService;
 import org.jewelryshop.productservice.services.RedisService;
@@ -80,7 +81,8 @@ public class ProductCacheManager {
             String cacheKey = "product_" + dbProduct.getProductId();
 
             // Lấy sản phẩm từ cache
-            Product cachedProduct = (Product) redisCacheService.getValue(cacheKey);
+            Product cachedProduct = (Product) redisCacheService.getValues(cacheKey, new TypeReference<Product>() {
+            });
 
             if (cachedProduct != null) {
                 // So sánh updatedAt giữa cache và database

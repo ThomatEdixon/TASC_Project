@@ -7,5 +7,6 @@ public class PaymentStatus {
     public static final String ERROR = "ERROR";
     public static final String REFUND = "REFUND";
     public static final String DECLINED = "DECLINED";
+    public static final String PROCESSING = "PROCESSING";
     private PaymentStatus(){};
 }

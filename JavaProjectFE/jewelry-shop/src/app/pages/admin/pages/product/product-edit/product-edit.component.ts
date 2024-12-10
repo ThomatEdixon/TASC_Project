@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductService } from '../../../../services/product.service';
+import { CategoryResponse } from '../../../../../models/category';
+import { BrandResponse } from '../../../../../models/brand';
+import { Material, ProductRequest, ProductResponse } from '../../../../../models/product';
+import { ProductService } from '../../../../../services/product.service';
+import { CategoryService } from '../../../../../services/category.service';
+import { BrandService } from '../../../../../services/brand.service';
+import { MaterialService } from '../../../../../services/material.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MaterialService } from '../../../../services/material.service';
-import { CategoryService } from '../../../../services/category.service';
-import { BrandService } from '../../../../services/brand.service';
-import { CategoryResponse } from '../../../../models/category';
-import { BrandResponse } from '../../../../models/brand';
-import { Material, ProductRequest, ProductResponse } from '../../../../models/product';
 
 @Component({
   selector: 'app-product-edit',

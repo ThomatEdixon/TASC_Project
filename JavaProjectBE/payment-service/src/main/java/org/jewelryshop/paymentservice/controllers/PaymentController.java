@@ -1,8 +1,10 @@
 package org.jewelryshop.paymentservice.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.jewelryshop.paymentservice.client.ProductClient;
 import org.jewelryshop.paymentservice.contants.PaymentStatus;
 import org.jewelryshop.paymentservice.dto.request.PaymentRequest;
+import org.jewelryshop.paymentservice.dto.request.ProductStockRequest;
 import org.jewelryshop.paymentservice.dto.response.ApiResponse;
 import org.jewelryshop.paymentservice.dto.response.PaymentResponse;
 import org.jewelryshop.paymentservice.dto.response.StatusResponse;
@@ -61,7 +63,8 @@ public class PaymentController {
                 paymentResponse.setPaymentStatus(PaymentStatus.SUCCESS);
                 paymentService.updatePaymentStatus(Math.toIntExact(orderCode),statusResponse);
                 transactionService.update(id,PaymentStatus.SUCCESS);
-                paymentProducerService.sendPaymentEvent("payment-topic",paymentResponse);
+                paymentService.reduceStock(Math.toIntExact(orderCode));
+                //paymentProducerService.sendPaymentEvent("payment-topic",paymentResponse);
                 return ApiResponse.<Boolean>builder().data(true).build();
             }else {
                 statusResponse.setStatus(status);

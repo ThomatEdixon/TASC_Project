@@ -1,0 +1,182 @@
+/* Set background color for the page */
+body { /* Light emerald color for jewelry theme */
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  /* Styles for the table */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center; /* Center content inside table cells */
+    background-color: #E0F2E9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  }
+  
+  .table th, .table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #b2dfdb; /* Emerald-inspired header */
+    font-weight: bold;
+    color: #004d40; /* Darker shade of emerald */
+  }
+  
+  .table td {
+    color: #333;
+  }
+  
+  /* Adjusting image sizes and positioning */
+  .table img {
+    max-width: 80px; /* Maximum width for images */
+    max-height: 80px; /* Maximum height for images */
+    object-fit: contain; /* Ensure the image keeps its aspect ratio */
+    margin: 0 auto; /* Center the image */
+    display: block; /* Make the image a block element for margin auto to work */
+  }
+  
+  /* Style the action buttons */
+  .table button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    font-size: 14px; /* Smaller text size */
+  }
+  
+  .table button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Add icons to buttons */
+  .table button.edit-btn::before {
+    content: "\270E"; /* Pencil icon for Edit */
+    margin-right: 6px;
+    font-size: 16px;
+  }
+  
+  .table button.delete-btn::before {
+    content: "\1F5D1"; /* Trash icon for Delete */
+    margin-right: 6px;
+    font-size: 16px;
+  }
+  
+  .table button.delete-btn {
+    background-color: #dc3545;
+  }
+  
+  .table button.delete-btn:hover {
+    background-color: #c82333;
+  }
+  
+  /* Style for the modal */
+  .image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .image-container img {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .table th, .table td {
+      padding: 8px;
+    }
+    
+    .table img {
+      max-width: 70px;
+      max-height: 70px;
+    }
+  
+    .image-container img {
+      max-width: 150px;
+      max-height: 150px;
+    }
+  }
+  .product-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .create-button {
+    padding: 10px 20px;
+    background-color: #12454d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .create-button:hover {
+    background-color: #0d343a;
+  }
+  
+  .product-table {
+    width: 100%;
+    border-collapse: collapse;
+    /* Add additional styling for table as needed */
+  }
+  .pagination .page-item .page-link {
+    color: #003366;
+  }
+  
+  .pagination .page-item.active .page-link {
+    background-color: #004d40;
+    border-color: #004d40;
+    color: white;
+  }
+  
+  

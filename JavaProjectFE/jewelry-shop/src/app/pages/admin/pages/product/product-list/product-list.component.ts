@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ProductImage, ProductResponse } from '../../../../models/product';
-import { ProductService } from '../../../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductService } from '../../../../../services/product.service';
+import { ProductImage, ProductResponse } from '../../../../../models/product';
 
 @Component({
   selector: 'app-product-list',
